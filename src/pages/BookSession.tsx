@@ -10,6 +10,7 @@ import { CalendarDays, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { sendBookingEmail } from "@/lib/emailjs";
 
 const timeSlots = [
   "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
@@ -38,14 +39,29 @@ const BookSession = () => {
 
     setLoading(true);
 
-    // EmailJS integration placeholder
-    // Will be connected once EmailJS credentials are provided
     try {
-      // Simulate sending
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Send email via EmailJS
+      await sendBookingEmail({
+        name,
+        email,
+        phone,
+        date: format(date, "MMMM d, yyyy"),
+        timeSlot,
+        message,
+      });
+      
       setSubmitted(true);
-    } catch {
-      toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
+      toast({
+        title: "Success!",
+        description: "Session booked and confirmation email sent.",
+      });
+    } catch (error) {
+      console.error("Booking error:", error);
+      toast({
+        title: "Booking Failed",
+        description: "There was an issue booking your session. Please try again or contact us directly.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }

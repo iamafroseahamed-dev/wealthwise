@@ -42,6 +42,9 @@ const Navbar = () => {
               Book Free Session
             </Button>
           </Link>
+          <a href="/admin" className="text-xs text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100">
+            Admin
+          </a>
         </div>
 
         {/* Mobile Toggle */}
