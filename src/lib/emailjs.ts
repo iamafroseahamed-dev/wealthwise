@@ -1,10 +1,4 @@
-import emailjs from 'emailjs-com';
-
-// Initialize EmailJS
-const emailjsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-if (emailjsPublicKey) {
-  emailjs.init(emailjsPublicKey);
-}
+// Email service using backend API (nodemailer)
 
 export interface BookingData {
   name: string;
@@ -16,31 +10,41 @@ export interface BookingData {
 }
 
 export const sendBookingEmail = async (bookingData: BookingData) => {
-  if (!emailjsPublicKey) {
-    console.error('EmailJS not configured');
-    throw new Error('Email service not configured');
-  }
-
   try {
-    const templateParams = {
-      to_email: 'Itskarthikgangadharan@gmail.com',
-      user_name: bookingData.name,
-      user_email: bookingData.email,
-      user_phone: bookingData.phone,
-      booking_date: bookingData.date,
-      booking_time: bookingData.timeSlot,
-      message: bookingData.message || 'No additional message provided',
-    };
-
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-
-    if (!serviceId || !templateId) {
-      throw new Error('EmailJS configuration incomplete');
+    // In development mode, log the booking data
+    // Production email sending happens on Vercel
+    if (import.meta.env.DEV) {
+      console.log('📧 Booking email (dev mode):', bookingData);
+      // Return mock success response for development
+      return {
+        success: true,
+        message: 'Booking received. In production, confirmation email will be sent.',
+      };
     }
 
-    const response = await emailjs.send(serviceId, templateId, templateParams);
-    return response;
+    // Production: Call Vercel API endpoint
+    const response = await fetch('/api/send-booking-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: bookingData.name,
+        email: bookingData.email,
+        phone: bookingData.phone,
+        date: bookingData.date,
+        timeSlot: bookingData.timeSlot,
+        message: bookingData.message || '',
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || `API error: ${response.status}`);
+    }
+
+    return data;
   } catch (error) {
     console.error('Failed to send email:', error);
     throw error;

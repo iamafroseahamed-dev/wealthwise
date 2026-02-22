@@ -1,73 +1,130 @@
-# Welcome to your Lovable project
+# Clarity Wealth Hub
 
-## Project info
+A modern financial advisory website for wealth management services including mutual funds, insurance, and financial planning.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Technologies
 
-## How can I edit this code?
+This project is built with:
+- **Vite** - Fast build tool
+- **React** 18.3 - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **shadcn/ui** - UI components
+- **React Router** - Client-side routing
+- **Supabase** - Backend database (PostgreSQL)
+- **Nodemailer** - Email sending
 
-There are several ways of editing your application.
+## Getting Started
 
-**Use Lovable**
+### Prerequisites
+- Node.js (v18+)
+- npm or bun package manager
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Installation
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to project
+cd clarity-wealth-hub
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── components/        # Reusable React components
+├── pages/            # Page components
+├── lib/              # Utilities and services
+│   ├── supabase.ts   # Supabase client
+│   └── emailjs.ts    # Email service
+├── contexts/         # React contexts
+├── hooks/            # Custom hooks
+└── App.tsx           # Main app component
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+api/
+└── send-booking-email.ts  # Vercel serverless function
 
-## What technologies are used for this project?
+public/              # Static assets
+```
 
-This project is built with:
+## Configuration
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Environment Variables
 
-## How can I deploy this project?
+Create a `.env.local` file:
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```env
+# Supabase
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
 
-## Can I connect a custom domain to my Lovable project?
+# Email (Gmail)
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
 
-Yes, you can!
+# Admin
+VITE_ADMIN_PASSWORD=your_password
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Available Scripts
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+npm run dev          # Start dev server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run test         # Run tests
+npm run test:watch   # Run tests in watch mode
+npm run lint         # Run ESLint
+```
+
+## Features
+
+### Public Features
+- 📱 Responsive landing page
+- 📚 Blog section with Supabase integration
+- 💰 Product showcase (mutual funds, insurance)
+- 📅 Session booking form with email notifications
+- 🎯 About and company pages
+
+### Admin Features
+- 🔐 Password-protected admin panel
+- 📝 Blog post management (create, read, update, delete)
+- 🖼️ Cover image preview
+- 📊 Auto slug generation
+
+## Deployment
+
+### Vercel
+
+1. Push code to GitHub
+2. Import project in Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically
+
+### Custom Domain
+
+Go to Vercel project settings → Domains and add your custom domain.
+
+## Documentation
+
+- [Email Setup Guide](./EMAIL_SETUP.md)
+- [Setup Instructions](./SETUP.md)
+- [Implementation Summary](./IMPLEMENTATION_SUMMARY.md)
+
+## License
+
+MIT
+
+## Support
+
+For issues or questions, check the documentation files or review the codebase comments.

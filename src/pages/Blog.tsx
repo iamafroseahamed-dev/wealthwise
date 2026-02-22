@@ -1,15 +1,18 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { ArrowRight, Clock } from "lucide-react";
+import { supabase, BlogPost } from "@/lib/supabase";
 
-// Placeholder data — will be replaced with Supabase data
-const blogPosts = [
+// Fallback data if Supabase is not available
+const fallbackBlogPosts: BlogPost[] = [
   {
     id: "1",
     slug: "power-of-sip",
     title: "The Power of SIP: How ₹5,000/Month Can Build a Crore",
     excerpt: "Discover how systematic investment plans leverage compounding to turn small monthly investments into significant wealth over time.",
+    content: "",
     cover_image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop",
     published_at: "2024-12-15",
     reading_time: "5 min read",
@@ -19,22 +22,44 @@ const blogPosts = [
     slug: "tax-saving-elss",
     title: "ELSS vs PPF vs FD: Which Tax Saving Option Is Best?",
     excerpt: "A comprehensive comparison of popular Section 80C investment options to help you make the smartest tax-saving decision.",
+    content: "",
     cover_image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&auto=format&fit=crop",
     published_at: "2024-11-28",
     reading_time: "7 min read",
   },
-  {
-    id: "3",
-    slug: "health-insurance-guide",
-    title: "Health Insurance in 2025: A Complete Buying Guide",
-    excerpt: "Everything you need to know about choosing the right health insurance plan for your family in the current landscape.",
-    cover_image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop",
-    published_at: "2024-11-10",
-    reading_time: "6 min read",
-  },
 ];
 
 const Blog = () => {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(fallbackBlogPosts);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchBlogPosts();
+  }, []);
+
+  const fetchBlogPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("*")
+        .order("published_at", { ascending: false });
+
+      if (error) {
+        console.log("Supabase fetch note:", error.message);
+        setBlogPosts(fallbackBlogPosts);
+      } else if (data && data.length > 0) {
+        setBlogPosts(data);
+      } else {
+        setBlogPosts(fallbackBlogPosts);
+      }
+    } catch (error) {
+      console.log("Using fallback blog posts");
+      setBlogPosts(fallbackBlogPosts);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Layout>
       <section className="section-padding bg-gradient-navy text-primary-foreground">
