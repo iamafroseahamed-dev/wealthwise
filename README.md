@@ -46,13 +46,13 @@ src/
 ├── pages/            # Page components
 ├── lib/              # Utilities and services
 │   ├── supabase.ts   # Supabase client
-│   └── emailjs.ts    # Email service
+│   └── email.ts      # Email API client
 ├── contexts/         # React contexts
 ├── hooks/            # Custom hooks
 └── App.tsx           # Main app component
 
 api/
-└── send-booking-email.ts  # Vercel serverless function
+└── send-booking-email.ts  # Vercel serverless function (Nodemailer)
 
 public/              # Static assets
 ```

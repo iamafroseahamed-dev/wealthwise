@@ -81,10 +81,9 @@ This adds 3 sample blog posts to test with.
 ```
 ✅ VITE_SUPABASE_URL=https://qoytxtxfmbhmrcyhtyfk.supabase.co
 ✅ VITE_SUPABASE_ANON_KEY=sb_publishable_wTMEWGmgvE4_SFBJOhUzVg_CMGXroJ_
-⏳ VITE_EMAILJS_SERVICE_ID=not_yet_configured
-⏳ VITE_EMAILJS_TEMPLATE_ID=not_yet_configured
-⏳ VITE_EMAILJS_PUBLIC_KEY=not_yet_configured
 ⏳ VITE_ADMIN_PASSWORD=not_yet_configured
+⏳ EMAIL_USER=configured_in_vercel_dashboard
+⏳ EMAIL_PASSWORD=configured_in_vercel_dashboard
 ```
 
 ---
@@ -98,21 +97,18 @@ VITE_ADMIN_PASSWORD=your_secure_password_here
 ```
 Then restart the dev server (Ctrl+C and `npm run dev`)
 
-### 2. Setup EmailJS for Email Notifications (5 minutes)
-See: [SETUP.md](./SETUP.md) - EmailJS Setup section
+### 2. Setup Nodemailer for Email Notifications (10 minutes)
+See: [NODEMAILER_SETUP.md](./NODEMAILER_SETUP.md)
 
 Steps:
-1. Go to https://emailjs.com
-2. Create an account
-3. Set up Gmail service connection
-4. Create an email template
-5. Get your Service ID, Template ID, and Public Key
-6. Add them to `.env.local`
+1. Enable 2FA on your Gmail account
+2. Generate an app password
+3. Set `EMAIL_USER` and `EMAIL_PASSWORD` in Vercel dashboard
 
 ### 3. Test Everything
 - Create a blog post in admin panel
 - Try booking a session
-- Check that email is sent (once EmailJS configured)
+- Check that email is sent (once Nodemailer configured)
 
 ---
 
@@ -168,7 +164,7 @@ src/
 ├── lib/
 │   ├── utils.ts                   Utilities
 │   ├── supabase.ts                Supabase client ← New
-│   └── emailjs.ts                 Email service ← New
+│   └── email.ts                   Email service (API client) ← New
 │
 ├── contexts/
 │   └── AdminContext.tsx           Admin auth ← New
@@ -201,7 +197,7 @@ After setting up Supabase:
 - [ ] Visit individual post at `/blog/power-of-sip`
 - [ ] Test responsive design (mobile view)
 
-After setting up EmailJS:
+After setting up Nodemailer:
 
 - [ ] Visit `/book-session`
 - [ ] Fill out booking form
@@ -238,6 +234,7 @@ Then create new posts from admin panel.
 
 ## 📞 Support Resources
 
+- **Nodemailer Docs**: https://nodemailer.com/
 - **Supabase Docs**: https://supabase.com/docs
 - **React Docs**: https://react.dev
 - **Tailwind CSS**: https://tailwindcss.com

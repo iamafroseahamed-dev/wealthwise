@@ -11,84 +11,19 @@ The platform now includes:
 
 ---
 
-## 1. EmailJS Setup (for Booking Confirmations)
+## 1. Nodemailer Setup (for Booking Confirmations)
 
-EmailJS allows you to send emails directly from your frontend without a backend server.
+Nodemailer handles email sending through a Vercel serverless function. This requires Gmail 2FA and an app password.
 
-### Step 1: Create EmailJS Account
+**Quick Setup:**
+1. Enable 2-Step Verification on your Gmail account at [myaccount.google.com/security](https://myaccount.google.com/security)
+2. Generate an App Password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+3. Set environment variables in Vercel dashboard:
+   - `EMAIL_USER` = your_email@gmail.com
+   - `EMAIL_PASSWORD` = your_16_character_app_password
+   - `ADMIN_EMAIL` = Itskarthikgangadharan@gmail.com
 
-1. Go to [EmailJS.com](https://www.emailjs.com)
-2. Sign up for a free account
-3. Verify your email
-
-### Step 2: Set Up Email Service
-
-1. Click **Add Service**
-2. Choose **Gmail** (or your preferred email provider)
-3. Name it: `gmail_service`
-4. Connect your Gmail account (you may need to use an app password if 2FA is enabled)
-5. Click **Create Service** (this generates your Service ID)
-
-### Step 3: Create Email Template
-
-1. Go to **Email Templates**
-2. Click **Create New Template**
-3. Configure the template:
-
-```
-Template Name: Booking Confirmation
-To Email: {{to_email}}
-Subject: Session Booked - {{user_name}}
-
-Email Body:
-Hi {{user_name}},
-
-Thank you for booking a consultation session with WealthWise!
-
-📅 Session Details:
-• Date: {{booking_date}}
-• Time: {{booking_time}}
-• Your Email: {{user_email}}
-• Your Phone: {{user_phone}}
-
-{{#if message}}
-Additional Message:
-{{message}}
-{{/if}}
-
-We'll send you a calendar invite shortly. If you have any questions, feel free to reach out.
-
-Best regards,
-WealthWise Team
-Itskarthikgangadharan@gmail.com
-```
-
-4. Click **Save**. Note the **Template ID** (e.g., `template_xxxxx`)
-
-### Step 4: Get Your Credentials
-
-1. Go to **Account Settings**
-2. Under **API** tab, copy:
-   - **Service ID** (e.g., `service_xxxxx`)
-   - **Public Key** (e.g., `3Lp2xxxxxxxxxxxxx`)
-   - **Template ID** from the template you created
-
-### Step 5: Update `.env.local`
-
-Add these to your `.env.local` file:
-
-```env
-VITE_EMAILJS_SERVICE_ID=your_service_id_here
-VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
-VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
-```
-
-**Example:**
-```env
-VITE_EMAILJS_SERVICE_ID=service_abc123def456
-VITE_EMAILJS_TEMPLATE_ID=template_xyz789
-VITE_EMAILJS_PUBLIC_KEY=3Lp2xyz123abc456
-```
+For detailed setup instructions, see [NODEMAILER_SETUP.md](./NODEMAILER_SETUP.md)
 
 ---
 
@@ -248,13 +183,13 @@ VITE_ADMIN_PASSWORD=MySecureAdminPass123!
 VITE_SUPABASE_URL=https://abc123xyz.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJhbGc123...(your actual key)
 
-# EmailJS Configuration
-VITE_EMAILJS_SERVICE_ID=service_abc123def456
-VITE_EMAILJS_TEMPLATE_ID=template_xyz789
-VITE_EMAILJS_PUBLIC_KEY=3Lp2xyz123abc456
-
 # Admin Configuration
 VITE_ADMIN_PASSWORD=MySecureAdminPass123!
+
+# Email Configuration (set in Vercel dashboard for production)
+# EMAIL_USER=your_email@gmail.com
+# EMAIL_PASSWORD=your_app_password
+# ADMIN_EMAIL=Itskarthikgangadharan@gmail.com
 ```
 
 ---
@@ -281,17 +216,15 @@ VITE_ADMIN_PASSWORD=MySecureAdminPass123!
 
 ## 6. Deployment
 
-When deploying to production:
+When deploying to production (Vercel):
 
-### Vercel / Netlify:
-
-1. Add environment variables in your deployment dashboard:
+1. Add environment variables in Vercel dashboard:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`
-   - `VITE_EMAILJS_SERVICE_ID`
-   - `VITE_EMAILJS_TEMPLATE_ID`
-   - `VITE_EMAILJS_PUBLIC_KEY`
    - `VITE_ADMIN_PASSWORD`
+   - `EMAIL_USER` (Gmail address)
+   - `EMAIL_PASSWORD` (16-char app password)
+   - `ADMIN_EMAIL` (admin notification email)
 
 2. Deploy your code
 3. Test on production
@@ -303,9 +236,9 @@ When deploying to production:
 ⚠️ **Important:**
 
 - **Admin Password**: Change `VITE_ADMIN_PASSWORD` to a strong password
-- **EmailJS Key**: Your public key is visible in browser (that's okay for EmailJS)
+- **Email Credentials**: Never commit `.env.local` with email passwords (it's in `.gitignore`)
 - **Supabase**: Use `anon` key only (it's read-only by default due to RLS)
-- **Never commit `.env.local`**: It's in `.gitignore`
+- **Gmail App Password**: Only valid with 2FA enabled, regenerate if compromised
 
 ---
 
@@ -313,10 +246,10 @@ When deploying to production:
 
 ### Email Not Sending?
 
-1. Check EmailJS dashboard for error logs
-2. Verify email service is properly connected
-3. Check template variables match: `{{to_email}}`, `{{user_name}}`, etc.
-4. Test with console logs: `console.log('Sending:', bookingData)`
+1. Check Vercel function logs for errors
+2. Verify `EMAIL_USER` and `EMAIL_PASSWORD` are set in Vercel dashboard
+3. Verify Gmail 2FA is enabled and app password is correct
+4. Check browser console for API errors
 
 ### Blog Posts Not Loading?
 
@@ -348,10 +281,10 @@ lsof -ti:8080 | xargs kill -9
 
 ## 9. Next Steps
 
-- [ ] Create EmailJS account and set up template
+- [ ] Enable Gmail 2FA and generate app password
+- [ ] Set environment variables in Vercel dashboard
 - [ ] Create Supabase project and database table
-- [ ] Add credentials to `.env.local`
-- [ ] Test booking form
+- [ ] Test booking form in development
 - [ ] Test admin panel
 - [ ] Create blog posts
 - [ ] Deploy to production

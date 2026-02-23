@@ -22,6 +22,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/AdminBlog";
 import AdminBlogEditor from "./pages/AdminBlogEditor";
+import AdminBookings from "./pages/AdminBookings";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <AdminBlogEditor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/bookings"
+              element={
+                <ProtectedRoute>
+                  <AdminBookings />
                 </ProtectedRoute>
               }
             />

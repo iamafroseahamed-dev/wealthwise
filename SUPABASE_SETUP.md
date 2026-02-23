@@ -145,7 +145,7 @@ npm run dev
 ### Test Booking Form:
 1. Go to `/book-session`
 2. Fill in the form
-3. Submit (after configuring EmailJS)
+3. Submit (after configuring Nodemailer)
 4. Email should be sent to Itskarthikgangadharan@gmail.com
 
 ## Troubleshooting
@@ -171,13 +171,13 @@ Then re-run the table creation SQL above.
 
 ## Next: Email Configuration
 
-After database is set up, configure EmailJS:
-1. Go to [EmailJS.com](https://www.emailjs.com)
-2. Create account and email service
-3. Add credentials to `.env.local`
-4. Update admin password in `.env.local`
+After database is set up, configure Nodemailer:
+1. Enable 2FA on your Gmail account
+2. Generate an app password
+3. Set environment variables in Vercel dashboard
+4. Update admin email and password
 
-See [SETUP.md](../SETUP.md) for detailed instructions.
+See [NODEMAILER_SETUP.md](../NODEMAILER_SETUP.md) and [SETUP.md](../SETUP.md) for detailed instructions.
 
 ---
 

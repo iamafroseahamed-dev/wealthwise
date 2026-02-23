@@ -10,7 +10,7 @@ import { CalendarDays, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { sendBookingEmail } from "@/lib/emailjs";
+import { supabase } from "@/lib/supabase";
 
 const timeSlots = [
   "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
@@ -37,23 +37,35 @@ const BookSession = () => {
       return;
     }
 
+    console.log("Booking data:", { name, email, phone, date, timeSlot, message });
+
     setLoading(true);
 
     try {
-      // Send email via EmailJS
-      await sendBookingEmail({
-        name,
-        email,
-        phone,
-        date: format(date, "MMMM d, yyyy"),
-        timeSlot,
-        message,
-      });
+      // Save booking to Supabase
+      const { error: dbError } = await supabase
+        .from("bookings")
+        .insert([
+          {
+            name,
+            email,
+            phone,
+            date: format(date, "yyyy-MM-dd"),
+            time_slot: timeSlot,
+            message: message || null,
+            status: "pending",
+          },
+        ]);
+
+      if (dbError) {
+        console.error("Database error:", dbError);
+        throw dbError;
+      }
       
       setSubmitted(true);
       toast({
         title: "Success!",
-        description: "Session booked and confirmation email sent.",
+        description: "Your session booking has been confirmed.",
       });
     } catch (error) {
       console.error("Booking error:", error);
@@ -84,7 +96,7 @@ const BookSession = () => {
                 <strong className="text-foreground">{format(date!, "MMMM d, yyyy")}</strong> at <strong className="text-foreground">{timeSlot}</strong>
               </p>
               <p className="text-sm text-muted-foreground mb-8">
-                We'll confirm your session via email shortly.
+                Your booking is confirmed and stored in our system.
               </p>
               <Button variant="gold" onClick={() => setSubmitted(false)}>
                 Book Another Session

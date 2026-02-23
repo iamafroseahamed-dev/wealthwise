@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Plus } from 'lucide-react';
+import { BookOpen, Calendar } from 'lucide-react';
 
 const AdminDashboard = () => {
   return (
@@ -24,24 +24,25 @@ const AdminDashboard = () => {
             </p>
             <Link to="/admin/blog">
               <Button variant="default" className="w-full">
-                <Plus className="w-4 h-4 mr-2" />
                 Manage Blog
               </Button>
             </Link>
           </div>
 
-          {/* Placeholder for future modules */}
-          <div className="bg-card rounded-2xl border border-border p-8 opacity-50">
-            <div className="w-12 h-12 rounded-xl bg-slate-300/10 flex items-center justify-center mb-6">
-              <div className="w-6 h-6 bg-slate-300 rounded" />
+          {/* Bookings Management Card */}
+          <div className="bg-card rounded-2xl border border-border p-8">
+            <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+              <Calendar className="w-6 h-6 text-accent" />
             </div>
-            <h2 className="text-xl font-bold mb-2 font-display">Coming Soon</h2>
+            <h2 className="text-xl font-bold mb-2 font-display">Bookings</h2>
             <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-              More admin features coming soon...
+              View and manage all session bookings. Track status and client details.
             </p>
-            <Button variant="outline" className="w-full" disabled>
-              Stay Tuned
-            </Button>
+            <Link to="/admin/bookings">
+              <Button variant="default" className="w-full">
+                View Bookings
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
