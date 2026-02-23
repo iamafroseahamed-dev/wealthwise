@@ -95,7 +95,6 @@ const BookSession = () => {
       const { data: emailData } = await resend.emails.send({
         from: "noreply@claritywealth.com",
         to: email,
-        replyTo: "support@claritywealth.com",
         subject: "Booking Confirmation - Clarity Wealth Hub",
         text: `Dear ${name},
 
