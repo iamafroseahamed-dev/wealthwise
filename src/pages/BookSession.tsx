@@ -5,20 +5,32 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { CalendarDays, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
-import { Resend } from 'resend';
+import { Resend } from "resend";
 
 const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 
 const timeSlots = [
-  "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-  "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM",
-  "04:00 PM", "04:30 PM", "05:00 PM",
+  "10:00 AM",
+  "10:30 AM",
+  "11:00 AM",
+  "11:30 AM",
+  "02:00 PM",
+  "02:30 PM",
+  "03:00 PM",
+  "03:30 PM",
+  "04:00 PM",
+  "04:30 PM",
+  "05:00 PM",
 ];
 
 const BookSession = () => {
@@ -36,11 +48,21 @@ const BookSession = () => {
     e.preventDefault();
 
     if (!name || !email || !phone || !date || !timeSlot) {
-      toast({ title: "Please fill all required fields", variant: "destructive" });
+      toast({
+        title: "Please fill all required fields",
+        variant: "destructive",
+      });
       return;
     }
 
-    console.log("Booking data:", { name, email, phone, date, timeSlot, message });
+    console.log("Booking data:", {
+      name,
+      email,
+      phone,
+      date,
+      timeSlot,
+      message,
+    });
 
     setLoading(true);
 
@@ -66,15 +88,15 @@ const BookSession = () => {
         console.error("Database error:", dbError);
         throw dbError;
       }
-      
+
       setSubmitted(true);
-      
+
       // Send confirmation email with booking details
       const { data: emailData } = await resend.emails.send({
-        from: 'noreply@claritywealth.com',
+        from: "noreply@claritywealth.com",
         to: email,
-        replyTo: 'support@claritywealth.com',
-        subject: 'Booking Confirmation - Clarity Wealth Hub',
+        replyTo: "support@claritywealth.com",
+        subject: "Booking Confirmation - Clarity Wealth Hub",
         text: `Dear ${name},
 
 Thank you for booking a consultation with Clarity Wealth Hub!
@@ -83,7 +105,7 @@ Your Booking Details:
 - Date: ${format(date, "MMMM d, yyyy")}
 - Time: ${timeSlot}
 - Phone: ${phone}
-${message ? `- Message: ${message}` : ''}
+${message ? `- Message: ${message}` : ""}
 
 We look forward to speaking with you. If you need to reschedule or have any questions, please reply to this email.
 
@@ -92,6 +114,28 @@ Clarity Wealth Hub Team`,
       });
 
       console.log(`Confirmation email ${emailData?.id} sent to ${email}`);
+
+      // Send notification email to admin
+      const { data: adminEmailData } = await resend.emails.send({
+        from: "noreply@claritywealth.com",
+        to: "posttoafrose@gmail.com",
+        subject: "New Booking Session Registered - Clarity Wealth Hub",
+        text: `A new booking session has been registered!
+
+Customer Details:
+- Name: ${name}
+- Email: ${email}
+- Phone: ${phone}
+
+Booking Details:
+- Date: ${format(date, "MMMM d, yyyy")}
+- Time: ${timeSlot}
+${message ? `- Message: ${message}` : ""}
+
+Please follow up with the customer at your earliest convenience.`,
+      });
+
+      console.log(`Admin notification email ${adminEmailData?.id} sent`);
       toast({
         title: "Success!",
         description: "Your session booking has been confirmed.",
@@ -100,7 +144,8 @@ Clarity Wealth Hub Team`,
       console.error("Booking error:", error);
       toast({
         title: "Booking Failed",
-        description: "There was an issue booking your session. Please try again or contact us directly.",
+        description:
+          "There was an issue booking your session. Please try again or contact us directly.",
         variant: "destructive",
       });
     } finally {
@@ -117,12 +162,17 @@ Clarity Wealth Hub Team`,
               <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-8">
                 <CheckCircle2 className="w-10 h-10 text-accent" />
               </div>
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">Session Booked!</h1>
+              <h1 className="text-3xl md:text-5xl font-bold mb-4">
+                Session Booked!
+              </h1>
               <p className="text-muted-foreground text-lg max-w-md mx-auto mb-2">
                 Thank you, {name}! We've received your booking request.
               </p>
               <p className="text-muted-foreground max-w-md mx-auto mb-8">
-                <strong className="text-foreground">{format(date!, "MMMM d, yyyy")}</strong> at <strong className="text-foreground">{timeSlot}</strong>
+                <strong className="text-foreground">
+                  {format(date!, "MMMM d, yyyy")}
+                </strong>{" "}
+                at <strong className="text-foreground">{timeSlot}</strong>
               </p>
               <p className="text-sm text-muted-foreground mb-8">
                 Your booking is confirmed and stored in our system.
@@ -142,12 +192,15 @@ Clarity Wealth Hub Team`,
       <section className="section-padding bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Free Consultation</p>
+            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">
+              Free Consultation
+            </p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
               Book Your <span className="text-gradient-gold">Free Session</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              Take the first step towards financial clarity. Schedule a free, no-obligation consultation with our experts.
+              Take the first step towards financial clarity. Schedule a free,
+              no-obligation consultation with our experts.
             </p>
           </AnimatedSection>
         </div>
@@ -159,7 +212,9 @@ Clarity Wealth Hub Team`,
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Full Name *</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Full Name *
+                  </label>
                   <Input
                     placeholder="John Doe"
                     value={name}
@@ -169,7 +224,9 @@ Clarity Wealth Hub Team`,
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Email *</label>
+                  <label className="text-sm font-medium mb-2 block">
+                    Email *
+                  </label>
                   <Input
                     type="email"
                     placeholder="john@example.com"
@@ -182,7 +239,9 @@ Clarity Wealth Hub Team`,
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-2 block">Phone Number *</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Phone Number *
+                </label>
                 <Input
                   type="tel"
                   placeholder="+91 98765 43210"
@@ -194,12 +253,17 @@ Clarity Wealth Hub Team`,
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-2 block">Preferred Date *</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Preferred Date *
+                </label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className={cn("w-full h-12 justify-start text-left font-normal", !date && "text-muted-foreground")}
+                      className={cn(
+                        "w-full h-12 justify-start text-left font-normal",
+                        !date && "text-muted-foreground",
+                      )}
                     >
                       <CalendarDays className="mr-2 w-4 h-4" />
                       {date ? format(date, "PPP") : "Select a date"}
@@ -219,7 +283,9 @@ Clarity Wealth Hub Team`,
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-2 block">Preferred Time Slot *</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Preferred Time Slot *
+                </label>
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
                   {timeSlots.map((slot) => (
                     <button
@@ -230,7 +296,7 @@ Clarity Wealth Hub Team`,
                         "py-2.5 px-3 rounded-lg text-sm font-medium border transition-all",
                         timeSlot === slot
                           ? "bg-accent text-accent-foreground border-accent shadow-md"
-                          : "bg-card border-border text-muted-foreground hover:border-accent/50"
+                          : "bg-card border-border text-muted-foreground hover:border-accent/50",
                       )}
                     >
                       <Clock className="w-3 h-3 inline mr-1" />
@@ -241,7 +307,9 @@ Clarity Wealth Hub Team`,
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-2 block">Message (Optional)</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Message (Optional)
+                </label>
                 <Textarea
                   placeholder="Tell us about your financial goals or any specific questions..."
                   value={message}
@@ -250,13 +318,20 @@ Clarity Wealth Hub Team`,
                 />
               </div>
 
-              <Button type="submit" variant="hero" size="xl" className="w-full" disabled={loading}>
+              <Button
+                type="submit"
+                variant="hero"
+                size="xl"
+                className="w-full"
+                disabled={loading}
+              >
                 {loading ? "Booking..." : "Confirm Booking"}
                 {!loading && <ArrowRight className="w-5 h-5 ml-1" />}
               </Button>
 
               <p className="text-xs text-muted-foreground text-center">
-                By booking, you agree that your information will be used solely to schedule your consultation.
+                By booking, you agree that your information will be used solely
+                to schedule your consultation.
               </p>
             </form>
           </AnimatedSection>
