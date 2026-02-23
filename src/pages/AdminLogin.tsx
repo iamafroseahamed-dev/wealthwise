@@ -13,7 +13,7 @@ const AdminLogin = () => {
   const navigate = useNavigate(); 
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault() ;
     setError('');
     setLoading(true); 
 
