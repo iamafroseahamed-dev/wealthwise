@@ -15,7 +15,7 @@ const AdminLogin = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    setLoading(true); 
 
     try {
       if (login(password)) {
