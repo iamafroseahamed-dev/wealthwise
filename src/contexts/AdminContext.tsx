@@ -36,7 +36,7 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
   }, []);
 
   const login = (password: string): boolean => {
-    const correctPassword = (import.meta.env as any).ADMIN_PASSWORD;
+    const correctPassword = (import.meta.env as any).VITE_ADMIN_PASSWORD;
     
     if (!correctPassword) {
       console.error('Admin password not configured');
