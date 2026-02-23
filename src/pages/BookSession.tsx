@@ -15,9 +15,6 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
-import { Resend } from "resend";
-
-const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 
 const timeSlots = [
   "10:00 AM",
@@ -90,51 +87,6 @@ const BookSession = () => {
       }
 
       setSubmitted(true);
-
-      // Send confirmation email with booking details
-      const { data: emailData } = await resend.emails.send({
-        from: "noreply@claritywealth.com",
-        to: email,
-        subject: "Booking Confirmation - Clarity Wealth Hub",
-        text: `Dear ${name},
-
-Thank you for booking a consultation with Clarity Wealth Hub!
-
-Your Booking Details:
-- Date: ${format(date, "MMMM d, yyyy")}
-- Time: ${timeSlot}
-- Phone: ${phone}
-${message ? `- Message: ${message}` : ""}
-
-We look forward to speaking with you. If you need to reschedule or have any questions, please reply to this email.
-
-Best regards,
-Clarity Wealth Hub Team`,
-      });
-
-      console.log(`Confirmation email ${emailData?.id} sent to ${email}`);
-
-      // Send notification email to admin
-      const { data: adminEmailData } = await resend.emails.send({
-        from: "noreply@claritywealth.com",
-        to: "posttoafrose@gmail.com",
-        subject: "New Booking Session Registered - Clarity Wealth Hub",
-        text: `A new booking session has been registered!
-
-Customer Details:
-- Name: ${name}
-- Email: ${email}
-- Phone: ${phone}
-
-Booking Details:
-- Date: ${format(date, "MMMM d, yyyy")}
-- Time: ${timeSlot}
-${message ? `- Message: ${message}` : ""}
-
-Please follow up with the customer at your earliest convenience.`,
-      });
-
-      console.log(`Admin notification email ${adminEmailData?.id} sent`);
       toast({
         title: "Success!",
         description: "Your session booking has been confirmed.",
