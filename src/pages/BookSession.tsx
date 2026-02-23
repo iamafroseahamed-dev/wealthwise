@@ -11,6 +11,9 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
+import { Resend } from 'resend';
+
+const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 
 const timeSlots = [
   "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
@@ -43,7 +46,7 @@ const BookSession = () => {
 
     try {
       // Save booking to Supabase
-      const { error: dbError } = await supabase
+      const { data: bookingData, error: dbError } = await supabase
         .from("bookings")
         .insert([
           {
@@ -55,7 +58,9 @@ const BookSession = () => {
             message: message || null,
             status: "pending",
           },
-        ]);
+        ])
+        .select()
+        .single();
 
       if (dbError) {
         console.error("Database error:", dbError);
@@ -63,6 +68,30 @@ const BookSession = () => {
       }
       
       setSubmitted(true);
+      
+      // Send confirmation email with booking details
+      const { data: emailData } = await resend.emails.send({
+        from: 'noreply@claritywealth.com',
+        to: email,
+        replyTo: 'support@claritywealth.com',
+        subject: 'Booking Confirmation - Clarity Wealth Hub',
+        text: `Dear ${name},
+
+Thank you for booking a consultation with Clarity Wealth Hub!
+
+Your Booking Details:
+- Date: ${format(date, "MMMM d, yyyy")}
+- Time: ${timeSlot}
+- Phone: ${phone}
+${message ? `- Message: ${message}` : ''}
+
+We look forward to speaking with you. If you need to reschedule or have any questions, please reply to this email.
+
+Best regards,
+Clarity Wealth Hub Team`,
+      });
+
+      console.log(`Confirmation email ${emailData?.id} sent to ${email}`);
       toast({
         title: "Success!",
         description: "Your session booking has been confirmed.",
