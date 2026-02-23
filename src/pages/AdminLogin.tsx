@@ -10,7 +10,7 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAdmin();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
