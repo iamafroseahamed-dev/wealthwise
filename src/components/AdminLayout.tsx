@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { useAdmin } from '@/contexts/AdminContext';
-import { LogOut, BookOpen, Home } from 'lucide-react';
+import { BookOpen, Home } from 'lucide-react';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -10,7 +8,6 @@ interface AdminLayoutProps {
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
   const location = useLocation();
-  const { logout } = useAdmin();
 
   const navItems = [
     { to: '/admin/dashboard', label: 'Dashboard', icon: Home },
@@ -48,18 +45,6 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
             );
           })}
         </nav>
-
-        <div className="absolute bottom-6 left-6 right-6">
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full"
-            onClick={logout}
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
-        </div>
       </aside>
 
       {/* Main Content */}

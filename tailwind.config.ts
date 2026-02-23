@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["DM Sans", "sans-serif"],
-        display: ["Playfair Display", "serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Mulish", "Inter", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,14 +51,20 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
-          dark: "hsl(var(--gold-dark))",
+        razorpay: {
+          DEFAULT: "hsl(var(--razorpay-blue))",
+          light: "hsl(var(--razorpay-blue-light))",
+          dark: "hsl(var(--razorpay-blue-dark))",
         },
         navy: {
-          DEFAULT: "hsl(var(--navy))",
-          light: "hsl(var(--navy-light))",
+          DEFAULT: "hsl(var(--razorpay-navy))",
+          light: "hsl(var(--razorpay-navy-light))",
+        },
+        // Alias for backward compatibility
+        gold: {
+          DEFAULT: "hsl(var(--razorpay-blue))",
+          light: "hsl(var(--razorpay-blue-light))",
+          dark: "hsl(var(--razorpay-blue-dark))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
