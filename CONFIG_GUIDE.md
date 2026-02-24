@@ -1,4 +1,4 @@
-# 🎯 Clarity Wealth Hub - Configuration Status
+# 🎯 Wealth Wise - Configuration Status
 
 **Last Updated**: February 22, 2026  
 **Status**: ✅ Ready to Configure
@@ -34,7 +34,7 @@
 ## 📋 Your Supabase Setup
 
 ```
-Project: Clarity Wealth Hub
+Project: Wealth Wise
 URL: https://qoytxtxfmbhmrcyhtyfk.supabase.co
 Anon Key: sb_publishable_wTMEWGmgvE4_SFBJOhUzVg_CMGXroJ_
 Status: ✅ Connected

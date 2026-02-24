@@ -1,4 +1,4 @@
-# Clarity Wealth Hub
+# Wealth Wise
 
 A modern financial advisory website for wealth management services including mutual funds, insurance, and financial planning.
 

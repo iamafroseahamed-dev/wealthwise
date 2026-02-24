@@ -1,4 +1,4 @@
-# 🚀 Quick Start: Supabase & Clarity Wealth Hub
+# 🚀 Quick Start: Supabase & Wealth Wise
 
 ## ✅ Status
 - ✅ Dev server running on `http://localhost:8080/`
@@ -244,7 +244,7 @@ Then create new posts from admin panel.
 
 ## 🎉 You're All Set!
 
-Your Clarity Wealth Hub is now ready to:
+Your Wealth Wise is now ready to:
 1. Manage blog posts from admin panel
 2. Send booking emails (once EmailJS is set up)
 3. Display dynamic content from Supabase
