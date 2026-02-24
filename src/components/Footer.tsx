@@ -7,15 +7,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           <div className="md:col-span-2">
             <h3 className="font-display text-2xl font-bold mb-4">
-              Wealth<span className="text-gradient-gold">Wise</span>
+              Karthik G - Wealth<span className="text-gradient-gold">Wise</span>
             </h3>
             <p className="text-primary-foreground/70 text-sm leading-relaxed max-w-md">
-              Your trusted partner for mutual fund distribution and insurance solutions.
-              Building wealth with discipline and clarity.
+              Your trusted partner for mutual fund distribution and financial planning.
+              Building wealth with discipline, clarity, and goal-based investing.
             </p>
             <div className="mt-6 space-y-1 text-sm text-primary-foreground/60">
-              <p>AMFI Registered Mutual Fund Distributor</p>
-              <p>ARN: XXXXX | EUIN: XXXXX</p>
+              <p>AMFI-Registered Mutual Fund Distributor</p>
+              <p>ARN: 332207</p>
             </div>
           </div>
 
@@ -50,12 +50,17 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/10 pt-8">
+          <p className="text-xs text-primary-foreground/40 leading-relaxed max-w-4xl mb-2">
+            <strong>Regulatory Disclosure:</strong> Karthik G is an AMFI-Registered Mutual Fund Distributor (ARN: 332207). This website is for mutual fund distribution only. We provide only "incidental advice" to help you select suitable mutual fund schemes based on your risk profile and financial goals. We do NOT provide comprehensive financial planning or investment advisory services (unless separately registered as Investment Adviser).
+          </p>
+          <p className="text-xs text-primary-foreground/40 leading-relaxed max-w-4xl mb-2">
+            <strong>Risk Disclosure:</strong> Mutual Fund investments are subject to market risks, including the loss of principal amount. Please read all scheme-related documents, key information document (KID), and Statement of Additional Information (SAI) carefully before investing. Past performance is not indicative of future performance.
+          </p>
           <p className="text-xs text-primary-foreground/40 leading-relaxed max-w-4xl">
-            <strong>Disclaimer:</strong> Mutual Fund investments are subject to market risks. Please read all scheme-related documents carefully before investing. 
-            This website facilitates mutual fund distribution support only and does not provide investment advisory services.
+            This communication is for educational purposes only and does not constitute a recommendation, offer, or solicitation. Investments should be made only after proper risk profiling and assessment of suitability. We are NOT responsible for providing investment advice on other financial products.
           </p>
           <p className="text-xs text-primary-foreground/30 mt-4">
-            © {new Date().getFullYear()} WealthWise. All rights reserved.
+            © {new Date().getFullYear()} Karthik G - Mutual Fund Distributor. All rights reserved.
           </p>
         </div>
       </div>

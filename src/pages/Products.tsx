@@ -7,16 +7,16 @@ import { TrendingUp, Shield, ArrowRight } from "lucide-react";
 const products = [
   {
     icon: TrendingUp,
-    title: "Mutual Funds",
-    description: "Diversified investment solutions across equity, debt, and hybrid categories. Start with as low as ₹500/month through SIP.",
-    features: ["Equity Funds", "Debt Funds", "Hybrid Funds", "ELSS (Tax Saving)", "Index Funds", "SIP & Lump Sum"],
+    title: "Mutual Fund Distribution",
+    description: "We assist investors in selecting suitable mutual fund schemes based on their risk profile and financial goals through proper suitability assessment.",
+    features: ["Goal-Based SIPs", "Lumpsum Investments", "ELSS (Tax Saving)", "Risk Profiling", "Portfolio Review", "After-Sales Support"],
     link: "/mutual-funds",
   },
   {
     icon: Shield,
-    title: "Insurance",
-    description: "Protect what matters most. Comprehensive life and health insurance solutions for complete peace of mind.",
-    features: ["Term Life Insurance", "Health Insurance", "ULIPs", "Endowment Plans", "Child Plans", "Pension Plans"],
+    title: "Our Scope & Limitations",
+    description: "As an AMFI-Registered Mutual Fund Distributor, our services are limited to mutual fund distribution only. View compliance details and scope.",
+    features: ["Mutual Funds Only", "Incidental Advice", "Proper Risk Assessment", "Suitability Check", "NO Financial Planning", "NO Insurance Products"],
     link: "/insurance",
   },
 ];
@@ -27,12 +27,12 @@ const Products = () => {
       <section className="section-padding bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Our Products</p>
+            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Mutual Fund Solutions</p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
-              Solutions Designed for <span className="text-gradient-gold">Every Goal</span>
+              Our Services for <span className="text-gradient-gold">Every Goal</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              From wealth creation to wealth protection, we offer a comprehensive suite of financial products.
+              We assist investors across India in selecting suitable mutual fund schemes aligned with their financial goals and risk appetite.
             </p>
           </AnimatedSection>
         </div>

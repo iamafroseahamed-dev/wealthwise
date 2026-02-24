@@ -9,9 +9,9 @@ import { supabase, BlogPost } from "@/lib/supabase";
 const fallbackBlogPosts: BlogPost[] = [
   {
     id: "1",
-    slug: "power-of-sip",
-    title: "The Power of SIP: How ₹5,000/Month Can Build a Crore",
-    excerpt: "Discover how systematic investment plans leverage compounding to turn small monthly investments into significant wealth over time.",
+    slug: "risk-profiling-mutual-funds",
+    title: "What Is Risk Profiling in Mutual Funds?",
+    excerpt: "Understand the importance of risk profiling and how it helps determine the right mutual fund investments for your financial goals.",
     content: "",
     cover_image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop",
     published_at: "2024-12-15",
@@ -19,13 +19,23 @@ const fallbackBlogPosts: BlogPost[] = [
   },
   {
     id: "2",
-    slug: "tax-saving-elss",
-    title: "ELSS vs PPF vs FD: Which Tax Saving Option Is Best?",
-    excerpt: "A comprehensive comparison of popular Section 80C investment options to help you make the smartest tax-saving decision.",
+    slug: "sip-vs-lumpsum-difference",
+    title: "SIP vs Lumpsum: Understanding the Difference",
+    excerpt: "Learn the key differences between Systematic Investment Plans (SIP) and lumpsum investments to choose the right approach for your portfolio.",
     content: "",
     cover_image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&auto=format&fit=crop",
     published_at: "2024-11-28",
     reading_time: "7 min read",
+  },
+  {
+    id: "3",
+    slug: "elss-tax-saving",
+    title: "How ELSS Helps in Tax Saving Under Section 80C",
+    excerpt: "Discover how Equity Linked Savings Schemes (ELSS) can provide tax benefits while building long-term wealth.",
+    content: "",
+    cover_image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf35f?w=800&auto=format&fit=crop",
+    published_at: "2024-11-20",
+    reading_time: "6 min read",
   },
 ];
 
@@ -65,12 +75,12 @@ const Blog = () => {
       <section className="section-padding bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Blog</p>
+            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Insights</p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Insights & <span className="text-gradient-gold">Knowledge</span>
+              Educational <span className="text-gradient-gold">Content</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              Stay informed with expert articles on investments, insurance, and personal finance.
+              Stay informed with educational articles on mutual fund investments, financial planning, and investment strategies.
             </p>
           </AnimatedSection>
         </div>

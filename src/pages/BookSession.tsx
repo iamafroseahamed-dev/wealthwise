@@ -144,14 +144,13 @@ const BookSession = () => {
         <div className="container-tight">
           <AnimatedSection>
             <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">
-              Free Consultation
+              Schedule a Consultation
             </p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
-              Book Your <span className="text-gradient-gold">Free Session</span>
+              Discuss Your <span className="text-gradient-gold">Investment Goals</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              Take the first step towards financial clarity. Schedule a free,
-              no-obligation consultation with our experts.
+              Schedule a consultation to discuss your investment goals and explore suitable mutual fund options aligned with your risk profile.
             </p>
           </AnimatedSection>
         </div>

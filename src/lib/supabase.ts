@@ -23,3 +23,30 @@ export interface BlogPost {
   created_at?: string;
   updated_at?: string;
 }
+
+// TypeScript types for bookings
+export interface Booking {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  date: string;
+  time_slot: string;
+  message?: string | null;
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+  created_at?: string;
+  updated_at?: string;
+}
+
+// TypeScript types for contacts
+export interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  phone?: string;
+  status: 'new' | 'reviewed' | 'replied' | 'closed';
+  created_at?: string;
+  updated_at?: string;
+}

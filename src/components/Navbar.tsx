@@ -7,10 +7,9 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/products", label: "Products" },
-  { to: "/mutual-funds", label: "Mutual Funds" },
-  { to: "/insurance", label: "Insurance" },
-  { to: "/blog", label: "Blog" },
+  { to: "/mutual-funds", label: "Services" },
+  { to: "/blog", label: "Insights" },
+  { to: "/contact", label: "Contact" },
 ];
 
 const Navbar = () => {
@@ -21,7 +20,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       <div className="container-tight flex items-center justify-between h-16 md:h-20 px-4 md:px-8">
         <Link to="/" className="font-display text-xl md:text-2xl font-bold tracking-tight">
-          Wealth<span className="text-gradient-gold">Wise</span>
+          Karthik G<span className="text-gradient-gold">.</span>Wealth
         </Link>
 
         {/* Desktop Nav */}
@@ -39,7 +38,7 @@ const Navbar = () => {
           ))}
           <Link to="/book-session">
             <Button variant="gold" size="default">
-              Book Free Session
+              Begin Your Journey
             </Button>
           </Link>
           <a href="/admin" className="text-xs text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100">

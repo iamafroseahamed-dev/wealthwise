@@ -13,24 +13,24 @@ const HeroSection = () => (
     <div className="container-tight relative z-10">
       <AnimatedSection>
         <div className="max-w-3xl">
-          <p className="text-accent font-medium text-sm uppercase tracking-widest mb-6">AMFI Registered Mutual Fund Distributor</p>
+          <p className="text-accent font-medium text-sm uppercase tracking-widest mb-6">AMFI Registered Mutual Fund Distributor - ARN: 332207</p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6">
-            Build Wealth with Discipline.{" "}
-            <span className="text-gradient-gold">Plan with Clarity.</span>
+            Invest with Purpose.{" "}
+            <span className="text-gradient-gold">Build Wealth with Discipline.</span>
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/70 max-w-xl mb-10 font-body leading-relaxed">
-            Expert guidance for mutual fund investments and insurance solutions tailored to your financial goals.
+            Goal-based mutual fund distribution services aligned with your life milestones.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/book-session">
               <Button variant="hero" size="xl">
-                Book Free Session
+                Begin Your Investment Journey
                 <ArrowRight className="w-5 h-5 ml-1" />
               </Button>
             </Link>
-            <Link to="/products">
+            <Link to="/book-session">
               <Button variant="outline-light" size="xl">
-                Explore Products
+                Schedule a Consultation
               </Button>
             </Link>
           </div>
@@ -43,23 +43,23 @@ const HeroSection = () => (
 const services = [
   {
     icon: TrendingUp,
-    title: "Mutual Funds",
-    description: "Diversified mutual fund solutions including SIP, lump sum, and goal-based investments across equity, debt, and hybrid categories.",
-  },
-  {
-    icon: Shield,
-    title: "Insurance",
-    description: "Comprehensive life and health insurance plans to protect your family's future and secure your financial wellbeing.",
+    title: "Systematic Investment Plans (SIPs)",
+    description: "Invest a fixed amount regularly through Systematic Investment Plans to build disciplined investing habits and participate in long-term market growth.",
   },
   {
     icon: Target,
-    title: "Goal Planning",
-    description: "Structured financial planning to help you achieve milestones — retirement, education, home purchase, and more.",
+    title: "ELSS (Tax Saving Mutual Funds)",
+    description: "Equity Linked Savings Schemes help you save tax under Section 80C while building wealth with a 3-year lock-in period.",
   },
   {
     icon: Users,
-    title: "Family Wealth",
-    description: "Holistic wealth management for your entire family with personalized strategies for every life stage.",
+    title: "Retirement Corpus Planning",
+    description: "Goal-based mutual fund investments designed to help you build substantial retirement savings aligned to your desired lifestyle.",
+  },
+  {
+    icon: Target,
+    title: "Child Education Planning",
+    description: "Structured mutual fund investments specifically aligned to meet your child's future education needs and aspirations.",
   },
 ];
 
@@ -67,10 +67,10 @@ const ServicesSection = () => (
   <section className="section-padding">
     <div className="container-tight">
       <AnimatedSection>
-        <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">What We Offer</p>
-        <h2 className="text-3xl md:text-5xl font-bold mb-4">Services Built for Your Future</h2>
+        <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Key Services</p>
+        <h2 className="text-3xl md:text-5xl font-bold mb-4">Mutual Fund Solutions for Every Goal</h2>
         <p className="text-muted-foreground text-lg max-w-2xl mb-14">
-          We simplify wealth creation with disciplined investment strategies and the right protection plans.
+          We assist investors across India in selecting suitable mutual fund schemes aligned with their financial goals and risk appetite.
         </p>
       </AnimatedSection>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -91,12 +91,12 @@ const ServicesSection = () => (
 );
 
 const reasons = [
-  "AMFI Registered Distributor with transparent practices",
-  "Personalized investment strategies, not one-size-fits-all",
-  "Zero hidden charges — complete fee transparency",
-  "Regular portfolio reviews and rebalancing",
-  "Dedicated support for all your financial queries",
-  "10+ years of trusted wealth management experience",
+  "Risk Profiling Before Recommendation",
+  "Goal-Based Investment Approach",
+  "Ongoing Service Support",
+  "Periodic Portfolio Review",
+  "Transparent practices with zero hidden charges",
+  "Proper suitability assessment for each recommendation",
 ];
 
 const WhyChooseUs = () => (
@@ -104,10 +104,10 @@ const WhyChooseUs = () => (
     <div className="container-tight">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <AnimatedSection>
-          <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Why WealthWise</p>
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">Your Trust, Our Commitment</h2>
+          <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Why Choose Us</p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">Your Trusted Partner in Wealth Creation</h2>
           <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-            We believe in building long-term relationships through transparency, expertise, and unwavering dedication to your financial success.
+            Karthik G (ARN: 332207) is an AMFI-Registered Mutual Fund Distributor committed to conducting proper risk profiling, recommending suitable mutual fund schemes, and providing ongoing service assistance focused on disciplined, goal-oriented investing.
           </p>
           <Link to="/about">
             <Button variant="default" size="lg">
@@ -162,23 +162,21 @@ const ProcessSteps = () => (
 );
 
 const CTABanner = () => (
-  <section className="section-padding bg-gradient-navy text-primary-foreground relative overflow-hidden">
-    <div className="absolute inset-0 opacity-10">
-      <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-accent/30 blur-3xl" />
-    </div>
-    <div className="container-tight relative z-10 text-center">
+  <section className="section-padding bg-secondary">
+    <div className="container-tight">
       <AnimatedSection>
-        <h2 className="text-3xl md:text-5xl font-bold mb-6">
-          Ready to Start Your <span className="text-gradient-gold">Wealth Journey?</span>
-        </h2>
-        <p className="text-primary-foreground/70 text-lg max-w-xl mx-auto mb-10">
-          Take the first step towards financial freedom. Book a free consultation today — no obligations, just clarity.
-        </p>
-        <Link to="/book-session">
-          <Button variant="hero" size="xl">
-            Book Your Free Session <ArrowRight className="w-5 h-5 ml-1" />
-          </Button>
-        </Link>
+        <div className="p-8 md:p-12 rounded-2xl border border-border bg-card">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Important Disclaimer</p>
+            <h2 className="text-2xl font-bold mb-4">Scope & Limitations</h2>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              The information on this website is for educational purposes only. We are AMFI-Registered Mutual Fund Distributors providing only incidental advice to help you select suitable mutual fund schemes. We do NOT provide comprehensive financial planning, investment advisory services, or any products other than mutual funds.
+            </p>
+            <p className="text-muted-foreground text-sm">
+              All recommendations are made after assessing your risk profile and evaluating product suitability. Mutual Fund investments are subject to market risks. Past performance does not guarantee future results.
+            </p>
+          </div>
+        </div>
       </AnimatedSection>
     </div>
   </section>

@@ -15,6 +15,7 @@ import Insurance from "./pages/Insurance";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BookSession from "./pages/BookSession";
+import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -23,6 +24,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/AdminBlog";
 import AdminBlogEditor from "./pages/AdminBlogEditor";
 import AdminBookings from "./pages/AdminBookings";
+import AdminContacts from "./pages/AdminContacts";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +45,7 @@ const App = () => (
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/book-session" element={<BookSession />} />
+            <Route path="/contact" element={<Contact />} />
 
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLogin />} />
@@ -83,6 +86,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <AdminBookings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/contacts"
+              element={
+                <ProtectedRoute>
+                  <AdminContacts />
                 </ProtectedRoute>
               }
             />
