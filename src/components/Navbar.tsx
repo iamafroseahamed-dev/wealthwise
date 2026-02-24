@@ -9,6 +9,7 @@ const navLinks = [
   { to: "/about", label: "About" },
   { to: "/mutual-funds", label: "Services" },
   { to: "/blog", label: "Insights" },
+  { to: "/tax-regime", label: "Tax Guide" },
   { to: "/contact", label: "Contact" },
 ];
 

@@ -172,3 +172,8 @@ const About = () => {
           </AnimatedSection>
         </div>
       </section>
+    </Layout>
+  );
+};
+
+export default About;

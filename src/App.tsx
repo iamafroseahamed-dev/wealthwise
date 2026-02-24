@@ -16,6 +16,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BookSession from "./pages/BookSession";
 import Contact from "./pages/Contact";
+import TaxRegime from "./pages/TaxRegime";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/book-session" element={<BookSession />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/tax-regime" element={<TaxRegime />} />
 
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLogin />} />

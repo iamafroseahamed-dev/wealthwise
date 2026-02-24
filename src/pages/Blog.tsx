@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight, Clock, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { supabase, BlogPost } from "@/lib/supabase";
 
 // Fallback data if Supabase is not available
@@ -120,6 +121,32 @@ const Blog = () => {
               </AnimatedSection>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Tax Guide CTA */}
+      <section className="section-padding bg-secondary">
+        <div className="container-tight">
+          <AnimatedSection>
+            <div className="bg-card rounded-2xl p-8 md:p-12 border border-accent/20 flex flex-col md:flex-row gap-8 items-center justify-between">
+              <div className="md:flex-1">
+                <div className="flex gap-3 mb-4 items-center">
+                  <BookOpen className="w-6 h-6 text-accent" />
+                  <h3 className="text-2xl font-bold">Want to Understand Mutual Fund Taxation?</h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed">
+                  Learn about tax rates for equity funds, debt funds, capital gains taxation, and smart tax-saving strategies. 
+                  Our comprehensive tax guide covers everything you need to know about mutual fund taxation in India.
+                </p>
+              </div>
+              <Link to="/tax-regime">
+                <Button variant="gold" size="lg" className="whitespace-nowrap">
+                  Read Tax Guide
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
     </Layout>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BarChart3, PiggyBank, TrendingUp, Clock } from "lucide-react";
+import { ArrowRight, BarChart3, PiggyBank, TrendingUp, Clock, BookOpen } from "lucide-react";
 
 const fundTypes = [
   { icon: TrendingUp, title: "Systematic Investment Plans (SIPs)", description: "Invest a fixed amount regularly to build disciplined investing habits, participate in long-term market growth, and harness the power of compounding and rupee cost averaging." },
@@ -121,6 +121,46 @@ const MutualFunds = () => {
                       <span>We don't recommend schemes without knowing your risk profile</span>
                     </li>
                   </ul>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Tax Guide CTA */}
+      <section className="section-padding">
+        <div className="container-tight">
+          <AnimatedSection>
+            <div className="bg-card rounded-2xl p-8 md:p-12 border border-border">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div>
+                  <div className="flex gap-3 mb-4 items-center">
+                    <BookOpen className="w-6 h-6 text-accent" />
+                    <h3 className="text-2xl font-bold">Understand Mutual Fund Taxation</h3>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    Maximize your investment returns by understanding how mutual funds are taxed. 
+                    Learn about long-term vs short-term capital gains, tax-saving strategies, and how to optimize your portfolio for tax efficiency.
+                  </p>
+                  <div className="space-y-2 text-sm text-muted-foreground mb-6">
+                    <p className="flex items-center gap-2">
+                      <span className="text-accent">✓</span> Tax rates for equity and debt funds
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <span className="text-accent">✓</span> Capital gains and dividend taxation
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <span className="text-accent">✓</span> Tax-smart investment strategies
+                    </p>
+                  </div>
+                </div>
+                <div className="text-center lg:text-left">
+                  <Link to="/tax-regime">
+                    <Button variant="hero" size="xl">
+                      Explore Tax Guide <ArrowRight className="w-5 h-5 ml-1" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
