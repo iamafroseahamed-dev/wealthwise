@@ -82,7 +82,7 @@ const Contact = () => {
   if (submitted) {
     return (
       <Layout>
-        <section className="section-padding min-h-[70vh] flex items-center">
+        <section className="section-padding-lg min-h-[70vh] flex items-center">
           <div className="container-tight text-center">
             <AnimatedSection>
               <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-8">
@@ -120,7 +120,7 @@ const Contact = () => {
   return (
     <Layout>
       {/* Header */}
-      <section className="section-padding bg-gradient-navy text-primary-foreground">
+      <section className="section-padding-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
             <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">
@@ -138,10 +138,10 @@ const Contact = () => {
       </section>
 
       {/* Contact Info Cards */}
-      <section className="section-padding bg-secondary/40">
+      <section className="py-12 bg-secondary/40">
         <div className="container-tight">
           <AnimatedSection>
-            <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="grid md:grid-cols-3 gap-6 mb-6">
               <div className="bg-card rounded-lg border p-6">
                 <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
                   <Mail className="w-6 h-6 text-accent" />
@@ -177,7 +177,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="section-padding">
+      <section className="py-12">
         <div className="container-tight max-w-2xl">
           <AnimatedSection>
             <form onSubmit={handleSubmit} className="space-y-6">

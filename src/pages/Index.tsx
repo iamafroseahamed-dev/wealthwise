@@ -5,7 +5,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { TrendingUp, Shield, Users, Target, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const HeroSection = () => (
-  <section className="bg-gradient-navy text-primary-foreground section-padding relative overflow-hidden">
+  <section className="bg-gradient-navy text-primary-foreground section-padding-lg relative overflow-hidden">
     <div className="absolute inset-0 opacity-10">
       <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-accent/30 blur-3xl" />
       <div className="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/20 blur-3xl" />
@@ -73,7 +73,7 @@ const ServicesSection = () => (
           We assist investors across India in selecting suitable mutual fund schemes aligned with their financial goals and risk appetite.
         </p>
       </AnimatedSection>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {services.map((service, i) => (
           <AnimatedSection key={service.title} delay={i * 0.1}>
             <div className="group p-8 rounded-2xl border border-border bg-card hover:shadow-xl hover:shadow-accent/5 transition-all duration-500 hover:-translate-y-1">

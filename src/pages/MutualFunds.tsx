@@ -14,7 +14,7 @@ const fundTypes = [
 const MutualFunds = () => {
   return (
     <Layout>
-      <section className="section-padding bg-gradient-navy text-primary-foreground">
+      <section className="section-padding-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
             <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Mutual Funds</p>
