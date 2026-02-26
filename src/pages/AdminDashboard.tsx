@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Calendar, Mail } from 'lucide-react';
+import { BookOpen, Calendar } from 'lucide-react';
 
 const AdminDashboard = () => {
   return (
@@ -41,22 +41,6 @@ const AdminDashboard = () => {
             <Link to="/admin/bookings">
               <Button variant="default" className="w-full">
                 View Bookings
-              </Button>
-            </Link>
-          </div>
-
-          {/* Contacts Management Card */}
-          <div className="bg-card rounded-2xl border border-border p-8">
-            <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
-              <Mail className="w-6 h-6 text-accent" />
-            </div>
-            <h2 className="text-xl font-bold mb-2 font-display">Contact Messages</h2>
-            <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
-              Manage contact form submissions and track customer inquiries.
-            </p>
-            <Link to="/admin/contacts">
-              <Button variant="default" className="w-full">
-                View Contacts
               </Button>
             </Link>
           </div>
