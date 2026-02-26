@@ -12,11 +12,11 @@ const values = [
 const About = () => {
   return (
     <Layout>
-      <section className="section-padding-lg bg-gradient-navy text-primary-foreground">
+      <section className="section-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">About Us</p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
+            <p className="label-uppercase text-accent mb-3">About Us</p>
+            <h1 className="h1-display mb-6 max-w-3xl">
               Built on Integrity. <span className="text-gradient-gold">Guided by Your Goals.</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
@@ -26,11 +26,11 @@ const About = () => {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-lg items-center mb-16">
             <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Meet the Distributor</h2>
+              <h2 className="h2-display mb-6">Meet the Distributor</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
                   <strong className="text-foreground">Karthik G</strong> (ARN: 332207) is an AMFI-Registered Mutual Fund Distributor dedicated to helping investors select suitable mutual fund schemes aligned with their financial goals and risk profiles.
@@ -52,7 +52,7 @@ const About = () => {
             </AnimatedSection>
             <AnimatedSection delay={0.2}>
               <div className="bg-secondary rounded-2xl p-10">
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-2 gap-lg">
                   {[
                     { num: "332207", label: "ARN Number" },
                     { num: "AMFI", label: "Registered with" },
@@ -70,15 +70,15 @@ const About = () => {
           </div>
 
           <AnimatedSection delay={0.1}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="card-grid-2 gap-lg mb-16">
               <div className="bg-card rounded-2xl p-8 border border-border">
-                <h3 className="text-2xl font-bold mb-4 text-accent">Our Mission</h3>
+                <h3 className="h4-display mb-4 text-accent">Our Mission</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   To empower Indian investors with reliable, compliant, and transparent mutual fund distribution services, helping them achieve their financial goals through disciplined, goal-based investing.
                 </p>
               </div>
               <div className="bg-card rounded-2xl p-8 border border-border">
-                <h3 className="text-2xl font-bold mb-4 text-accent">Our Vision</h3>
+                <h3 className="h4-display mb-4 text-accent">Our Vision</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   To be a trusted mutual fund distributor known for integrity, transparency, and compliance, enabling thousands of families to build sustainable wealth aligned with their life goals.
                 </p>
@@ -88,15 +88,15 @@ const About = () => {
         </div>
       </section>
 
-      <section className="section-padding bg-secondary">
+      <section className="section-lg bg-secondary">
         <div className="container-tight">
           <AnimatedSection>
             <div className="text-center mb-14">
-              <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Our Values</p>
-              <h2 className="text-3xl md:text-5xl font-bold">What Drives Us</h2>
+              <p className="label-uppercase text-accent mb-3">Our Values</p>
+              <h2 className="h2-display">What Drives Us</h2>
             </div>
           </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="card-grid-4">
             {values.map((value, i) => (
               <AnimatedSection key={value.title} delay={i * 0.1}>
                 <div className="bg-card p-8 rounded-2xl text-center hover:shadow-lg transition-shadow">
@@ -111,14 +111,14 @@ const About = () => {
           </div>
         </div>
       </section>
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
           <AnimatedSection>
             <div className="max-w-4xl mx-auto">
-              <p className="text-accent font-medium text-sm uppercase tracking-widest mb-6">Compliance Note</p>
-              <h2 className="text-3xl font-bold mb-8">Our Scope of Services</h2>
+              <p className="label-uppercase text-accent mb-6">Compliance Note</p>
+              <h2 className="h2-display mb-8">Our Scope of Services</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="card-grid-2 gap-lg">
                 <div className="bg-secondary rounded-2xl p-8 border border-border">
                   <h3 className="text-lg font-bold mb-4 text-accent">What We Do ✓</h3>
                   <ul className="space-y-3 text-muted-foreground text-sm">

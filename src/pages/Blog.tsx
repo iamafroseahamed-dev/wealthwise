@@ -73,11 +73,11 @@ const Blog = () => {
 
   return (
     <Layout>
-      <section className="section-padding-lg bg-gradient-navy text-primary-foreground">
+      <section className="section-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Insights</p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <p className="label-uppercase text-accent mb-3">Insights</p>
+            <h1 className="h1-display mb-6">
               Educational <span className="text-gradient-gold">Content</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
@@ -87,9 +87,9 @@ const Blog = () => {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="card-grid gap-lg">
             {blogPosts.map((post, i) => (
               <AnimatedSection key={post.id} delay={i * 0.1}>
                 <Link to={`/blog/${post.slug}`} className="group block">
@@ -125,14 +125,14 @@ const Blog = () => {
       </section>
 
       {/* Tax Guide CTA */}
-      <section className="section-padding bg-secondary">
+      <section className="section-lg bg-secondary">
         <div className="container-tight">
           <AnimatedSection>
-            <div className="bg-card rounded-2xl p-8 md:p-12 border border-accent/20 flex flex-col md:flex-row gap-8 items-center justify-between">
+            <div className="bg-card rounded-2xl p-8 md:p-12 border border-accent/20 flex flex-col md:flex-row gap-lg items-center justify-between">
               <div className="md:flex-1">
                 <div className="flex gap-3 mb-4 items-center">
                   <BookOpen className="w-6 h-6 text-accent" />
-                  <h3 className="text-2xl font-bold">Want to Understand Mutual Fund Taxation?</h3>
+                  <h3 className="h3-display">Want to Understand Mutual Fund Taxation?</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
                   Learn about tax rates for equity funds, debt funds, capital gains taxation, and smart tax-saving strategies. 

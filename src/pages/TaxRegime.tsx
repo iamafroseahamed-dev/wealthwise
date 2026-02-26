@@ -6,13 +6,13 @@ const TaxRegime = () => {
   return (
     <Layout>
       {/* Header Section */}
-      <section className="section-padding-lg bg-gradient-navy text-primary-foreground">
+      <section className="section-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">
+            <p className="label-uppercase text-accent mb-3">
               Tax Guide
             </p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
+            <h1 className="h1-display mb-6 max-w-3xl">
               Tax Regime for <span className="text-gradient-gold">Mutual Funds</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
@@ -23,7 +23,7 @@ const TaxRegime = () => {
       </section>
 
       {/* Important Notice */}
-      <section className="section-padding bg-secondary/40">
+      <section className="section-sm bg-secondary/40">
         <div className="container-tight">
           <AnimatedSection>
             <div className="bg-accent/10 border border-accent/30 rounded-2xl p-6 md:p-8 flex gap-4">
@@ -42,10 +42,10 @@ const TaxRegime = () => {
       </section>
 
       {/* Tax Rates Table */}
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
           <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">I. Tax Rates for Mutual Fund Investors (FY 2024-25)</h2>
+            <h2 className="h2-display mb-8">I. Tax Rates for Mutual Fund Investors (FY 2024-25)</h2>
           </AnimatedSection>
 
           {/* Equity Oriented Funds */}
@@ -173,13 +173,13 @@ const TaxRegime = () => {
       </section>
 
       {/* Key Concepts */}
-      <section className="section-padding bg-secondary/40">
+      <section className="section bg-secondary/40">
         <div className="container-tight">
           <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold mb-12">Key Tax Concepts</h2>
+            <h2 className="h2-display mb-12">Key Tax Concepts</h2>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="card-grid-2 gap-md">
             <AnimatedSection delay={0.1}>
               <div className="bg-card rounded-2xl border p-8">
                 <h3 className="text-xl font-bold mb-4 flex gap-2 items-start">
@@ -276,10 +276,10 @@ const TaxRegime = () => {
       </section>
 
       {/* Tax Optimization Tips */}
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
           <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold mb-12">Tax-Smart Investment Tips</h2>
+            <h2 className="h2-display mb-12">Tax-Smart Investment Tips</h2>
           </AnimatedSection>
 
           <div className="space-y-6">
@@ -365,10 +365,10 @@ const TaxRegime = () => {
       </section>
 
       {/* Other Tax Provisions */}
-      <section className="section-padding bg-secondary/40">
+      <section className="section bg-secondary/40">
         <div className="container-tight">
           <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">II. Other Important Tax Provisions</h2>
+            <h2 className="h2-display mb-8">II. Other Important Tax Provisions</h2>
           </AnimatedSection>
 
           <div className="space-y-6">
@@ -437,11 +437,11 @@ const TaxRegime = () => {
       </section>
 
       {/* Disclaimer & Consultation */}
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight max-w-3xl">
           <AnimatedSection>
             <div className="bg-secondary rounded-2xl p-8 md:p-12 border border-accent/20">
-              <h2 className="text-2xl font-bold mb-4">Before You Invest - Remember</h2>
+              <h2 className="h3-display mb-4">Before You Invest - Remember</h2>
               <ul className="space-y-4 text-muted-foreground leading-relaxed">
                 <li className="flex gap-3">
                   <span className="text-accent font-bold flex-shrink-0 mt-0.5">✓</span>

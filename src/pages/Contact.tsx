@@ -82,13 +82,13 @@ const Contact = () => {
   if (submitted) {
     return (
       <Layout>
-        <section className="section-padding-lg min-h-[70vh] flex items-center">
+        <section className="section-lg min-h-[70vh] flex items-center">
           <div className="container-tight text-center">
             <AnimatedSection>
               <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-8">
                 <CheckCircle2 className="w-10 h-10 text-accent" />
               </div>
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">
+              <h1 className="h1-display mb-4">
                 Message Received!
               </h1>
               <p className="text-muted-foreground text-lg max-w-md mx-auto mb-8">
@@ -120,13 +120,13 @@ const Contact = () => {
   return (
     <Layout>
       {/* Header */}
-      <section className="section-padding-lg bg-gradient-navy text-primary-foreground">
+      <section className="section-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">
+            <p className="label-uppercase text-accent mb-3">
               Get In Touch
             </p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
+            <h1 className="h1-display mb-6 max-w-3xl">
               We'd Love to <span className="text-gradient-gold">Hear From You</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mb-8">
@@ -138,10 +138,10 @@ const Contact = () => {
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-12 bg-secondary/40">
+      <section className="section-sm bg-secondary/40">
         <div className="container-tight">
           <AnimatedSection>
-            <div className="grid md:grid-cols-3 gap-6 mb-6">
+            <div className="card-grid gap-md mb-6">
               <div className="bg-card rounded-lg border p-6">
                 <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
                   <Mail className="w-6 h-6 text-accent" />
@@ -177,7 +177,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-12">
+      <section className="section">
         <div className="container-tight max-w-2xl">
           <AnimatedSection>
             <form onSubmit={handleSubmit} className="space-y-6">

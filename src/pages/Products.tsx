@@ -24,11 +24,11 @@ const products = [
 const Products = () => {
   return (
     <Layout>
-      <section className="section-padding bg-gradient-navy text-primary-foreground">
+      <section className="section-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Mutual Fund Solutions</p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
+            <p className="label-uppercase text-accent mb-3">Mutual Fund Solutions</p>
+            <h1 className="h1-display mb-6 max-w-3xl">
               Our Services for <span className="text-gradient-gold">Every Goal</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
@@ -38,9 +38,9 @@ const Products = () => {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="card-grid-2 gap-lg">
             {products.map((product, i) => (
               <AnimatedSection key={product.title} delay={i * 0.15}>
                 <div className="border border-border rounded-2xl p-8 md:p-10 bg-card hover:shadow-xl transition-all duration-500 h-full flex flex-col">

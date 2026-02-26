@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 const Insurance = () => {
   return (
     <Layout>
-      <section className="section-padding-lg bg-gradient-navy text-primary-foreground">
+      <section className="section-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Insurance Protection</p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
+            <p className="label-uppercase text-accent mb-3">Insurance Protection</p>
+            <h1 className="h1-display mb-6 max-w-3xl">
               Protect Your Family. <span className="text-gradient-gold">Secure What You've Built.</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
@@ -21,7 +21,7 @@ const Insurance = () => {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight max-w-4xl">
           <AnimatedSection>
             <div className="bg-accent/10 border border-accent/30 rounded-2xl p-6 md:p-8 flex gap-4 mb-12">
@@ -38,11 +38,11 @@ const Insurance = () => {
           <AnimatedSection delay={0.1}>
             <div className="space-y-12">
               <div>
-                <h2 className="text-3xl font-bold mb-4">Why Insurance Matters</h2>
+                <h2 className="h2-display mb-4">Why Insurance Matters</h2>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   Insurance serves as a financial safety net for your family, protecting them against unexpected events that could impact your wealth and savings. While you focus on building wealth through smart investments, insurance ensures your family is protected if you're unexpectedly unable to provide for them.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div className="card-grid gap-md mt-8">
                   {[
                     { icon: Heart, title: "Family Protection", desc: "Ensures your family's financial security and lifestyle is maintained" },
                     { icon: Shield, title: "Wealth Protection", desc: "Protects the wealth and assets you've built from unexpected events" },
@@ -58,10 +58,10 @@ const Insurance = () => {
               </div>
 
               <div className="pt-8 border-t border-border">
-                <h2 className="text-3xl font-bold mb-4">Types of Insurance</h2>
+                <h2 className="h2-display mb-4">Types of Insurance</h2>
                 <div className="space-y-6">
                   <div className="bg-secondary rounded-xl p-8">
-                    <h3 className="text-2xl font-bold mb-3">Term Life Insurance</h3>
+                    <h3 className="h4-display mb-3">Term Life Insurance</h3>
                     <p className="text-muted-foreground leading-relaxed mb-4">
                       Term life insurance provides maximum coverage at the lowest premium. It pays a lump sum (death benefit) to your family if you pass away during the coverage period. It's ideal for individuals with dependents who rely on your income.
                     </p>
@@ -73,7 +73,7 @@ const Insurance = () => {
                   </div>
 
                   <div className="bg-secondary rounded-xl p-8">
-                    <h3 className="text-2xl font-bold mb-3">Health Insurance</h3>
+                    <h3 className="h4-display mb-3">Health Insurance</h3>
                     <p className="text-muted-foreground leading-relaxed mb-4">
                       Health insurance covers medical expenses from hospitalization, treatment, and preventive care. It protects you and your family from unexpected healthcare costs that could deplete your savings.
                     </p>
@@ -87,7 +87,7 @@ const Insurance = () => {
               </div>
 
               <div className="pt-8 border-t border-border">
-                <h2 className="text-3xl font-bold mb-6">How to Get Insurance</h2>
+                <h2 className="h2-display mb-6">How to Get Insurance</h2>
                 <p className="text-muted-foreground leading-relaxed mb-8">
                   While we specialize in mutual fund distribution, we encourage you to explore insurance options suited to your needs:
                 </p>
@@ -113,15 +113,15 @@ const Insurance = () => {
         </div>
       </section>
 
-      <section className="section-padding bg-secondary">
+      <section className="section-lg bg-secondary">
         <div className="container-tight">
           <AnimatedSection>
             <div className="bg-card rounded-2xl p-8 md:p-12 border border-border">
-              <h2 className="text-2xl font-bold mb-6">Combining Insurance & Investments</h2>
+              <h2 className="h3-display mb-6">Combining Insurance & Investments</h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 While you protect your family with insurance, you can simultaneously build wealth through mutual fund investments. This two-pronged approach ensures financial security and wealth creation.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-lg mb-8">
                 <div>
                   <h3 className="font-bold mb-3 text-accent">Insurance Provides:</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">

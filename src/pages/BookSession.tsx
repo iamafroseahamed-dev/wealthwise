@@ -107,13 +107,13 @@ const BookSession = () => {
   if (submitted) {
     return (
       <Layout>
-        <section className="section-padding min-h-[70vh] flex items-center">
+        <section className="section-lg min-h-[70vh] flex items-center">
           <div className="container-tight text-center">
             <AnimatedSection>
               <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-8">
                 <CheckCircle2 className="w-10 h-10 text-accent" />
               </div>
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">
+              <h1 className="h1-display mb-4">
                 Session Booked!
               </h1>
               <p className="text-muted-foreground text-lg max-w-md mx-auto mb-2">
@@ -140,13 +140,13 @@ const BookSession = () => {
 
   return (
     <Layout>
-      <section className="section-padding bg-gradient-navy text-primary-foreground">
+      <section className="section-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">
+            <p className="label-uppercase text-accent mb-3">
               Schedule Consultation
             </p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
+            <h1 className="h1-display mb-6 max-w-3xl">
               Book a <span className="text-gradient-gold">Consultation</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
@@ -156,7 +156,7 @@ const BookSession = () => {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight max-w-2xl">
           <AnimatedSection>
             <div className="bg-secondary/50 rounded-2xl p-6 mb-8 border border-accent/20">
@@ -166,7 +166,7 @@ const BookSession = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
                 <div>
                   <label className="text-sm font-medium mb-2 block">
                     Full Name *

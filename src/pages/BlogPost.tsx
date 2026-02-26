@@ -97,9 +97,9 @@ const BlogPost = () => {
   if (!post) {
     return (
       <Layout>
-        <section className="section-padding">
+        <section className="section">
           <div className="container-tight text-center">
-            <h1 className="text-3xl font-bold mb-4">Post not found</h1>
+            <h1 className="h2-display mb-4">Post not found</h1>
             <Link to="/blog" className="text-accent hover:underline">← Back to Blog</Link>
           </div>
         </section>
@@ -118,7 +118,7 @@ const BlogPost = () => {
               <Link to="/blog" className="text-primary-foreground/70 text-sm hover:text-accent transition-colors inline-flex items-center gap-1 mb-4">
                 <ArrowLeft className="w-4 h-4" /> Back to Blog
               </Link>
-              <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground max-w-3xl">{post.title}</h1>
+              <h1 className="h1-display text-primary-foreground max-w-3xl">{post.title}</h1>
               <div className="flex items-center gap-4 mt-4 text-primary-foreground/60 text-sm">
                 <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {new Date(post.published_at).toLocaleDateString("en-IN", { month: "long", day: "numeric", year: "numeric" })}</span>
                 <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {post.reading_time}</span>
@@ -127,7 +127,7 @@ const BlogPost = () => {
           </div>
         </div>
 
-        <section className="section-padding">
+        <section className="section">
           <div className="container-tight">
             <AnimatedSection>
               <div className="max-w-3xl mx-auto prose prose-lg prose-headings:font-display prose-headings:font-bold prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-accent">

@@ -14,11 +14,11 @@ const fundTypes = [
 const MutualFunds = () => {
   return (
     <Layout>
-      <section className="section-padding-lg bg-gradient-navy text-primary-foreground">
+      <section className="section-lg bg-gradient-navy text-primary-foreground">
         <div className="container-tight">
           <AnimatedSection>
-            <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Mutual Funds</p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
+            <p className="label-uppercase text-accent mb-3">Mutual Funds</p>
+            <h1 className="h1-display mb-6 max-w-3xl">
               Invest with Purpose. <span className="text-gradient-gold">Build Wealth Over Time</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
@@ -28,11 +28,11 @@ const MutualFunds = () => {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight max-w-3xl">
           <AnimatedSection>
             <div className="prose prose-invert max-w-none">
-              <h2 className="text-3xl font-bold mb-6">What is a Mutual Fund?</h2>
+              <h2 className="h2-display">What is a Mutual Fund?</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
                   A mutual fund is an investment vehicle that pools money from multiple investors to invest in a diversified portfolio of securities such as stocks, bonds, or a mix of both. Professional fund managers manage these portfolios according to the fund's stated objectives.
@@ -52,15 +52,15 @@ const MutualFunds = () => {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
           <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold mb-12">Fund Categories</h2>
+            <h2 className="h2-display mb-12">Fund Categories</h2>
           </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="card-grid-2">
             {fundTypes.map((fund, i) => (
               <AnimatedSection key={fund.title} delay={i * 0.1}>
-                <div className="group p-8 rounded-2xl border border-border bg-card hover:shadow-lg transition-all duration-300">
+                <div className="card-full group p-8 rounded-2xl border border-border bg-card hover:shadow-lg transition-all duration-300">
                   <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors">
                     <fund.icon className="w-6 h-6 text-accent" />
                   </div>
@@ -73,12 +73,12 @@ const MutualFunds = () => {
         </div>
       </section>
 
-      <section className="section-padding bg-secondary">
+      <section className="section-lg bg-secondary">
         <div className="container-tight">
           <AnimatedSection>
             <div className="bg-card rounded-2xl p-8 md:p-12 border border-accent/10 mb-8">
-              <h2 className="text-2xl font-bold mb-6">Understanding Risk Profiling & Risk-O-Meter</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <h2 className="h3-display mb-6">Understanding Risk Profiling & Risk-O-Meter</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
                 <div>
                   <h3 className="text-lg font-bold mb-3 text-accent">Risk-O-Meter</h3>
                   <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
@@ -115,7 +115,7 @@ const MutualFunds = () => {
             </div>
 
             <div className="bg-card rounded-2xl p-8 md:p-12 border border-accent/10">
-              <h2 className="text-2xl font-bold mb-6">Commission Disclosure</h2>
+              <h2 className="h3-display mb-6">Commission Disclosure</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed text-sm">
                 <p>
                   <strong className="text-foreground">We are compensated by AMCs:</strong> As an AMFI-registered Mutual Fund Distributor, we earn trail commission from Asset Management Companies (AMCs) on the mutual funds we distribute. This commission is paid from the scheme's expense ratio and does NOT add to your investment cost.
@@ -135,13 +135,13 @@ const MutualFunds = () => {
         </div>
       </section>
 
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
           <AnimatedSection>
             <div className="bg-secondary rounded-2xl p-8 md:p-12 border border-accent/10">
-              <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Regulatory Compliance</p>
-              <h2 className="text-2xl font-bold mb-6">Risk Profiling & Suitability Assessment</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <p className="label-uppercase text-accent mb-3">Regulatory Compliance</p>
+              <h2 className="h3-display mb-6">Risk Profiling & Suitability Assessment</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
                 <div>
                   <h3 className="text-lg font-bold mb-3">Before You Invest</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
@@ -183,7 +183,7 @@ const MutualFunds = () => {
       </section>
 
       {/* Tax Guide CTA */}
-      <section className="section-padding">
+      <section className="section">
         <div className="container-tight">
           <AnimatedSection>
             <div className="bg-card rounded-2xl p-8 md:p-12 border border-border">
