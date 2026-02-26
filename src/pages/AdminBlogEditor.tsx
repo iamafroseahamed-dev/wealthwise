@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase, BlogPost } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Upload, Image as ImageIcon, Trash2 } from 'lucide-react';
 
 const AdminBlogEditor = () => {
   const navigate = useNavigate();
@@ -16,6 +16,8 @@ const AdminBlogEditor = () => {
 
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -76,6 +78,79 @@ const AdminBlogEditor = () => {
       .replace(/[^\w\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-');
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    setUploading(true);
+
+    try {
+      const file = files[0];
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: 'Error',
+          description: 'Please select an image file',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // Generate unique filename
+      const timestamp = Date.now();
+      const fileName = `blog-${timestamp}-${file.name.replace(/\s+/g, '-')}`;
+      const filePath = `blog-images/${fileName}`;
+
+      // Upload to Supabase storage
+      const { error: uploadError, data } = await supabase.storage
+        .from('blog-images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      // Get public URL
+      const { data: urlData } = supabase.storage.from('blog-images').getPublicUrl(filePath);
+      const imageUrl = urlData.publicUrl;
+
+      // Add to uploaded images list
+      setUploadedImages([...uploadedImages, imageUrl]);
+
+      toast({
+        title: 'Success',
+        description: 'Image uploaded successfully',
+      });
+
+      // Reset input
+      e.target.value = '';
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to upload image',
+        variant: 'destructive',
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const insertImageIntoContent = (imageUrl: string) => {
+    const imageMarkdown = `\n![Image](${imageUrl})\n`;
+    setFormData({
+      ...formData,
+      content: formData.content + imageMarkdown,
+    });
+    toast({
+      title: 'Success',
+      description: 'Image inserted into content',
+    });
+  };
+
+  const deleteUploadedImage = (indexToDelete: number) => {
+    setUploadedImages(uploadedImages.filter((_, index) => index !== indexToDelete));
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -215,15 +290,79 @@ const AdminBlogEditor = () => {
             />
           </div>
 
+          {/* Image Upload for Content */}
+          <div className="bg-secondary/50 rounded-lg p-6 border border-border">
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <ImageIcon className="w-5 h-5 text-accent" />
+              Blog Post Images
+            </h3>
+            
+            {/* Upload Area */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium mb-3">Upload Images</label>
+              <div className="relative">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  disabled={uploading}
+                  className="cursor-pointer"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                Upload PNG, JPG, GIF or WebP (max 5MB). You can upload multiple images one at a time.
+              </p>
+            </div>
+
+            {/* Uploaded Images Gallery */}
+            {uploadedImages.length > 0 && (
+              <div>
+                <label className="block text-sm font-medium mb-3">Uploaded Images</label>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {uploadedImages.map((imageUrl, index) => (
+                    <div key={index} className="relative group rounded-lg overflow-hidden border border-border bg-background">
+                      <img src={imageUrl} alt={`Uploaded ${index}`} className="w-full h-32 object-cover" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="default"
+                          onClick={() => insertImageIntoContent(imageUrl)}
+                          className="flex items-center gap-1"
+                        >
+                          <ImageIcon className="w-3 h-3" />
+                          Insert
+                        </Button>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => deleteUploadedImage(index)}
+                          className="flex items-center gap-1"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                          Remove
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Content */}
           <div>
             <label className="block text-sm font-medium mb-2">Content</label>
             <Textarea
-              placeholder="Full blog post content"
+              placeholder="Full blog post content. Click 'Insert' button on uploaded images to add them. Use markdown formatting."
               value={formData.content}
               onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              rows={8}
+              rows={12}
             />
+            <p className="text-xs text-muted-foreground mt-2">
+              💡 Supports markdown. Upload images above and click "Insert" to add them to your content with proper formatting.
+            </p>
           </div>
 
           {/* Cover Image */}
