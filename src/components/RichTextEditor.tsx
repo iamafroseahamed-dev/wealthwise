@@ -2,6 +2,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
+import { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Bold,
@@ -33,6 +34,8 @@ const RichTextEditor = ({
   placeholder = 'Start typing...',
 }: RichTextEditorProps) => {
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -75,6 +78,7 @@ const RichTextEditor = ({
       return;
     }
 
+    setIsUploading(true);
     try {
       // Generate unique filename
       const timestamp = Date.now();
@@ -107,7 +111,9 @@ const RichTextEditor = ({
       });
 
       // Reset input
-      e.target.value = '';
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     } catch (error: any) {
       console.error('Upload error:', error);
       toast({
@@ -115,6 +121,8 @@ const RichTextEditor = ({
         description: error.message || 'Failed to upload image',
         variant: 'destructive',
       });
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -220,24 +228,29 @@ const RichTextEditor = ({
 
         <div className="w-px bg-border mx-1" />
 
-        <label>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={e => e.preventDefault()}
-            title="Upload Image"
-            className="w-9 h-9 p-0"
-          >
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isUploading}
+          title={isUploading ? "Uploading image..." : "Upload Image"}
+          className="w-9 h-9 p-0"
+        >
+          {isUploading ? (
+            <div className="w-4 h-4 border-2 border-border border-t-accent rounded-full animate-spin" />
+          ) : (
             <ImageIcon className="w-4 h-4" />
-          </Button>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="hidden"
-          />
-        </label>
+          )}
+        </Button>
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="hidden"
+        />
 
         <div className="w-px bg-border mx-1" />
 
