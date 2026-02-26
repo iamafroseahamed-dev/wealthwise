@@ -25,7 +25,13 @@ const AdminBlogEditor = () => {
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
   const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
-  const [blocks, setBlocks] = useState<ContentBlock[]>([]);
+  const [blocks, setBlocks] = useState<ContentBlock[]>([
+    {
+      id: `block-${Date.now()}`,
+      type: 'text',
+      content: '',
+    },
+  ]);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -80,10 +86,34 @@ const AdminBlogEditor = () => {
   };
 
   const parseContentToBlocks = (content: string) => {
+    if (!content || typeof content !== 'string') {
+      setBlocks([
+        {
+          id: `block-${Date.now()}`,
+          type: 'text',
+          content: '',
+        },
+      ]);
+      return;
+    }
+
     const newBlocks: ContentBlock[] = [];
     const parts = content.split(/(\n?\[.*?\]\(.*?\)\n?)/g);
+
+    if (!Array.isArray(parts)) {
+      setBlocks([
+        {
+          id: `block-${Date.now()}`,
+          type: 'text',
+          content: content,
+        },
+      ]);
+      return;
+    }
     
     parts.forEach((part, index) => {
+      if (!part) return;
+      
       const imageMatch = part.match(/!\[(.*?)\]\((.*?)\)/);
       if (imageMatch) {
         newBlocks.push({
@@ -241,13 +271,19 @@ const AdminBlogEditor = () => {
   };
 
   const blocksToContent = (): string => {
-    return blocks.map(block => {
-      if (block.type === 'text') {
-        return block.content;
-      } else {
-        return `![Image](${block.content})`;
-      }
-    }).join('\n\n');
+    if (!Array.isArray(blocks) || blocks.length === 0) {
+      return '';
+    }
+    
+    return blocks
+      .map(block => {
+        if (block.type === 'text') {
+          return block.content || '';
+        } else {
+          return `![Image](${block.content})`;
+        }
+      })
+      .join('\n\n');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -262,7 +298,7 @@ const AdminBlogEditor = () => {
       return;
     }
 
-    if (blocks.length === 0 || blocks.every(b => !b.content.trim())) {
+    if (!Array.isArray(blocks) || blocks.length === 0 || blocks.every(b => !b.content.trim())) {
       toast({
         title: 'Error',
         description: 'Please add some content to your blog post',
@@ -647,7 +683,7 @@ const AdminBlogEditor = () => {
 
                 {/* Content Blocks Preview */}
                 <div className="prose prose-sm max-w-none space-y-4">
-                  {blocks.length === 0 || blocks.every(b => !b.content.trim() && b.content !== '<p><br/></p>') ? (
+                  {!Array.isArray(blocks) || blocks.length === 0 || blocks.every(b => !b.content.trim() && b.content !== '<p><br/></p>') ? (
                     <p className="text-muted-foreground italic">Content will appear here as you add blocks...</p>
                   ) : (
                     blocks.map((block) => {
