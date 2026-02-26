@@ -144,13 +144,13 @@ const BookSession = () => {
         <div className="container-tight">
           <AnimatedSection>
             <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">
-              Schedule a Consultation
+              Schedule Consultation
             </p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
-              Discuss Your <span className="text-gradient-gold">Investment Goals</span>
+              Book a <span className="text-gradient-gold">Consultation</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              Schedule a consultation to discuss your investment goals and explore suitable mutual fund options aligned with your risk profile.
+              Schedule a consultation to discuss your financial goals, risk profile, and explore suitable mutual fund schemes aligned with your investment needs.
             </p>
           </AnimatedSection>
         </div>
@@ -159,6 +159,12 @@ const BookSession = () => {
       <section className="section-padding">
         <div className="container-tight max-w-2xl">
           <AnimatedSection>
+            <div className="bg-secondary/50 rounded-2xl p-6 mb-8 border border-accent/20">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <strong className="text-foreground">📋 Important Note:</strong> This is a consultation booking, not an investment advice platform. During our consultation, we will conduct risk profiling and provide incidental guidance to help you select suitable mutual fund schemes. All recommendations are subject to your goals, risk appetite, and suitability assessment.
+              </p>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -261,7 +267,7 @@ const BookSession = () => {
                   Message (Optional)
                 </label>
                 <Textarea
-                  placeholder="Tell us about your financial goals or any specific questions..."
+                  placeholder="Share your financial goals, questions, or investment timeline..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={4}
@@ -279,10 +285,17 @@ const BookSession = () => {
                 {!loading && <ArrowRight className="w-5 h-5 ml-1" />}
               </Button>
 
-              <p className="text-xs text-muted-foreground text-center">
-                By booking, you agree that your information will be used solely
-                to schedule your consultation.
-              </p>
+              <div className="space-y-2 text-xs text-muted-foreground">
+                <p>
+                  ✓ By booking, you agree that your information will be used solely to schedule and conduct your consultation.
+                </p>
+                <p>
+                  ✓ This consultation is for the purpose of understanding your goals and conducting risk profiling to recommend suitable mutual fund schemes.
+                </p>
+                <p>
+                  ✓ Mutual Fund investments are subject to market risks. Please review all scheme documents before investing.
+                </p>
+              </div>
             </form>
           </AnimatedSection>
         </div>

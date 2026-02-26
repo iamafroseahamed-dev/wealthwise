@@ -81,7 +81,7 @@ const Blog = () => {
               Educational <span className="text-gradient-gold">Content</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              Stay informed with educational articles on mutual fund investments, financial planning, and investment strategies.
+              Stay informed with educational articles on mutual fund investments, goal-based investing, and investment strategies.
             </p>
           </AnimatedSection>
         </div>

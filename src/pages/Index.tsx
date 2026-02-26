@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
-import { TrendingUp, Shield, Users, Target, ArrowRight, CheckCircle2 } from "lucide-react";
+import { TrendingUp, Shield, Users, Target, ArrowRight, CheckCircle2, Award, Zap } from "lucide-react";
 
 const HeroSection = () => (
   <section className="bg-gradient-navy text-primary-foreground section-padding-lg relative overflow-hidden">
@@ -15,22 +15,22 @@ const HeroSection = () => (
         <div className="max-w-3xl">
           <p className="text-accent font-medium text-sm uppercase tracking-widest mb-6">AMFI Registered Mutual Fund Distributor - ARN: 332207</p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6">
-            Invest with Purpose.{" "}
-            <span className="text-gradient-gold">Build Wealth with Discipline.</span>
+            Your Goals. Our Guidance.{" "}
+            <span className="text-gradient-gold">Your Wealth Journey Starts Here.</span>
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/70 max-w-xl mb-10 font-body leading-relaxed">
-            Goal-based mutual fund distribution services aligned with your life milestones.
+            We help investors invest in mutual funds with personalised, suitability-based guidance aligned to your financial goals.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/book-session">
               <Button variant="hero" size="xl">
-                Begin Your Investment Journey
+                Start Your Investment Journey
                 <ArrowRight className="w-5 h-5 ml-1" />
               </Button>
             </Link>
-            <Link to="/book-session">
+            <Link to="/mutual-funds">
               <Button variant="outline-light" size="xl">
-                Schedule a Consultation
+                Explore Mutual Funds
               </Button>
             </Link>
           </div>
@@ -43,25 +43,50 @@ const HeroSection = () => (
 const services = [
   {
     icon: TrendingUp,
-    title: "Systematic Investment Plans (SIPs)",
-    description: "Invest a fixed amount regularly through Systematic Investment Plans to build disciplined investing habits and participate in long-term market growth.",
+    title: "Goal-Based Investing",
+    description: "Structured mutual fund investments aligned with your specific financial goals such as retirement, education, or wealth creation.",
   },
   {
     icon: Target,
-    title: "ELSS (Tax Saving Mutual Funds)",
-    description: "Equity Linked Savings Schemes help you save tax under Section 80C while building wealth with a 3-year lock-in period.",
+    title: "Suitability-First Approach",
+    description: "We conduct thorough risk profiling to recommend mutual fund schemes that match your risk appetite and investment horizon.",
   },
   {
-    icon: Users,
-    title: "Retirement Corpus Planning",
-    description: "Goal-based mutual fund investments designed to help you build substantial retirement savings aligned to your desired lifestyle.",
+    icon: Shield,
+    title: "Ongoing Support",
+    description: "Continuous portfolio monitoring, periodic reviews, and assistance with SIP changes and KYC updates.",
   },
   {
-    icon: Target,
-    title: "Child Education Planning",
-    description: "Structured mutual fund investments specifically aligned to meet your child's future education needs and aspirations.",
+    icon: Award,
+    title: "Compliance & Transparency",
+    description: "AMFI and SEBI-compliant operations with transparent practices, proper documentation, and commission disclosure.",
   },
 ];
+
+const TrustBar = () => (
+  <section className="section-padding bg-secondary border-y border-border">
+    <div className="container-tight">
+      <AnimatedSection>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8">
+          {[
+            { icon: Award, label: "AMFI Registered Distributor" },
+            { icon: CheckCircle2, label: "ARN: 332207" },
+            { icon: Shield, label: "Compliant & Transparent" },
+            { icon: Zap, label: "Pan India Service" },
+            { icon: Users, label: "Trusted by Hundreds" },
+          ].map((badge, i) => (
+            <div key={i} className="flex flex-col items-center text-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
+                <badge.icon className="w-6 h-6 text-accent" />
+              </div>
+              <p className="text-xs md:text-sm font-semibold text-foreground">{badge.label}</p>
+            </div>
+          ))}
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+);
 
 const ServicesSection = () => (
   <section className="section-padding">
@@ -91,12 +116,12 @@ const ServicesSection = () => (
 );
 
 const reasons = [
-  "Risk Profiling Before Recommendation",
-  "Goal-Based Investment Approach",
-  "Ongoing Service Support",
-  "Periodic Portfolio Review",
-  "Transparent practices with zero hidden charges",
-  "Proper suitability assessment for each recommendation",
+  "Goal-Based Investing Approach",
+  "Suitability-First Recommendations",
+  "Rigorous Risk Profiling",
+  "Transparent Commission Practices",
+  "Ongoing Portfolio Support",
+  "AMFI & SEBI Compliant Operations",
 ];
 
 const WhyChooseUs = () => (
@@ -131,10 +156,10 @@ const WhyChooseUs = () => (
 );
 
 const steps = [
-  { num: "01", title: "Book a Session", description: "Schedule a free consultation at your convenience." },
-  { num: "02", title: "Share Your Goals", description: "Tell us about your financial dreams and risk appetite." },
-  { num: "03", title: "Get a Plan", description: "Receive a personalized investment strategy tailored for you." },
-  { num: "04", title: "Start Investing", description: "Begin your wealth-building journey with expert guidance." },
+  { num: "01", title: "Book a Consultation", description: "Schedule a consultation to discuss your financial goals and investment timeline." },
+  { num: "02", title: "Risk Profiling", description: "We conduct a thorough assessment of your risk appetite, financial situation, and investment horizon." },
+  { num: "03", title: "Scheme Recommendation", description: "Based on your profile, we recommend suitable mutual fund schemes aligned with your goals." },
+  { num: "04", title: "Invest & Stay on Track", description: "Invest with support and receive ongoing portfolio reviews to keep you on your wealth-building path." },
 ];
 
 const ProcessSteps = () => (
@@ -186,6 +211,7 @@ const Index = () => {
   return (
     <Layout>
       <HeroSection />
+      <TrustBar />
       <ServicesSection />
       <WhyChooseUs />
       <ProcessSteps />

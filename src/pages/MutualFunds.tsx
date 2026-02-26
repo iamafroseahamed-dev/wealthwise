@@ -19,11 +19,35 @@ const MutualFunds = () => {
           <AnimatedSection>
             <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">Mutual Funds</p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
-              Invest Smart, <span className="text-gradient-gold">Grow Steady</span>
+              Invest with Purpose. <span className="text-gradient-gold">Build Wealth Over Time</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              Choose from a wide range of mutual funds curated to match your risk profile and financial goals.
+              Understand mutual funds and select suitable schemes aligned with your financial goals through proper risk profiling.
             </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="section-padding">
+        <div className="container-tight max-w-3xl">
+          <AnimatedSection>
+            <div className="prose prose-invert max-w-none">
+              <h2 className="text-3xl font-bold mb-6">What is a Mutual Fund?</h2>
+              <div className="space-y-4 text-muted-foreground leading-relaxed">
+                <p>
+                  A mutual fund is an investment vehicle that pools money from multiple investors to invest in a diversified portfolio of securities such as stocks, bonds, or a mix of both. Professional fund managers manage these portfolios according to the fund's stated objectives.
+                </p>
+                <p>
+                  <strong className="text-foreground">How it works:</strong> When you invest in a mutual fund, you receive units proportional to your investment. The fund's value fluctuates based on market performance, and you benefit from diversification without needing to pick individual stocks.
+                </p>
+                <p>
+                  <strong className="text-foreground">Why invest in mutual funds:</strong> They offer diversification, professional management, liquidity, and accessibility to various asset classes with relatively low investment amounts compared to direct stock investing.
+                </p>
+                <p className="text-sm border-l-4 border-accent pl-4 py-2 bg-secondary">
+                  ⚠️ <strong>Important:</strong> Mutual Fund investments are subject to market risks, including the loss of principal. Please read all scheme documents carefully before investing.
+                </p>
+              </div>
+            </div>
           </AnimatedSection>
         </div>
       </section>
@@ -52,29 +76,59 @@ const MutualFunds = () => {
       <section className="section-padding bg-secondary">
         <div className="container-tight">
           <AnimatedSection>
-            <div className="bg-card rounded-2xl p-10 md:p-14">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="bg-card rounded-2xl p-8 md:p-12 border border-accent/10 mb-8">
+              <h2 className="text-2xl font-bold mb-6">Understanding Risk Profiling & Risk-O-Meter</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">Portfolio Review & Rebalancing</h2>
-                  <p className="text-muted-foreground leading-relaxed mb-6">
-                    Periodic portfolio reviews ensure your mutual fund investments remain aligned with your financial goals. We assess suitability and suggest changes if required to keep you on track.
+                  <h3 className="text-lg font-bold mb-3 text-accent">Risk-O-Meter</h3>
+                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                    Every mutual fund is assigned a Risk-O-Meter rating from 1 (lowest risk) to 5 (highest risk) by AMFI. This helps investors quickly assess the volatility and risk profile of a scheme.
                   </p>
-                  <div className="space-y-3">
-                    {["Assess alignment with goals", "Review suitability", "Suggest changes if needed", "Stay on track"].map((item) => (
-                      <p key={item} className="flex items-center gap-3 text-sm font-medium">
-                        <span className="w-2 h-2 rounded-full bg-accent" />
-                        {item}
-                      </p>
-                    ))}
+                  <div className="space-y-2 text-sm">
+                    <p className="flex gap-2"><span className="font-bold text-accent">1-2:</span> <span className="text-muted-foreground">Low risk - Debt-focused</span></p>
+                    <p className="flex gap-2"><span className="font-bold text-accent">3:</span> <span className="text-muted-foreground">Moderate risk - Balanced</span></p>
+                    <p className="flex gap-2"><span className="font-bold text-accent">4-5:</span> <span className="text-muted-foreground">High risk - Equity-focused</span></p>
                   </div>
                 </div>
-                <div className="text-center">
-                  <Link to="/book-session">
-                    <Button variant="hero" size="xl">
-                      Start Your SIP Today <ArrowRight className="w-5 h-5 ml-1" />
-                    </Button>
-                  </Link>
+                <div>
+                  <h3 className="text-lg font-bold mb-3 text-accent">Our Risk Profiling Process</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex gap-3">
+                      <span className="text-accent font-bold">✓</span>
+                      <span>Assess your financial goals and investment timeline</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-accent font-bold">✓</span>
+                      <span>Evaluate your risk appetite and tolerance</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-accent font-bold">✓</span>
+                      <span>Match your risk profile with suitable fund categories</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-accent font-bold">✓</span>
+                      <span>Document your profile and recommendation rationale</span>
+                    </li>
+                  </ul>
                 </div>
+              </div>
+            </div>
+
+            <div className="bg-card rounded-2xl p-8 md:p-12 border border-accent/10">
+              <h2 className="text-2xl font-bold mb-6">Commission Disclosure</h2>
+              <div className="space-y-4 text-muted-foreground leading-relaxed text-sm">
+                <p>
+                  <strong className="text-foreground">We are compensated by AMCs:</strong> As an AMFI-registered Mutual Fund Distributor, we earn trail commission from Asset Management Companies (AMCs) on the mutual funds we distribute. This commission is paid from the scheme's expense ratio and does NOT add to your investment cost.
+                </p>
+                <p>
+                  <strong className="text-foreground">Transparency:</strong> The exact commission varies by scheme and AMC. You can find this information in the scheme's Statement of Additional Information (SAI) or contact us directly.
+                </p>
+                <p>
+                  <strong className="text-foreground">Your benefit:</strong> This compensation model ensures we are incentivized to help you invest optimally, as our income depends on your long-term investments.
+                </p>
+                <p className="border-t border-border pt-4 mt-4">
+                  All scheme-related charges including expense ratio are transparent and available in the fund documents. We encourage you to review these carefully.
+                </p>
               </div>
             </div>
           </AnimatedSection>

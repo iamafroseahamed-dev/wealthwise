@@ -146,6 +146,13 @@ const BlogPost = () => {
                   return paragraph.trim() ? <p key={i} className="text-muted-foreground leading-relaxed mb-4">{paragraph}</p> : null;
                 })}
               </div>
+
+              {/* Mandatory Disclaimer */}
+              <div className="mt-12 max-w-3xl mx-auto bg-secondary/50 border border-accent/20 rounded-2xl p-6 md:p-8">
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">📋 Important Disclaimer:</strong> This article is for educational purposes only and does not constitute financial advice, investment recommendation, or a solicitation to buy or sell any security. Mutual Fund investments are subject to market risks, including loss of principal. Past performance is not indicative of future results. Please read all scheme documents, Key Information Documents (KID), and SAI before investing. All recommendations should be made only after proper risk profiling and assessment of suitability by a qualified professional. For personalized advice, consult an AMFI-registered Mutual Fund Distributor or SEBI-registered Investment Adviser.
+                </p>
+              </div>
             </AnimatedSection>
           </div>
         </section>

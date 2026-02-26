@@ -77,7 +77,7 @@ const Navbar = () => {
               ))}
               <Link to="/book-session" onClick={() => setOpen(false)}>
                 <Button variant="gold" className="w-full mt-2">
-                  Book Free Session
+                  Book a Consultation
                 </Button>
               </Link>
             </div>

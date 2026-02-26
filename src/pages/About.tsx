@@ -17,10 +17,10 @@ const About = () => {
           <AnimatedSection>
             <p className="text-accent font-medium text-sm uppercase tracking-widest mb-3">About Us</p>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
-              Your Trusted Partner in <span className="text-gradient-gold">Wealth Creation</span>
+              Built on Integrity. <span className="text-gradient-gold">Guided by Your Goals.</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              With over a decade of experience, we help families and individuals navigate the world of investments with confidence and clarity.
+              As an AMFI-Registered Mutual Fund Distributor, we combine expertise, transparency, and compliance to help investors build wealth through disciplined investing.
             </p>
           </AnimatedSection>
         </div>
@@ -28,25 +28,25 @@ const About = () => {
 
       <section className="section-padding">
         <div className="container-tight">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
             <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">About Karthik G</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Meet the Distributor</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Karthik G (ARN: 332207) is an AMFI-Registered Mutual Fund Distributor assisting investors in selecting suitable mutual fund schemes based on their financial goals and risk appetite.
+                  <strong className="text-foreground">Karthik G</strong> (ARN: 332207) is an AMFI-Registered Mutual Fund Distributor dedicated to helping investors select suitable mutual fund schemes aligned with their financial goals and risk profiles.
                 </p>
                 <p className="font-semibold text-foreground">
-                  His approach includes:
+                  Core approach:
                 </p>
                 <ul className="list-disc list-inside space-y-2">
-                  <li>Understanding investor goals</li>
-                  <li>Conducting risk profiling</li>
-                  <li>Recommending suitable mutual fund schemes</li>
-                  <li>Supporting transaction execution</li>
-                  <li>Providing after-sales service support</li>
+                  <li>Deep understanding of your financial goals</li>
+                  <li>Comprehensive risk profiling and assessment</li>
+                  <li>Recommendation of suitable mutual fund schemes</li>
+                  <li>Seamless transaction execution with guidance</li>
+                  <li>Ongoing after-sales support and portfolio reviews</li>
                 </ul>
                 <p>
-                  He serves salaried professionals, small business owners, young investors, and retirees. All recommendations are limited to mutual fund schemes and are provided to aid investor decision-making in line with regulatory guidelines.
+                  We serve salaried professionals, small business owners, young investors, and retirees across India. Our recommendations are always made after assessing suitability and are limited to mutual fund schemes, in compliance with AMFI and SEBI guidelines.
                 </p>
               </div>
             </AnimatedSection>
@@ -55,9 +55,9 @@ const About = () => {
                 <div className="grid grid-cols-2 gap-8">
                   {[
                     { num: "332207", label: "ARN Number" },
-                    { num: "AMFI", label: "Registration" },
-                    { num: "Mutual", label: "Fund Focus" },
-                    { num: "India", label: "Service Area" },
+                    { num: "AMFI", label: "Registered with" },
+                    { num: "MF", label: "Specialization" },
+                    { num: "Pan-India", label: "Coverage" },
                   ].map((stat) => (
                     <div key={stat.label} className="text-center">
                       <p className="text-3xl font-bold text-gradient-gold font-display">{stat.num}</p>
@@ -68,6 +68,23 @@ const About = () => {
               </div>
             </AnimatedSection>
           </div>
+
+          <AnimatedSection delay={0.1}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h3 className="text-2xl font-bold mb-4 text-accent">Our Mission</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  To empower Indian investors with reliable, compliant, and transparent mutual fund distribution services, helping them achieve their financial goals through disciplined, goal-based investing.
+                </p>
+              </div>
+              <div className="bg-card rounded-2xl p-8 border border-border">
+                <h3 className="text-2xl font-bold mb-4 text-accent">Our Vision</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  To be a trusted mutual fund distributor known for integrity, transparency, and compliance, enabling thousands of families to build sustainable wealth aligned with their life goals.
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
