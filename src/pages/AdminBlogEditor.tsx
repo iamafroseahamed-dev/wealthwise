@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -484,12 +486,28 @@ const AdminBlogEditor = () => {
 
                       {/* Block Content */}
                       {block.type === 'text' ? (
-                        <Textarea
-                          placeholder="Enter paragraph text..."
-                          value={block.content}
-                          onChange={(e) => updateBlock(block.id, e.target.value)}
-                          rows={4}
-                        />
+                        <div className="ql-wrapper">
+                          <ReactQuill
+                            theme="snow"
+                            value={block.content}
+                            onChange={(content) => updateBlock(block.id, content)}
+                            modules={{
+                              toolbar: [
+                                [{ header: [2, 3, false] }],
+                                'bold',
+                                'italic',
+                                'underline',
+                                'link',
+                                { list: 'ordered' },
+                                { list: 'bullet' },
+                                'blockquote',
+                                { 'color': [] },
+                              ],
+                            }}
+                            formats={['header', 'bold', 'italic', 'underline', 'link', 'list', 'blockquote', 'color']}
+                            placeholder="Enter your content with formatting..."
+                          />
+                        </div>
                       ) : (
                         <div className="space-y-3">
                           {block.content && (
@@ -629,15 +647,17 @@ const AdminBlogEditor = () => {
 
                 {/* Content Blocks Preview */}
                 <div className="prose prose-sm max-w-none space-y-4">
-                  {blocks.length === 0 || blocks.every(b => !b.content.trim()) ? (
+                  {blocks.length === 0 || blocks.every(b => !b.content.trim() && b.content !== '<p><br/></p>') ? (
                     <p className="text-muted-foreground italic">Content will appear here as you add blocks...</p>
                   ) : (
                     blocks.map((block) => {
                       if (block.type === 'text') {
                         return (
-                          <p key={block.id} className="whitespace-pre-wrap text-muted-foreground leading-relaxed">
-                            {block.content}
-                          </p>
+                          <div
+                            key={block.id}
+                            className="text-muted-foreground leading-relaxed"
+                            dangerouslySetInnerHTML={{ __html: block.content }}
+                          />
                         );
                       } else {
                         return (
