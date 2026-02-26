@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase, BlogPost } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Upload, Image as ImageIcon, Trash2 } from 'lucide-react';
+import { ArrowLeft, Upload, Image as ImageIcon, Trash2, Eye, Clock } from 'lucide-react';
 
 const AdminBlogEditor = () => {
   const navigate = useNavigate();
@@ -226,9 +226,36 @@ const AdminBlogEditor = () => {
     );
   }
 
+  const renderMarkdownContent = (content: string) => {
+    const parts = content.split(/(!?\[.*?\]\(.*?\))/g);
+    
+    return parts.map((part, index) => {
+      const imageMatch = part.match(/!\[(.*?)\]\((.*?)\)/);
+      if (imageMatch) {
+        return (
+          <img
+            key={index}
+            src={imageMatch[2]}
+            alt={imageMatch[1]}
+            className="w-full h-auto rounded-lg my-4 border border-border"
+          />
+        );
+      }
+      
+      if (part.trim()) {
+        return (
+          <p key={index} className="whitespace-pre-wrap text-muted-foreground leading-relaxed mb-4">
+            {part}
+          </p>
+        );
+      }
+      return null;
+    });
+  };
+
   return (
     <AdminLayout>
-      <div className="max-w-4xl">
+      <div className="w-full">
         <button
           onClick={() => navigate('/admin/blog')}
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
@@ -246,8 +273,11 @@ const AdminBlogEditor = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title */}
+        {/* Split Screen: Editor + Preview */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* LEFT: Editor Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Title */}
           <div>
             <label className="block text-sm font-medium mb-2">
               Title <span className="text-red-500">*</span>
@@ -407,7 +437,7 @@ const AdminBlogEditor = () => {
           </div>
 
           {/* Actions */}
-          <div className="bg-secondary rounded-lg p-6 flex gap-4 justify-end">
+          <div className="bg-secondary rounded-lg p-6 flex gap-4 justify-end lg:col-span-1">
             <Button
               type="button"
               variant="outline"
@@ -423,7 +453,69 @@ const AdminBlogEditor = () => {
               {saving ? 'Saving...' : isEditing ? 'Update Post' : 'Create Post'}
             </Button>
           </div>
-        </form>
+            </form>
+
+          {/* RIGHT: Live Preview */}
+          <div className="space-y-6 sticky top-24 self-start h-fit">
+            <div className="bg-card rounded-lg border border-border overflow-hidden">
+              <div className="bg-secondary px-6 py-4 border-b border-border">
+                <h2 className="font-semibold flex items-center gap-2">
+                  <Eye className="w-4 h-4 text-accent" />
+                  Live Preview
+                </h2>
+              </div>
+
+              <div className="p-6 max-h-[70vh] overflow-y-auto">
+                {/* Cover Image */}
+                {formData.cover_image && (
+                  <div className="mb-6 rounded-lg overflow-hidden border border-border">
+                    <img
+                      src={formData.cover_image}
+                      alt="Cover"
+                      className="w-full h-48 object-cover"
+                    />
+                  </div>
+                )}
+
+                {/* Title */}
+                {formData.title && (
+                  <h1 className="text-3xl md:text-4xl font-bold font-display mb-4 leading-tight">
+                    {formData.title}
+                  </h1>
+                )}
+
+                {/* Meta Info */}
+                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6 pb-6 border-b border-border">
+                  {formData.reading_time && (
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      {formData.reading_time}
+                    </span>
+                  )}
+                  {formData.author && (
+                    <span>By {formData.author}</span>
+                  )}
+                </div>
+
+                {/* Content with Images */}
+                <div className="prose prose-sm max-w-none">
+                  {formData.content ? (
+                    renderMarkdownContent(formData.content)
+                  ) : (
+                    <p className="text-muted-foreground italic">Content will appear here as you type...</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Preview Info */}
+            <div className="bg-amber-50 dark:bg-amber-950 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
+              <p className="text-xs text-amber-800 dark:text-amber-200">
+                💡 <strong>Tip:</strong> Images appear in the exact position you insert them. Images uploaded will render in preview after insertion.
+              </p>
+            </div>
+          </div>
+        </div>
 
         <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800">
           <p className="text-sm text-blue-800 dark:text-blue-200">
