@@ -18,9 +18,9 @@ const AdminBlogEditor = () => {
   const isEditing = !!id;
   const { blogPosts, createBlogPost, updateBlogPost } = useAdmin();
 
-  const [loading, setLoading] = useState(isEditing);
-  const [saving, setSaving] = useState(false);
-  const [uploadingCover, setUploadingCover] = useState(false);
+  const [loading, setLoading] = useState<boolean>(isEditing);
+  const [saving, setSaving] = useState<boolean>(false);
+  const [uploadingCover, setUploadingCover] = useState<boolean>(false);
   const coverInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -34,6 +34,7 @@ const AdminBlogEditor = () => {
 
   useEffect(() => {
     if (isEditing && id) {
+      // Try to find post in already loaded posts
       const post = blogPosts.find((p) => p.id === id);
       if (post) {
         setFormData({
@@ -46,7 +47,8 @@ const AdminBlogEditor = () => {
           author: post.author || 'WealthWise Team',
         });
         setLoading(false);
-      } else {
+      } else if (blogPosts.length > 0) {
+        // Posts are loaded but this post doesn't exist
         toast({
           title: 'Error',
           description: 'Blog post not found',
@@ -54,8 +56,12 @@ const AdminBlogEditor = () => {
         });
         navigate('/admin/blog');
       }
+      // If blogPosts is still empty, keep loading state true and wait
+    } else {
+      // Not editing, so loading is done
+      setLoading(false);
     }
-  }, [id, isEditing, blogPosts]);
+  }, [id, isEditing, blogPosts, navigate, toast]);
 
   const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
