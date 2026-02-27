@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AdminLayout from '@/components/AdminLayout';
 import RichTextEditor from '@/components/RichTextEditor';
@@ -8,7 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { BlogPost } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { useAdmin } from '@/contexts/AdminContext';
-import { ArrowLeft, Eye, Clock } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { ArrowLeft, Eye, Clock, Upload } from 'lucide-react';
 
 const AdminBlogEditor = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const AdminBlogEditor = () => {
 
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const coverInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -53,6 +56,108 @@ const AdminBlogEditor = () => {
       }
     }
   }, [id, isEditing, blogPosts]);
+
+  const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const file = files[0];
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: 'Error',
+        description: 'Please select an image file',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Check file size (max 5MB for cover images)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: 'Error',
+        description: 'Image size must be less than 5MB',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setUploadingCover(true);
+    try {
+      // Validate Supabase configuration
+      const supabaseUrl = (import.meta.env as any).VITE_SUPABASE_URL;
+      const supabaseKey = (import.meta.env as any).VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error('Supabase credentials not configured');
+      }
+
+      // Generate unique filename
+      const timestamp = Date.now();
+      const randomId = Math.random().toString(36).substring(2, 8);
+      const cleanFileName = file.name
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9.-]/g, '')
+        .toLowerCase();
+      const fileName = `cover-${timestamp}-${randomId}-${cleanFileName}`;
+
+      // Upload to Supabase storage - organize by date
+      const year = new Date().getFullYear();
+      const month = String(new Date().getMonth() + 1).padStart(2, '0');
+      const filePath = `covers/${year}/${month}/${fileName}`;
+
+      console.log('Uploading cover image to:', filePath);
+
+      // Upload to Supabase storage
+      const { data, error: uploadError } = await supabase.storage
+        .from('blog-images')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (uploadError) {
+        console.error('Upload error details:', uploadError);
+        throw new Error(`Upload failed: ${uploadError.message}`);
+      }
+
+      console.log('Upload successful:', data);
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(filePath);
+
+      const imageUrl = urlData.publicUrl;
+
+      if (!imageUrl) {
+        throw new Error('Failed to generate public URL');
+      }
+
+      console.log('Cover image public URL:', imageUrl);
+
+      // Update form data with the image URL
+      setFormData({ ...formData, cover_image: imageUrl });
+
+      toast({
+        title: 'Success',
+        description: 'Cover image uploaded',
+      });
+
+      // Reset input
+      if (coverInputRef.current) {
+        coverInputRef.current.value = '';
+      }
+    } catch (error: any) {
+      console.error('Upload error:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'Failed to upload cover image',
+        variant: 'destructive',
+      });
+    } finally {
+      setUploadingCover(false);
+    }
+  };
 
   const generateSlug = (title: string) => {
     return title
@@ -214,8 +319,42 @@ const AdminBlogEditor = () => {
             {/* Cover Image */}
             <div>
               <label className="block text-sm font-medium mb-2">
-                Cover Image URL <span className="text-red-500">*</span>
+                Cover Image <span className="text-red-500">*</span>
               </label>
+              
+              {/* File Upload Button */}
+              <div className="flex gap-2 mb-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => coverInputRef.current?.click()}
+                  disabled={uploadingCover}
+                  className="gap-2"
+                >
+                  {uploadingCover ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-border border-t-accent rounded-full animate-spin" />
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-4 h-4" />
+                      Upload Image
+                    </>
+                  )}
+                </Button>
+                <span className="text-sm text-muted-foreground flex items-center">or paste URL below</span>
+              </div>
+
+              <input
+                ref={coverInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleCoverImageUpload}
+                className="hidden"
+              />
+
+              {/* URL Input */}
               <Input
                 type="url"
                 placeholder="https://images.unsplash.com/photo-..."
@@ -223,9 +362,15 @@ const AdminBlogEditor = () => {
                 onChange={(e) => setFormData({ ...formData, cover_image: e.target.value })}
                 required
               />
+              
+              {/* Image Preview */}
               {formData.cover_image && (
                 <div className="mt-3 rounded-lg overflow-hidden w-full max-w-sm">
-                  <img src={formData.cover_image} alt="Cover preview" className="w-full h-40 object-cover" />
+                  <img 
+                    src={formData.cover_image} 
+                    alt="Cover preview" 
+                    className="w-full h-40 object-cover border border-border rounded-lg"
+                  />
                 </div>
               )}
             </div>

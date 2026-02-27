@@ -80,25 +80,57 @@ const RichTextEditor = ({
 
     setIsUploading(true);
     try {
+      // Validate Supabase configuration
+      const supabaseUrl = (import.meta.env as any).VITE_SUPABASE_URL;
+      const supabaseKey = (import.meta.env as any).VITE_SUPABASE_ANON_KEY;
+
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error('Supabase credentials not configured');
+      }
+
       // Generate unique filename
       const timestamp = Date.now();
-      const fileName = `blog-${timestamp}-${file.name.replace(/\s+/g, '-')}`;
-      const filePath = `blog-images/${fileName}`;
+      const randomId = Math.random().toString(36).substring(2, 8);
+      const cleanFileName = file.name
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9.-]/g, '')
+        .toLowerCase();
+      const fileName = `${timestamp}-${randomId}-${cleanFileName}`;
+
+      // Upload to Supabase storage - store in root of bucket or organize by date
+      const year = new Date().getFullYear();
+      const month = String(new Date().getMonth() + 1).padStart(2, '0');
+      const filePath = `${year}/${month}/${fileName}`;
+
+      console.log('Uploading image to:', filePath);
 
       // Upload to Supabase storage
-      const { error: uploadError } = await supabase.storage
+      const { data, error: uploadError } = await supabase.storage
         .from('blog-images')
-        .upload(filePath, file);
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+        });
 
       if (uploadError) {
-        throw uploadError;
+        console.error('Upload error details:', uploadError);
+        throw new Error(`Upload failed: ${uploadError.message}`);
       }
+
+      console.log('Upload successful:', data);
 
       // Get public URL
       const { data: urlData } = supabase.storage
         .from('blog-images')
         .getPublicUrl(filePath);
+      
       const imageUrl = urlData.publicUrl;
+
+      if (!imageUrl) {
+        throw new Error('Failed to generate public URL');
+      }
+
+      console.log('Image public URL:', imageUrl);
 
       // Insert image into editor
       if (editor) {
@@ -118,7 +150,7 @@ const RichTextEditor = ({
       console.error('Upload error:', error);
       toast({
         title: 'Error',
-        description: error.message || 'Failed to upload image',
+        description: error.message || 'Failed to upload image. Check console for details.',
         variant: 'destructive',
       });
     } finally {
