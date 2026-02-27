@@ -7,9 +7,9 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/mutual-funds", label: "Services" },
+  { to: "/mutual-funds", label: "Mutual Funds" },
+  { to: "/insurance", label: "Insurance" },
   { to: "/blog", label: "Insights" },
-  { to: "/tax-regime", label: "Tax Guide" },
 ];
 
 const Navbar = () => {

@@ -70,9 +70,9 @@ const TrustBar = () => (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-md lg:gap-lg">
           {[
             { icon: Award, label: "AMFI Registered Distributor" },
-            { icon: CheckCircle2, label: "ARN: 332207" },
+            { icon: CheckCircle2, label: "Digital Onboarding with 0 Charges" },
             { icon: Shield, label: "Compliant & Transparent" },
-            { icon: Zap, label: "Pan India Service" },
+            { icon: Zap, label: "PAN India Service" },
             { icon: Users, label: "Trusted by Hundreds" },
           ].map((badge, i) => (
             <div key={i} className="flex flex-col items-center text-center gap-3">
@@ -119,7 +119,7 @@ const reasons = [
   "Goal-Based Investing Approach",
   "Suitability-First Recommendations",
   "Rigorous Risk Profiling",
-  "Transparent Commission Practices",
+  "No Hidden Charges, Zero Onboarding Fees",
   "Ongoing Portfolio Support",
   "AMFI & SEBI Compliant Operations",
 ];

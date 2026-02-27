@@ -27,8 +27,7 @@ const Footer = () => {
                 { to: "/about", label: "About Us" },
                 { to: "/mutual-funds", label: "Mutual Funds" },
                 { to: "/insurance", label: "Insurance Info" },
-                { to: "/tax-regime", label: "Tax Guide" },
-                { to: "/blog", label: "Blog" },
+                { to: "/blog", label: "Insights" },
               ].map((link) => (
                 <Link key={link.to} to={link.to} className="text-sm text-primary-foreground/60 hover:text-accent transition-colors">
                   {link.label}
