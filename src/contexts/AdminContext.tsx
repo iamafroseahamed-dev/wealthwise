@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
-import { BlogPost, Booking } from '@/lib/supabase';
-import { blogService, bookingService } from '@/lib/adminService';
+import { Booking } from '@/lib/supabase';
+import { bookingService } from '@/lib/adminService';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
 interface AdminContextType {
@@ -8,15 +8,6 @@ interface AdminContextType {
   isAuthenticated: boolean;
   login: (password: string) => boolean;
   logout: () => void;
-
-  // Blog Posts
-  blogPosts: BlogPost[];
-  blogLoading: boolean;
-  blogError: string | null;
-  createBlogPost: (post: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>) => Promise<BlogPost | null>;
-  updateBlogPost: (id: string, post: Partial<BlogPost>) => Promise<BlogPost | null>;
-  deleteBlogPost: (id: string) => Promise<boolean>;
-  fetchBlogPosts: () => Promise<void>;
 
   // Bookings
   bookings: Booking[];
@@ -32,13 +23,6 @@ const AdminContext = createContext<AdminContextType>({
   isAuthenticated: false,
   login: () => false,
   logout: () => {},
-  blogPosts: [],
-  blogLoading: false,
-  blogError: null,
-  createBlogPost: async () => null,
-  updateBlogPost: async () => null,
-  deleteBlogPost: async () => false,
-  fetchBlogPosts: async () => {},
   bookings: [],
   bookingsLoading: false,
   bookingsError: null,
@@ -64,12 +48,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
   // Authentication state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Blog Posts state
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [blogLoading, setBlogLoading] = useState(false);
-  const [blogError, setBlogError] = useState<string | null>(null);
-  const [blogSubscription, setBlogSubscription] = useState<RealtimeChannel | null>(null);
-
   // Bookings state
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [bookingsLoading, setBookingsLoading] = useState(false);
@@ -82,7 +60,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     if (savedAuth === 'true') {
       setIsAuthenticated(true);
       // Load data when authenticated
-      fetchBlogPosts();
       fetchBookings();
     }
   }, []);
@@ -100,7 +77,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
       setIsAuthenticated(true);
       localStorage.setItem('admin_auth', 'true');
       // Load data after login
-      fetchBlogPosts();
       fetchBookings();
       return true;
     }
@@ -111,88 +87,10 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     setIsAuthenticated(false);
     localStorage.removeItem('admin_auth');
     // Clear all data
-    setBlogPosts([]);
     setBookings([]);
     // Unsubscribe from real-time updates
-    if (blogSubscription) blogService.unsubscribeFromChanges(blogSubscription);
     if (bookingsSubscription) bookingService.unsubscribeFromChanges(bookingsSubscription);
   };
-
-  // ===== BLOG POSTS METHODS =====
-  const fetchBlogPosts = useCallback(async () => {
-    try {
-      setBlogLoading(true);
-      setBlogError(null);
-      const data = await blogService.getAllPosts();
-      setBlogPosts(data);
-
-      // Subscribe to real-time changes if not already subscribed
-      if (!blogSubscription) {
-        const channel = blogService.subscribeToChanges((payload: any) => {
-          const { eventType, new: newRecord, old: oldRecord } = payload;
-
-          if (eventType === 'INSERT') {
-            setBlogPosts((prev) => [newRecord, ...prev]);
-          } else if (eventType === 'UPDATE') {
-            setBlogPosts((prev) => prev.map((p) => (p.id === newRecord.id ? newRecord : p)));
-          } else if (eventType === 'DELETE') {
-            setBlogPosts((prev) => prev.filter((p) => p.id !== oldRecord.id));
-          }
-        });
-        setBlogSubscription(channel);
-      }
-    } catch (err) {
-      setBlogError(err instanceof Error ? err.message : 'Failed to fetch blog posts');
-      console.error('Error fetching blog posts:', err);
-    } finally {
-      setBlogLoading(false);
-    }
-  }, [blogSubscription]);
-
-  const createBlogPost = useCallback(async (post: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>) => {
-    try {
-      const newPost = await blogService.createPost(post);
-      if (newPost) {
-        setBlogPosts((prev) => [newPost, ...prev]);
-        return newPost;
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to create post';
-      setBlogError(message);
-      throw err;
-    }
-    return null;
-  }, []);
-
-  const updateBlogPost = useCallback(async (id: string, post: Partial<BlogPost>) => {
-    try {
-      const updated = await blogService.updatePost(id, post);
-      if (updated) {
-        setBlogPosts((prev) => prev.map((p) => (p.id === id ? updated : p)));
-        return updated;
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to update post';
-      setBlogError(message);
-      throw err;
-    }
-    return null;
-  }, []);
-
-  const deleteBlogPost = useCallback(async (id: string) => {
-    try {
-      const success = await blogService.deletePost(id);
-      if (success) {
-        setBlogPosts((prev) => prev.filter((p) => p.id !== id));
-        return true;
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to delete post';
-      setBlogError(message);
-      throw err;
-    }
-    return false;
-  }, []);
 
   // ===== BOOKINGS METHODS =====
   const fetchBookings = useCallback(async () => {
@@ -274,13 +172,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     isAuthenticated,
     login,
     logout,
-    blogPosts,
-    blogLoading,
-    blogError,
-    createBlogPost,
-    updateBlogPost,
-    deleteBlogPost,
-    fetchBlogPosts,
     bookings,
     bookingsLoading,
     bookingsError,

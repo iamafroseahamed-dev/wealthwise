@@ -69,21 +69,6 @@ export const useBookings = () => {
     }
   }, []);
 
-  // Update booking status
-  const updateStatus = useCallback(async (id: string, status: 'pending' | 'confirmed' | 'completed' | 'cancelled') => {
-    try {
-      const success = await bookingService.updateStatus(id, status);
-      if (success) {
-        setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, status } : b)));
-        return true;
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to update status';
-      setError(message);
-      throw err;
-    }
-  }, []);
-
   // Subscribe to real-time changes
   useEffect(() => {
     fetchBookings();
@@ -117,6 +102,5 @@ export const useBookings = () => {
     createBooking,
     updateBooking,
     deleteBooking,
-    updateStatus,
   };
 };

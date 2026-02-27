@@ -75,7 +75,6 @@ const BookSession = () => {
             date: format(date, "yyyy-MM-dd"),
             time_slot: timeSlot,
             message: message || null,
-            status: "pending",
           },
         ])
         .select()

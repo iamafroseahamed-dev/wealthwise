@@ -12,16 +12,12 @@ import About from "./pages/About";
 import Products from "./pages/Products";
 import MutualFunds from "./pages/MutualFunds";
 import Insurance from "./pages/Insurance";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
 import BookSession from "./pages/BookSession";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
-import AdminBlog from "./pages/AdminBlog";
-import AdminBlogEditor from "./pages/AdminBlogEditor";
 import AdminBookings from "./pages/AdminBookings";
 
 const queryClient = new QueryClient();
@@ -40,8 +36,6 @@ const App = () => (
             <Route path="/products" element={<Products />} />
             <Route path="/mutual-funds" element={<MutualFunds />} />
             <Route path="/insurance" element={<Insurance />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/book-session" element={<BookSession />} />
 
             {/* Admin Routes */}
@@ -51,30 +45,6 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/blog"
-              element={
-                <ProtectedRoute>
-                  <AdminBlog />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/blog/new"
-              element={
-                <ProtectedRoute>
-                  <AdminBlogEditor />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/blog/:id/edit"
-              element={
-                <ProtectedRoute>
-                  <AdminBlogEditor />
                 </ProtectedRoute>
               }
             />

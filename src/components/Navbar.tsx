@@ -9,7 +9,6 @@ const navLinks = [
   { to: "/about", label: "About" },
   { to: "/mutual-funds", label: "Mutual Funds" },
   { to: "/insurance", label: "Insurance" },
-  { to: "/blog", label: "Insights" },
 ];
 
 const Navbar = () => {

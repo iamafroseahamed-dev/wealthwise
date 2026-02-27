@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, Home } from 'lucide-react';
+import { Home } from 'lucide-react';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -11,7 +11,6 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   const navItems = [
     { to: '/admin/dashboard', label: 'Dashboard', icon: Home },
-    { to: '/admin/blog', label: 'Manage Blog', icon: BookOpen },
   ];
 
   return (
