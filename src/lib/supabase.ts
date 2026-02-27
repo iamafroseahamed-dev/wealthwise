@@ -33,7 +33,6 @@ export interface Booking {
   date: string;
   time_slot: string;
   message?: string | null;
-  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   created_at?: string;
   updated_at?: string;
 }

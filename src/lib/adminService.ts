@@ -199,22 +199,6 @@ export const bookingService = {
     }
   },
 
-  // Update booking status
-  async updateStatus(id: string, status: 'pending' | 'confirmed' | 'completed' | 'cancelled'): Promise<boolean> {
-    try {
-      const { error } = await supabase
-        .from('bookings')
-        .update({ status, updated_at: new Date().toISOString() })
-        .eq('id', id);
-
-      if (error) throw error;
-      return true;
-    } catch (error) {
-      console.error('Error updating booking status:', error);
-      throw error;
-    }
-  },
-
   // Subscribe to bookings changes in real-time
   subscribeToChanges(callback: (payload: any) => void): RealtimeChannel | null {
     try {

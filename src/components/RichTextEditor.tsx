@@ -65,73 +65,21 @@ const RichTextEditor = ({
   });
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+    const imageUrl = prompt('Enter the image URL (e.g., https://images.unsplash.com/photo-...')
+    
+    if (!imageUrl) return;
 
-    const file = files[0];
-    if (!file.type.startsWith('image/')) {
+    // Basic URL validation
+    if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
       toast({
         title: 'Error',
-        description: 'Please select an image file',
+        description: 'Please enter a valid image URL (starting with http:// or https://)',
         variant: 'destructive',
       });
       return;
     }
 
-    setIsUploading(true);
     try {
-      // Validate Supabase configuration
-      const supabaseUrl = (import.meta.env as any).VITE_SUPABASE_URL;
-      const supabaseKey = (import.meta.env as any).VITE_SUPABASE_ANON_KEY;
-
-      if (!supabaseUrl || !supabaseKey) {
-        throw new Error('Supabase credentials not configured');
-      }
-
-      // Generate unique filename
-      const timestamp = Date.now();
-      const randomId = Math.random().toString(36).substring(2, 8);
-      const cleanFileName = file.name
-        .replace(/\s+/g, '-')
-        .replace(/[^a-zA-Z0-9.-]/g, '')
-        .toLowerCase();
-      const fileName = `${timestamp}-${randomId}-${cleanFileName}`;
-
-      // Upload to Supabase storage - store in root of bucket or organize by date
-      const year = new Date().getFullYear();
-      const month = String(new Date().getMonth() + 1).padStart(2, '0');
-      const filePath = `${year}/${month}/${fileName}`;
-
-      console.log('Uploading image to:', filePath);
-
-      // Upload to Supabase storage
-      const { data, error: uploadError } = await supabase.storage
-        .from('uploads')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: false,
-        });
-
-      if (uploadError) {
-        console.error('Upload error details:', uploadError);
-        throw new Error(`Upload failed: ${uploadError.message}`);
-      }
-
-      console.log('Upload successful:', data);
-
-      // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('uploads')
-        .getPublicUrl(filePath);
-      
-      const imageUrl = urlData.publicUrl;
-
-      if (!imageUrl) {
-        throw new Error('Failed to generate public URL');
-      }
-
-      console.log('Image public URL:', imageUrl);
-
       // Insert image into editor
       if (editor) {
         editor.chain().focus().setImage({ src: imageUrl }).run();
@@ -139,7 +87,7 @@ const RichTextEditor = ({
 
       toast({
         title: 'Success',
-        description: 'Image uploaded and inserted',
+        description: 'Image inserted',
       });
 
       // Reset input
@@ -147,7 +95,14 @@ const RichTextEditor = ({
         fileInputRef.current.value = '';
       }
     } catch (error: any) {
-      console.error('Upload error:', error);
+      console.error('Insert image error:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to insert image',
+        variant: 'destructive',
+      });
+    }
+  };
       toast({
         title: 'Error',
         description: error.message || 'Failed to upload image. Check console for details.',

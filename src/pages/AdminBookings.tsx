@@ -35,15 +35,13 @@ interface Booking {
   date: string;
   time_slot: string;
   message: string | null;
-  status: string;
   created_at: string;
 }
 
 const AdminBookings = () => {
-  const { bookings, bookingsLoading, bookingsError, deleteBooking, updateBookingStatus } = useAdmin();
+  const { bookings, bookingsLoading, bookingsError, deleteBooking } = useAdmin();
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [statusFilter, setStatusFilter] = useState<string>("all");
   const { toast } = useToast();
 
   const handleDelete = async (id: string) => {
@@ -64,29 +62,6 @@ const AdminBookings = () => {
     }
   };
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
-    try {
-      const success = await updateBookingStatus(id, newStatus as 'pending' | 'confirmed' | 'completed' | 'cancelled');
-      if (success) {
-        toast({ title: "Success", description: "Status updated" });
-        if (selectedBooking?.id === id) {
-          setSelectedBooking({ ...selectedBooking, status: newStatus });
-        }
-      }
-    } catch (error) {
-      console.error("Update error:", error);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to update status",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const filteredBookings = statusFilter === "all"
-    ? bookings
-    : bookings.filter((b) => b.status === statusFilter);
-
 
   return (
     <AdminLayout>
@@ -101,22 +76,6 @@ const AdminBookings = () => {
             <p className="text-destructive text-sm">{bookingsError}</p>
           </div>
         )}
-
-        <div className="flex items-center gap-2">
-          <label className="text-sm font-medium">Filter by status:</label>
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-48">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Bookings</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="confirmed">Confirmed</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-              <SelectItem value="cancelled">Cancelled</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
 
         {bookingsLoading ? (
           <div className="text-center py-8">
@@ -136,31 +95,17 @@ const AdminBookings = () => {
                   <TableHead>Phone</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Time</TableHead>
-                  <TableHead>Status</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredBookings.map((booking) => (
+                {bookings.map((booking) => (
                   <TableRow key={booking.id}>
                     <TableCell className="font-medium">{booking.name}</TableCell>
                     <TableCell className="text-sm">{booking.email}</TableCell>
                     <TableCell className="text-sm">{booking.phone}</TableCell>
                     <TableCell className="text-sm">{booking.date}</TableCell>
                     <TableCell className="text-sm">{booking.time_slot}</TableCell>
-                    <TableCell>
-                      <Select value={booking.status} onValueChange={(newStatus) => handleStatusChange(booking.id, newStatus)}>
-                        <SelectTrigger className="w-32">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="confirmed">Confirmed</SelectItem>
-                          <SelectItem value="completed">Completed</SelectItem>
-                          <SelectItem value="cancelled">Cancelled</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
                     <TableCell className="space-x-2">
                       <Button
                         variant="ghost"
@@ -240,11 +185,6 @@ const AdminBookings = () => {
                   </div>
                 </div>
               )}
-
-              <div className="pt-4 border-t">
-                <p className="text-sm text-muted-foreground">Status</p>
-                <p className="font-medium capitalize">{selectedBooking.status}</p>
-              </div>
 
               <div className="pt-4 border-t">
                 <p className="text-sm text-muted-foreground">Booked On</p>

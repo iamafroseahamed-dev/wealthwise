@@ -25,7 +25,6 @@ interface AdminContextType {
   createBooking: (booking: Omit<Booking, 'id' | 'created_at' | 'updated_at'>) => Promise<Booking | null>;
   updateBooking: (id: string, booking: Partial<Booking>) => Promise<Booking | null>;
   deleteBooking: (id: string) => Promise<boolean>;
-  updateBookingStatus: (id: string, status: 'pending' | 'confirmed' | 'completed' | 'cancelled') => Promise<boolean>;
   fetchBookings: () => Promise<void>;
 }
 
@@ -46,7 +45,6 @@ const AdminContext = createContext<AdminContextType>({
   createBooking: async () => null,
   updateBooking: async () => null,
   deleteBooking: async () => false,
-  updateBookingStatus: async () => false,
   fetchBookings: async () => {},
 });
 
@@ -272,24 +270,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     return false;
   }, []);
 
-  const updateBookingStatus = useCallback(
-    async (id: string, status: 'pending' | 'confirmed' | 'completed' | 'cancelled') => {
-      try {
-        const success = await bookingService.updateStatus(id, status);
-        if (success) {
-          setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, status } : b)));
-          return true;
-        }
-      } catch (err) {
-        const message = err instanceof Error ? err.message : 'Failed to update status';
-        setBookingsError(message);
-        throw err;
-      }
-      return false;
-    },
-    []
-  );
-
   const value: AdminContextType = {
     isAuthenticated,
     login,
@@ -307,7 +287,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     createBooking,
     updateBooking,
     deleteBooking,
-    updateBookingStatus,
     fetchBookings,
   };
 
