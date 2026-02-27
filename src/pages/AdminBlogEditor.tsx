@@ -186,10 +186,19 @@ const AdminBlogEditor = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.title || !formData.slug || !formData.excerpt || !formData.cover_image || !formData.content) {
+    if (!formData.title || !formData.slug || !formData.excerpt || !formData.content) {
       toast({
         title: 'Error',
-        description: 'Please fill in all required fields including content',
+        description: 'Please fill in all required fields (title, slug, excerpt, content)',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (!formData.cover_image) {
+      toast({
+        title: 'Error',
+        description: 'Please add a cover image URL',
         variant: 'destructive',
       });
       return;
