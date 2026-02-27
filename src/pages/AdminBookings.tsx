@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AdminLayout from "@/components/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabase";
+import { useAdmin } from "@/contexts/AdminContext";
 import { Trash2, Calendar, User, Mail, Phone, MessageSquare } from "lucide-react";
 import {
   Table,
@@ -19,6 +19,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Booking {
   id: string;
@@ -33,71 +40,53 @@ interface Booking {
 }
 
 const AdminBookings = () => {
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { bookings, bookingsLoading, bookingsError, deleteBooking, updateBookingStatus } = useAdmin();
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<string>("all");
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchBookings();
-  }, []);
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this booking?")) return;
 
-  const fetchBookings = async () => {
     try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("bookings")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        console.error("Error fetching bookings:", error);
-        toast({ title: "Error", description: "Failed to load bookings", variant: "destructive" });
-      } else {
-        setBookings(data || []);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const deleteBooking = async (id: string) => {
-    try {
-      const { error } = await supabase.from("bookings").delete().eq("id", id);
-
-      if (error) {
-        toast({ title: "Error", description: "Failed to delete booking", variant: "destructive" });
-      } else {
-        setBookings(bookings.filter((b) => b.id !== id));
+      const success = await deleteBooking(id);
+      if (success) {
         toast({ title: "Success", description: "Booking deleted" });
       }
     } catch (error) {
       console.error("Delete error:", error);
-      toast({ title: "Error", description: "Failed to delete booking", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to delete booking",
+        variant: "destructive",
+      });
     }
   };
 
-  const updateStatus = async (id: string, status: string) => {
+  const handleStatusChange = async (id: string, newStatus: string) => {
     try {
-      const { error } = await supabase
-        .from("bookings")
-        .update({ status })
-        .eq("id", id);
-
-      if (error) {
-        toast({ title: "Error", description: "Failed to update status", variant: "destructive" });
-      } else {
-        setBookings(
-          bookings.map((b) => (b.id === id ? { ...b, status } : b))
-        );
+      const success = await updateBookingStatus(id, newStatus as 'pending' | 'confirmed' | 'completed' | 'cancelled');
+      if (success) {
         toast({ title: "Success", description: "Status updated" });
+        if (selectedBooking?.id === id) {
+          setSelectedBooking({ ...selectedBooking, status: newStatus });
+        }
       }
     } catch (error) {
       console.error("Update error:", error);
-      toast({ title: "Error", description: "Failed to update status", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to update status",
+        variant: "destructive",
+      });
     }
   };
+
+  const filteredBookings = statusFilter === "all"
+    ? bookings
+    : bookings.filter((b) => b.status === statusFilter);
+
 
   return (
     <AdminLayout>
@@ -107,7 +96,29 @@ const AdminBookings = () => {
           <p className="text-muted-foreground">Manage all session bookings and requests</p>
         </div>
 
-        {loading ? (
+        {bookingsError && (
+          <div className="bg-destructive/10 border border-destructive rounded-lg p-4">
+            <p className="text-destructive text-sm">{bookingsError}</p>
+          </div>
+        )}
+
+        <div className="flex items-center gap-2">
+          <label className="text-sm font-medium">Filter by status:</label>
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Bookings</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="confirmed">Confirmed</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem value="cancelled">Cancelled</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {bookingsLoading ? (
           <div className="text-center py-8">
             <p className="text-muted-foreground">Loading bookings...</p>
           </div>
@@ -130,7 +141,7 @@ const AdminBookings = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {bookings.map((booking) => (
+                {filteredBookings.map((booking) => (
                   <TableRow key={booking.id}>
                     <TableCell className="font-medium">{booking.name}</TableCell>
                     <TableCell className="text-sm">{booking.email}</TableCell>
@@ -138,16 +149,17 @@ const AdminBookings = () => {
                     <TableCell className="text-sm">{booking.date}</TableCell>
                     <TableCell className="text-sm">{booking.time_slot}</TableCell>
                     <TableCell>
-                      <select
-                        value={booking.status}
-                        onChange={(e) => updateStatus(booking.id, e.target.value)}
-                        className="text-sm px-2 py-1 rounded border bg-background"
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
+                      <Select value={booking.status} onValueChange={(newStatus) => handleStatusChange(booking.id, newStatus)}>
+                        <SelectTrigger className="w-32">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pending">Pending</SelectItem>
+                          <SelectItem value="confirmed">Confirmed</SelectItem>
+                          <SelectItem value="completed">Completed</SelectItem>
+                          <SelectItem value="cancelled">Cancelled</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </TableCell>
                     <TableCell className="space-x-2">
                       <Button
@@ -163,7 +175,7 @@ const AdminBookings = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => deleteBooking(booking.id)}
+                        onClick={() => handleDelete(booking.id)}
                       >
                         <Trash2 className="w-4 h-4 text-destructive" />
                       </Button>

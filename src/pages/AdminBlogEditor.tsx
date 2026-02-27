@@ -5,8 +5,9 @@ import RichTextEditor from '@/components/RichTextEditor';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { supabase, BlogPost } from '@/lib/supabase';
+import { BlogPost } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
+import { useAdmin } from '@/contexts/AdminContext';
 import { ArrowLeft, Eye, Clock } from 'lucide-react';
 
 const AdminBlogEditor = () => {
@@ -14,6 +15,7 @@ const AdminBlogEditor = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const isEditing = !!id;
+  const { blogPosts, createBlogPost, updateBlogPost } = useAdmin();
 
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
@@ -28,47 +30,29 @@ const AdminBlogEditor = () => {
   });
 
   useEffect(() => {
-    if (isEditing) {
-      fetchBlogPost();
-    }
-  }, [id]);
-
-  const fetchBlogPost = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error) {
+    if (isEditing && id) {
+      const post = blogPosts.find((p) => p.id === id);
+      if (post) {
+        setFormData({
+          title: post.title,
+          slug: post.slug,
+          excerpt: post.excerpt,
+          content: post.content || '',
+          cover_image: post.cover_image,
+          reading_time: post.reading_time,
+          author: post.author || 'WealthWise Team',
+        });
+        setLoading(false);
+      } else {
         toast({
           title: 'Error',
-          description: 'Failed to load blog post',
+          description: 'Blog post not found',
           variant: 'destructive',
         });
-      } else if (data) {
-        setFormData({
-          title: data.title,
-          slug: data.slug,
-          excerpt: data.excerpt,
-          content: data.content || '',
-          cover_image: data.cover_image,
-          reading_time: data.reading_time,
-          author: data.author || 'WealthWise Team',
-        });
+        navigate('/admin/blog');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to load blog post',
-        variant: 'destructive',
-      });
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [id, isEditing, blogPosts]);
 
   const generateSlug = (title: string) => {
     return title
@@ -103,32 +87,25 @@ const AdminBlogEditor = () => {
     setSaving(true);
 
     try {
-      const postData = {
-        ...formData,
-        published_at: new Date().toISOString(),
-      };
-
-      if (isEditing) {
-        const { error } = await supabase
-          .from('blog_posts')
-          .update(postData)
-          .eq('id', id);
-
-        if (error) {
-          throw error;
-        }
+      if (isEditing && id) {
+        await updateBlogPost(id, {
+          ...formData,
+          published_at: new Date().toISOString(),
+        });
+        toast({
+          title: 'Success',
+          description: 'Blog post updated',
+        });
       } else {
-        const { error } = await supabase.from('blog_posts').insert([postData]);
-
-        if (error) {
-          throw error;
-        }
+        await createBlogPost({
+          ...formData,
+          published_at: new Date().toISOString(),
+        } as Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>);
+        toast({
+          title: 'Success',
+          description: 'Blog post created',
+        });
       }
-
-      toast({
-        title: 'Success',
-        description: isEditing ? 'Blog post updated' : 'Blog post created',
-      });
       navigate('/admin/blog');
     } catch (error: any) {
       console.error('Error:', error);

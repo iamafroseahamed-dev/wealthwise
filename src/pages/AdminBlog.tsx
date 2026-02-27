@@ -1,102 +1,44 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Plus, Edit2, Trash2, Eye } from 'lucide-react';
-import { supabase, BlogPost } from '@/lib/supabase';
+import { useAdmin } from '@/contexts/AdminContext';
 import { useToast } from '@/hooks/use-toast';
 
 const AdminBlog = () => {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { blogPosts, blogLoading, blogError, deleteBlogPost } = useAdmin();
 
-  useEffect(() => {
-    fetchBlogPosts();
-  }, []);
-
-  const fetchBlogPosts = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .order('published_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching posts:', error);
-        toast({
-          title: 'Note: Blog source not configured yet',
-          description: 'Please configure Supabase to use blog features',
-          variant: 'destructive',
-        });
-        // Use sample data for demo
-        setPosts(getSampleBlogPosts());
-      } else {
-        setPosts(data || []);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setPosts(getSampleBlogPosts());
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getSampleBlogPosts = (): BlogPost[] => [
-    {
-      id: '1',
-      slug: 'power-of-sip',
-      title: 'The Power of SIP: How ₹5,000/Month Can Build a Crore',
-      excerpt: 'Discover how systematic investment plans leverage compounding to turn small monthly investments into significant wealth over time.',
-      content:
-        'Systematic Investment Plans (SIP) are one of the most powerful tools for long-term wealth creation...',
-      cover_image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop',
-      published_at: '2024-12-15',
-      reading_time: '5 min read',
-      author: 'WealthWise Team',
-    },
-    {
-      id: '2',
-      slug: 'tax-saving-elss',
-      title: 'ELSS vs PPF vs FD: Which Tax Saving Option Is Best?',
-      excerpt: 'A comprehensive comparison of popular Section 80C investment options to help you make the smartest tax-saving decision.',
-      content: 'When it comes to saving taxes under Section 80C...',
-      cover_image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&auto=format&fit=crop',
-      published_at: '2024-11-28',
-      reading_time: '7 min read',
-      author: 'WealthWise Team',
-    },
-  ];
-
-  const deletePost = async (id: string) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this post?')) return;
 
     try {
-      const { error } = await supabase.from('blog_posts').delete().eq('id', id);
-
-      if (error) {
-        toast({
-          title: 'Error',
-          description: 'Failed to delete post. Make sure Supabase is configured.',
-          variant: 'destructive',
-        });
-      } else {
+      const success = await deleteBlogPost(id);
+      if (success) {
         toast({ title: 'Success', description: 'Blog post deleted successfully' });
-        fetchBlogPosts();
       }
     } catch (error) {
       console.error('Error:', error);
       toast({
         title: 'Error',
-        description: 'Failed to delete post',
+        description: error instanceof Error ? error.message : 'Failed to delete post',
         variant: 'destructive',
       });
     }
   };
 
   if (loading) {
+    return (
+      <AdminLayout>
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">Loading blog posts...</p>
+        </div>
+      </AdminLayout>
+    );
+  }
+
+  if (blogLoading) {
     return (
       <AdminLayout>
         <div className="text-center py-12">
@@ -123,8 +65,14 @@ const AdminBlog = () => {
           </Button>
         </div>
 
+        {blogError && (
+          <div className="bg-destructive/10 border border-destructive rounded-lg p-4 mb-6">
+            <p className="text-destructive text-sm">{blogError}</p>
+          </div>
+        )}
+
         <div className="bg-card rounded-2xl border border-border overflow-hidden">
-          {posts.length === 0 ? (
+          {blogPosts.length === 0 ? (
             <div className="p-12 text-center">
               <p className="text-muted-foreground mb-6">No blog posts yet</p>
               <Button onClick={() => navigate('/admin/blog/new')}>Create First Post</Button>
@@ -141,7 +89,7 @@ const AdminBlog = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {posts.map((post) => (
+                  {blogPosts.map((post) => (
                     <tr key={post.id} className="hover:bg-secondary/50 transition-colors">
                       <td className="px-6 py-4">
                         <p className="font-medium">{post.title}</p>
@@ -174,7 +122,7 @@ const AdminBlog = () => {
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => deletePost(post.id)}
+                            onClick={() => handleDelete(post.id)}
                             className="gap-1 text-destructive hover:text-destructive"
                           >
                             <Trash2 className="w-4 h-4" />
