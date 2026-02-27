@@ -38,15 +38,4 @@ export interface Booking {
   updated_at?: string;
 }
 
-// TypeScript types for contacts
-export interface Contact {
-  id: string;
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  phone?: string;
-  status: 'new' | 'reviewed' | 'replied' | 'closed';
-  created_at?: string;
-  updated_at?: string;
-}
+

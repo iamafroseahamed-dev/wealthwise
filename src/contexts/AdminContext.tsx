@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
-import { BlogPost, Booking, Contact } from '@/lib/supabase';
-import { blogService, bookingService, contactService } from '@/lib/adminService';
+import { BlogPost, Booking } from '@/lib/supabase';
+import { blogService, bookingService } from '@/lib/adminService';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
 interface AdminContextType {
@@ -27,16 +27,6 @@ interface AdminContextType {
   deleteBooking: (id: string) => Promise<boolean>;
   updateBookingStatus: (id: string, status: 'pending' | 'confirmed' | 'completed' | 'cancelled') => Promise<boolean>;
   fetchBookings: () => Promise<void>;
-
-  // Contacts
-  contacts: Contact[];
-  contactsLoading: boolean;
-  contactsError: string | null;
-  createContact: (contact: Omit<Contact, 'id' | 'created_at' | 'updated_at'>) => Promise<Contact | null>;
-  updateContact: (id: string, contact: Partial<Contact>) => Promise<Contact | null>;
-  deleteContact: (id: string) => Promise<boolean>;
-  updateContactStatus: (id: string, status: 'new' | 'reviewed' | 'replied' | 'closed') => Promise<boolean>;
-  fetchContacts: () => Promise<void>;
 }
 
 const AdminContext = createContext<AdminContextType>({
@@ -58,14 +48,6 @@ const AdminContext = createContext<AdminContextType>({
   deleteBooking: async () => false,
   updateBookingStatus: async () => false,
   fetchBookings: async () => {},
-  contacts: [],
-  contactsLoading: false,
-  contactsError: null,
-  createContact: async () => null,
-  updateContact: async () => null,
-  deleteContact: async () => false,
-  updateContactStatus: async () => false,
-  fetchContacts: async () => {},
 });
 
 export const useAdmin = () => {
@@ -96,12 +78,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
   const [bookingsError, setBookingsError] = useState<string | null>(null);
   const [bookingsSubscription, setBookingsSubscription] = useState<RealtimeChannel | null>(null);
 
-  // Contacts state
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [contactsLoading, setContactsLoading] = useState(false);
-  const [contactsError, setContactsError] = useState<string | null>(null);
-  const [contactsSubscription, setContactsSubscription] = useState<RealtimeChannel | null>(null);
-
   // Check if already authenticated from localStorage
   useEffect(() => {
     const savedAuth = localStorage.getItem('admin_auth');
@@ -110,7 +86,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
       // Load data when authenticated
       fetchBlogPosts();
       fetchBookings();
-      fetchContacts();
     }
   }, []);
 
@@ -129,7 +104,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
       // Load data after login
       fetchBlogPosts();
       fetchBookings();
-      fetchContacts();
       return true;
     }
     return false;
@@ -141,11 +115,9 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     // Clear all data
     setBlogPosts([]);
     setBookings([]);
-    setContacts([]);
     // Unsubscribe from real-time updates
     if (blogSubscription) blogService.unsubscribeFromChanges(blogSubscription);
     if (bookingsSubscription) bookingService.unsubscribeFromChanges(bookingsSubscription);
-    if (contactsSubscription) contactService.unsubscribeFromChanges(contactsSubscription);
   };
 
   // ===== BLOG POSTS METHODS =====
@@ -318,97 +290,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     []
   );
 
-  // ===== CONTACTS METHODS =====
-  const fetchContacts = useCallback(async () => {
-    try {
-      setContactsLoading(true);
-      setContactsError(null);
-      const data = await contactService.getAllContacts();
-      setContacts(data);
-
-      // Subscribe to real-time changes if not already subscribed
-      if (!contactsSubscription) {
-        const channel = contactService.subscribeToChanges((payload: any) => {
-          const { eventType, new: newRecord, old: oldRecord } = payload;
-
-          if (eventType === 'INSERT') {
-            setContacts((prev) => [newRecord, ...prev]);
-          } else if (eventType === 'UPDATE') {
-            setContacts((prev) => prev.map((c) => (c.id === newRecord.id ? newRecord : c)));
-          } else if (eventType === 'DELETE') {
-            setContacts((prev) => prev.filter((c) => c.id !== oldRecord.id));
-          }
-        });
-        setContactsSubscription(channel);
-      }
-    } catch (err) {
-      setContactsError(err instanceof Error ? err.message : 'Failed to fetch contacts');
-      console.error('Error fetching contacts:', err);
-    } finally {
-      setContactsLoading(false);
-    }
-  }, [contactsSubscription]);
-
-  const createContact = useCallback(async (contact: Omit<Contact, 'id' | 'created_at' | 'updated_at'>) => {
-    try {
-      const newContact = await contactService.createContact(contact);
-      if (newContact) {
-        setContacts((prev) => [newContact, ...prev]);
-        return newContact;
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to create contact';
-      setContactsError(message);
-      throw err;
-    }
-    return null;
-  }, []);
-
-  const updateContact = useCallback(async (id: string, contact: Partial<Contact>) => {
-    try {
-      const updated = await contactService.updateContact(id, contact);
-      if (updated) {
-        setContacts((prev) => prev.map((c) => (c.id === id ? updated : c)));
-        return updated;
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to update contact';
-      setContactsError(message);
-      throw err;
-    }
-    return null;
-  }, []);
-
-  const deleteContact = useCallback(async (id: string) => {
-    try {
-      const success = await contactService.deleteContact(id);
-      if (success) {
-        setContacts((prev) => prev.filter((c) => c.id !== id));
-        return true;
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to delete contact';
-      setContactsError(message);
-      throw err;
-    }
-    return false;
-  }, []);
-
-  const updateContactStatus = useCallback(async (id: string, status: 'new' | 'reviewed' | 'replied' | 'closed') => {
-    try {
-      const success = await contactService.updateStatus(id, status);
-      if (success) {
-        setContacts((prev) => prev.map((c) => (c.id === id ? { ...c, status } : c)));
-        return true;
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to update status';
-      setContactsError(message);
-      throw err;
-    }
-    return false;
-  }, []);
-
   const value: AdminContextType = {
     isAuthenticated,
     login,
@@ -428,14 +309,6 @@ export const AdminProvider = ({ children }: AdminProviderProps) => {
     deleteBooking,
     updateBookingStatus,
     fetchBookings,
-    contacts,
-    contactsLoading,
-    contactsError,
-    createContact,
-    updateContact,
-    deleteContact,
-    updateContactStatus,
-    fetchContacts,
   };
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;

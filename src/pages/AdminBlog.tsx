@@ -28,16 +28,6 @@ const AdminBlog = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <AdminLayout>
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">Loading blog posts...</p>
-        </div>
-      </AdminLayout>
-    );
-  }
-
   if (blogLoading) {
     return (
       <AdminLayout>
