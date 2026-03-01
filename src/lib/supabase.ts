@@ -17,7 +17,8 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   cover_image: string;
-  published_at: string;
+  published_at: string | null;
+  published?: boolean;
   reading_time: string;
   author?: string;
   created_at?: string;

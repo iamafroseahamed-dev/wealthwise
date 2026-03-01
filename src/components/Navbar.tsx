@@ -1,48 +1,55 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigation, type Page } from "@/contexts/NavigationContext";
 
 const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/mutual-funds", label: "Mutual Funds" },
-  { to: "/insurance", label: "Insurance" },
+  { page: "home" as Page, label: "Home" },
+  { page: "about" as Page, label: "About" },
+  { page: "mutual-funds" as Page, label: "Mutual Funds" },
+  { page: "insurance" as Page, label: "Insurance" },
+  { page: "blog" as Page, label: "Blog" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const location = useLocation();
+  const { currentPage, navigate } = useNavigation();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       <div className="flex items-center justify-between h-16 md:h-20 px-4 sm:px-6 md:px-8 max-w-6xl mx-auto">
-        <Link to="/" className="font-display text-xl md:text-2xl font-bold tracking-tight">
+        <button
+          onClick={() => navigate("home")}
+          className="font-display text-xl md:text-2xl font-bold tracking-tight hover:text-accent transition-colors"
+        >
           Karthik G<span className="text-gradient-gold">.</span>Wealth
-        </Link>
+        </button>
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
+            <button
+              key={link.page}
+              onClick={() => navigate(link.page)}
               className={`text-sm font-medium transition-colors hover:text-accent ${
-                location.pathname === link.to ? "text-accent" : "text-muted-foreground"
+                currentPage === link.page ? "text-accent" : "text-muted-foreground"
               }`}
             >
               {link.label}
-            </Link>
+            </button>
           ))}
-          <Link to="/book-session">
+          <button onClick={() => navigate("book-session")}>
             <Button variant="gold" size="default">
               Begin Your Journey
             </Button>
-          </Link>
-          <a href="/admin" className="text-xs text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100">
+          </button>
+          <button
+            onClick={() => navigate("admin-login")}
+            className="text-xs text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
+          >
             Admin
-          </a>
+          </button>
         </div>
 
         {/* Mobile Toggle */}
@@ -62,22 +69,29 @@ const Navbar = () => {
           >
             <div className="px-4 sm:px-6 md:px-8 py-6 flex flex-col gap-4 max-w-6xl mx-auto">
               {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setOpen(false)}
-                  className={`text-base font-medium py-2 transition-colors ${
-                    location.pathname === link.to ? "text-accent" : "text-muted-foreground"
+                <button
+                  key={link.page}
+                  onClick={() => {
+                    navigate(link.page);
+                    setOpen(false);
+                  }}
+                  className={`text-left text-base font-medium py-2 transition-colors ${
+                    currentPage === link.page ? "text-accent" : "text-muted-foreground"
                   }`}
                 >
                   {link.label}
-                </Link>
+                </button>
               ))}
-              <Link to="/book-session" onClick={() => setOpen(false)}>
+              <button
+                onClick={() => {
+                  navigate("book-session");
+                  setOpen(false);
+                }}
+              >
                 <Button variant="gold" className="w-full mt-2">
                   Book a Consultation
                 </Button>
-              </Link>
+              </button>
             </div>
           </motion.div>
         )}

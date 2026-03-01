@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAdmin } from '@/contexts/AdminContext';
+import { useNavigation } from '@/contexts/NavigationContext';
 import { Lock } from 'lucide-react';
 
 const AdminLogin = () => {
@@ -10,16 +10,16 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAdmin();
-  const navigate = useNavigate(); 
+  const { navigate } = useNavigation();
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault() ;
+    e.preventDefault();
     setError('');
-    setLoading(true); 
+    setLoading(true);
 
     try {
       if (login(password)) {
-        navigate('/admin/dashboard');
+        navigate('admin-dashboard');
       } else {
         setError('Invalid password');
         setPassword('');

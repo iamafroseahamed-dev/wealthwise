@@ -2,9 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AdminProvider } from "@/contexts/AdminContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { BlogProvider } from "@/contexts/BlogContext";
+import { NavigationProvider, useNavigation } from "@/contexts/NavigationContext";
 
 // Public pages
 import Index from "./pages/Index";
@@ -13,14 +13,52 @@ import Products from "./pages/Products";
 import MutualFunds from "./pages/MutualFunds";
 import Insurance from "./pages/Insurance";
 import BookSession from "./pages/BookSession";
+import Blog from "./pages/Blog";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBookings from "./pages/AdminBookings";
+import AdminBlog from "./pages/AdminBlog";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  const { currentPage } = useNavigation();
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return <Index />;
+      case 'about':
+        return <About />;
+      case 'products':
+        return <Products />;
+      case 'mutual-funds':
+        return <MutualFunds />;
+      case 'insurance':
+        return <Insurance />;
+      case 'book-session':
+        return <BookSession />;
+      case 'blog':
+        return <Blog />;
+      case 'admin-login':
+        return <AdminLogin />;
+      case 'admin-dashboard':
+        return <AdminDashboard />;
+      case 'admin-bookings':
+        return <AdminBookings />;
+      case 'admin-blog':
+        return <AdminBlog />;
+      case 'not-found':
+      default:
+        return <NotFound />;
+    }
+  };
+
+  return renderPage();
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -28,39 +66,11 @@ const App = () => (
       <Toaster />
       <Sonner />
       <AdminProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/mutual-funds" element={<MutualFunds />} />
-            <Route path="/insurance" element={<Insurance />} />
-            <Route path="/book-session" element={<BookSession />} />
-
-            {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLogin />} />
-            <Route
-              path="/admin/dashboard"
-              element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/bookings"
-              element={
-                <ProtectedRoute>
-                  <AdminBookings />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <BlogProvider>
+          <NavigationProvider>
+            <AppContent />
+          </NavigationProvider>
+        </BlogProvider>
       </AdminProvider>
     </TooltipProvider>
   </QueryClientProvider>

@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
+import { useNavigation } from "@/contexts/NavigationContext";
 import { TrendingUp, Shield, Users, Target, ArrowRight, CheckCircle2, Award, Zap } from "lucide-react";
 
-const HeroSection = () => (
+const HeroSection = ({ navigate }: { navigate: (page: any) => void }) => (
   <section className="bg-gradient-navy text-primary-foreground section-lg relative overflow-hidden">
     <div className="absolute inset-0 opacity-10">
       <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-accent/30 blur-3xl" />
@@ -22,17 +22,13 @@ const HeroSection = () => (
             We help investors invest in mutual funds with personalised, suitability-based guidance aligned to your financial goals.
           </p>
           <div className="button-group">
-            <Link to="/book-session">
-              <Button variant="hero" size="xl">
-                Start Your Investment Journey
-                <ArrowRight className="w-5 h-5 ml-1" />
-              </Button>
-            </Link>
-            <Link to="/mutual-funds">
-              <Button variant="outline-light" size="xl">
-                Explore Mutual Funds
-              </Button>
-            </Link>
+            <Button variant="hero" size="xl" onClick={() => navigate("book-session")}>
+              Start Your Investment Journey
+              <ArrowRight className="w-5 h-5 ml-1" />
+            </Button>
+            <Button variant="outline-light" size="xl" onClick={() => navigate("mutual-funds")}>
+              Explore Mutual Funds
+            </Button>
           </div>
         </div>
       </AnimatedSection>
@@ -124,7 +120,7 @@ const reasons = [
   "AMFI & SEBI Compliant Operations",
 ];
 
-const WhyChooseUs = () => (
+const WhyChooseUs = ({ navigate }: { navigate: (page: any) => void }) => (
   <section className="section-lg bg-secondary">
     <div className="container-tight">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-lg items-center">
@@ -134,11 +130,9 @@ const WhyChooseUs = () => (
           <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
             Karthik G (ARN: 332207) is an AMFI-Registered Mutual Fund Distributor committed to conducting proper risk profiling, recommending suitable mutual fund schemes, and providing ongoing service assistance focused on disciplined, goal-oriented investing.
           </p>
-          <Link to="/about">
-            <Button variant="default" size="lg">
-              Learn More About Us <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
-          </Link>
+          <Button variant="default" size="lg" onClick={() => navigate("about")}>
+            Learn More About Us <ArrowRight className="w-4 h-4 ml-1" />
+          </Button>
         </AnimatedSection>
         <AnimatedSection delay={0.2}>
           <div className="space-y-4">
@@ -208,12 +202,14 @@ const CTABanner = () => (
 );
 
 const Index = () => {
+  const { navigate } = useNavigation();
+
   return (
     <Layout>
-      <HeroSection />
+      <HeroSection navigate={navigate} />
       <TrustBar />
       <ServicesSection />
-      <WhyChooseUs />
+      <WhyChooseUs navigate={navigate} />
       <ProcessSteps />
       <CTABanner />
     </Layout>

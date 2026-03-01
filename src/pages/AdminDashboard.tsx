@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
-import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
+import AdminLayout from '@/components/AdminLayout';
+import { useNavigation } from '@/contexts/NavigationContext';
 import { Calendar } from 'lucide-react';
 
 const AdminDashboard = () => {
+  const { navigate } = useNavigation();
+
   return (
     <AdminLayout>
       <div className="max-w-6xl">
@@ -22,11 +24,13 @@ const AdminDashboard = () => {
             <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
               View and manage all session bookings and client requests.
             </p>
-            <Link to="/admin/bookings">
-              <Button variant="default" className="w-full">
-                View Bookings
-              </Button>
-            </Link>
+            <Button
+              variant="default"
+              className="w-full"
+              onClick={() => navigate('admin-bookings')}
+            >
+              View Bookings
+            </Button>
           </div>
         </div>
       </div>

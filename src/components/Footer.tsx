@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { useNavigation } from "@/contexts/NavigationContext";
 
 const Footer = () => {
+  const { navigate } = useNavigation();
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container-tight px-4 sm:px-6 md:px-8 py-16">
@@ -24,13 +26,18 @@ const Footer = () => {
             <h4 className="font-body font-semibold text-sm uppercase tracking-wider mb-4 text-primary-foreground/80">Quick Links</h4>
             <div className="flex flex-col gap-3">
               {[
-                { to: "/about", label: "About Us" },
-                { to: "/mutual-funds", label: "Mutual Funds" },
-                { to: "/insurance", label: "Insurance Info" },
+                { page: "about" as const, label: "About Us" },
+                { page: "mutual-funds" as const, label: "Mutual Funds" },
+                { page: "insurance" as const, label: "Insurance Info" },
+                { page: "blog" as const, label: "Blog" },
               ].map((link) => (
-                <Link key={link.to} to={link.to} className="text-sm text-primary-foreground/60 hover:text-accent transition-colors">
+                <button
+                  key={link.page}
+                  onClick={() => navigate(link.page)}
+                  className="text-sm text-primary-foreground/60 hover:text-accent transition-colors text-left"
+                >
                   {link.label}
-                </Link>
+                </button>
               ))}
             </div>
           </div>

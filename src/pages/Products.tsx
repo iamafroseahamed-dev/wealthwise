@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Button } from "@/components/ui/button";
+import { useNavigation } from "@/contexts/NavigationContext";
 import { TrendingUp, Shield, ArrowRight } from "lucide-react";
 
 const products = [
@@ -10,18 +10,20 @@ const products = [
     title: "Mutual Fund Distribution",
     description: "We assist investors in selecting suitable mutual fund schemes based on their risk profile and financial goals through proper suitability assessment.",
     features: ["Goal-Based SIPs", "Lumpsum Investments", "ELSS (Tax Saving)", "Risk Profiling", "Portfolio Review", "After-Sales Support"],
-    link: "/mutual-funds",
+    page: "mutual-funds" as const,
   },
   {
     icon: Shield,
     title: "Our Scope & Limitations",
     description: "As an AMFI-Registered Mutual Fund Distributor, our services are limited to mutual fund distribution only. View compliance details and scope.",
     features: ["Mutual Funds Only", "Incidental Advice", "Proper Risk Assessment", "Suitability Check", "NO Financial Planning", "NO Insurance Products"],
-    link: "/insurance",
+    page: "insurance" as const,
   },
 ];
 
 const Products = () => {
+  const { navigate } = useNavigation();
+
   return (
     <Layout>
       <section className="section-lg bg-gradient-navy text-primary-foreground">
@@ -57,11 +59,9 @@ const Products = () => {
                       </p>
                     ))}
                   </div>
-                  <Link to={product.link}>
-                    <Button variant="default" className="w-full">
-                      Learn More <ArrowRight className="w-4 h-4 ml-1" />
-                    </Button>
-                  </Link>
+                  <Button variant="default" className="w-full" onClick={() => navigate(product.page)}>
+                    Learn More <ArrowRight className="w-4 h-4 ml-1" />
+                  </Button>
                 </div>
               </AnimatedSection>
             ))}

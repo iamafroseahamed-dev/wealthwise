@@ -1,10 +1,11 @@
 import Layout from "@/components/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { AlertCircle, Heart, Shield, Users, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useNavigation } from "@/contexts/NavigationContext";
 
 const Insurance = () => {
+  const { navigate } = useNavigation();
   return (
     <Layout>
       <section className="section-lg bg-gradient-navy text-primary-foreground">
@@ -140,11 +141,9 @@ const Insurance = () => {
                 </div>
               </div>
               <div className="text-center">
-                <Link to="/book-session">
-                  <Button variant="hero" size="lg">
-                    Let's Discuss Your Goals <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
-                </Link>
+                <Button variant="hero" size="lg" onClick={() => navigate("book-session")}>
+                  Let's Discuss Your Goals <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
               </div>
             </div>
           </AnimatedSection>

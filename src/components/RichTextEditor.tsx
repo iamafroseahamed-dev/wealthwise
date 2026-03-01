@@ -103,15 +103,6 @@ const RichTextEditor = ({
       });
     }
   };
-      toast({
-        title: 'Error',
-        description: error.message || 'Failed to upload image. Check console for details.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsUploading(false);
-    }
-  };
 
   if (!editor) {
     return <div className="text-center py-8 text-muted-foreground">Loading editor...</div>;
