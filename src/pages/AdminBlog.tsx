@@ -368,7 +368,7 @@ const AdminBlog = () => {
               <div>
                 <label className="block text-sm font-medium mb-2">Content *</label>
                 <RichTextEditor
-                  value={formData.content}
+                  content={formData.content}
                   onChange={(content) => setFormData((prev) => ({ ...prev, content }))}
                 />
               </div>
