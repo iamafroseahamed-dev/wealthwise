@@ -133,7 +133,11 @@ const AdminBlog = () => {
       const readingTime = blogService.calculateReadingTime(formData.content);
 
       const postData = {
-        ...formData,
+        title: formData.title,
+        excerpt: formData.excerpt,
+        content: formData.content,
+        cover_image: formData.cover_image,
+        author: formData.author,
         slug,
         reading_time: readingTime,
         published_at: formData.published ? new Date().toISOString() : null,
@@ -318,49 +322,87 @@ const AdminBlog = () => {
 
               {/* Cover Image Upload */}
               <div>
-                <label className="block text-sm font-medium mb-2">Cover Image</label>
+                <label className="block text-sm font-medium mb-3">Cover Image</label>
                 <div className="space-y-3">
+                  {/* Preview */}
                   {imagePreview && (
-                    <div className="relative w-full h-48 rounded-lg overflow-hidden bg-muted border border-border">
+                    <div className="relative w-full h-48 rounded-lg overflow-hidden bg-muted border border-border group">
                       <img
                         src={imagePreview}
                         alt="Cover preview"
                         className="w-full h-full object-cover"
                       />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('image-upload')?.click();
+                          }}
+                          className="text-white border-white hover:bg-white/10"
+                        >
+                          <Upload className="w-4 h-4 mr-2" />
+                          Change Image
+                        </Button>
+                      </div>
                     </div>
                   )}
-                  <div className="flex gap-2">
-                    <input
-                      type="file"
-                      id="image-upload"
-                      accept="image/*"
-                      onChange={handleImageSelect}
-                      className="hidden"
-                    />
-                    <label htmlFor="image-upload" className="flex-1">
-                      <Button
-                        variant="outline"
-                        className="w-full"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          document.getElementById('image-upload')?.click();
-                        }}
-                      >
-                        <Upload className="w-4 h-4 mr-2" />
-                        Choose Image
-                      </Button>
-                    </label>
-                    {imageFile && (
+
+                  {/* Upload Area */}
+                  {!imagePreview && (
+                    <div className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-accent hover:bg-accent/5 transition-colors">
+                      <Upload className="w-8 h-8 mx-auto mb-3 text-muted-foreground" />
+                      <p className="font-medium mb-2 text-sm">Drag & drop your image here</p>
+                      <p className="text-xs text-muted-foreground mb-4">or</p>
+                    </div>
+                  )}
+
+                  {/* File Input */}
+                  <input
+                    type="file"
+                    id="image-upload"
+                    accept="image/*"
+                    onChange={handleImageSelect}
+                    className="hidden"
+                  />
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('image-upload')?.click();
+                    }}
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    {imageFile ? 'Choose Different Image' : 'Choose Image from Device'}
+                  </Button>
+
+                  {/* File Info */}
+                  {imageFile && (
+                    <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+                      <p className="text-sm font-medium text-green-700 dark:text-green-400 mb-2">
+                        ✓ File selected: {imageFile.name}
+                      </p>
                       <Button
                         onClick={handleImageUpload}
                         disabled={uploading}
-                        className="gap-2"
+                        className="w-full gap-2"
                       >
-                        {uploading ? 'Uploading...' : 'Upload Image'}
+                        {uploading ? 'Uploading...' : 'Upload to Server'}
                       </Button>
-                    )}
-                  </div>
-                  {imageFile && <p className="text-xs text-muted-foreground">{imageFile.name}</p>}
+                    </div>
+                  )}
+
+                  {formData.cover_image && imagePreview === formData.cover_image && (
+                    <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+                      <p className="text-sm text-green-700 dark:text-green-400">✓ Image uploaded successfully!</p>
+                    </div>
+                  )}
+
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Recommended size: 1200x600px • Max 5MB
+                  </p>
                 </div>
               </div>
 

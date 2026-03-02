@@ -14,6 +14,7 @@ import MutualFunds from "./pages/MutualFunds";
 import Insurance from "./pages/Insurance";
 import BookSession from "./pages/BookSession";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 
 // Admin pages
@@ -43,6 +44,8 @@ const AppContent = () => {
         return <BookSession />;
       case 'blog':
         return <Blog />;
+      case 'blog-post':
+        return <BlogPost />;
       case 'admin-login':
         return <AdminLogin />;
       case 'admin-dashboard':

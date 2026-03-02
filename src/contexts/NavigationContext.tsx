@@ -8,6 +8,7 @@ export type Page =
   | 'products'
   | 'book-session'
   | 'blog'
+  | 'blog-post'
   | 'admin-login'
   | 'admin-dashboard'
   | 'admin-bookings'
@@ -16,7 +17,8 @@ export type Page =
 
 interface NavigationContextType {
   currentPage: Page;
-  navigate: (page: Page) => void;
+  postSlug: string | null;
+  navigate: (page: Page, postSlug?: string) => void;
   goHome: () => void;
   isAdmin: boolean;
 }
@@ -25,10 +27,16 @@ const NavigationContext = createContext<NavigationContextType | undefined>(undef
 
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [postSlug, setPostSlug] = useState<string | null>(null);
   const [isAdmin] = useState(false);
 
-  const navigate = (page: Page) => {
+  const navigate = (page: Page, postSlug?: string) => {
     setCurrentPage(page);
+    if (postSlug) {
+      setPostSlug(postSlug);
+    } else {
+      setPostSlug(null);
+    }
     // Scroll to top
     window.scrollTo(0, 0);
   };
@@ -38,7 +46,7 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <NavigationContext.Provider value={{ currentPage, navigate, goHome, isAdmin }}>
+    <NavigationContext.Provider value={{ currentPage, postSlug, navigate, goHome, isAdmin }}>
       {children}
     </NavigationContext.Provider>
   );

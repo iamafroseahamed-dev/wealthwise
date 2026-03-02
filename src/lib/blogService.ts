@@ -7,7 +7,7 @@ export const blogService = {
     const { data, error } = await supabase
       .from('blog_posts')
       .select('*')
-      .eq('published', true)
+      .not('published_at', 'is', null)
       .order('published_at', { ascending: false });
 
     if (error) {
@@ -23,7 +23,7 @@ export const blogService = {
       .from('blog_posts')
       .select('*')
       .eq('slug', slug)
-      .eq('published', true)
+      .not('published_at', 'is', null)
       .single();
 
     if (error && error.code !== 'PGRST116') {
@@ -64,10 +64,13 @@ export const blogService = {
 
   // Update a blog post
   async updatePost(id: string, updates: Partial<BlogPost>): Promise<BlogPost> {
+    // Remove the 'published' field (doesn't exist in DB) and keep only 'published_at'
+    const { published, ...safeUpdates } = updates as any;
+    
     const { data, error } = await supabase
       .from('blog_posts')
       .update({
-        ...updates,
+        ...safeUpdates,
         updated_at: new Date().toISOString(),
       })
       .eq('id', id)

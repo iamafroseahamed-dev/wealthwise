@@ -65,21 +65,54 @@ const RichTextEditor = ({
   });
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const imageUrl = prompt('Enter the image URL (e.g., https://images.unsplash.com/photo-...')
-    
-    if (!imageUrl) return;
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    // Basic URL validation
-    if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
       toast({
         title: 'Error',
-        description: 'Please enter a valid image URL (starting with http:// or https://)',
+        description: 'Please select a valid image file',
         variant: 'destructive',
       });
       return;
     }
 
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: 'Error',
+        description: 'Image must be smaller than 5MB',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsUploading(true);
+
     try {
+      // Generate unique filename
+      const timestamp = Date.now();
+      const randomString = Math.random().toString(36).substring(2, 8);
+      const filename = `${timestamp}_${randomString}_${file.name}`;
+      const filepath = `blog-content/${filename}`;
+
+      // Upload to Supabase storage
+      const { error: uploadError } = await supabase.storage
+        .from('blog-images')
+        .upload(filepath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      // Get public URL
+      const { data } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(filepath);
+
+      const imageUrl = data.publicUrl;
+
       // Insert image into editor
       if (editor) {
         editor.chain().focus().setImage({ src: imageUrl }).run();
@@ -87,7 +120,7 @@ const RichTextEditor = ({
 
       toast({
         title: 'Success',
-        description: 'Image inserted',
+        description: 'Image uploaded and inserted successfully',
       });
 
       // Reset input
@@ -95,12 +128,14 @@ const RichTextEditor = ({
         fileInputRef.current.value = '';
       }
     } catch (error: any) {
-      console.error('Insert image error:', error);
+      console.error('Image upload error:', error);
       toast({
         title: 'Error',
-        description: 'Failed to insert image',
+        description: error.message || 'Failed to upload image',
         variant: 'destructive',
       });
+    } finally {
+      setIsUploading(false);
     }
   };
 

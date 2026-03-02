@@ -1,11 +1,42 @@
-import { supabase } from '../src/lib/supabase';
+#!/usr/bin/env node
 
 /**
- * Seed script to add the first blog post
- * Run this once to populate the database with the mutual fund blog post
- * 
- * Execute with: npx ts-node scripts/seed-blog-posts.ts
+ * Seed script to add blog posts to Supabase
+ * Run this with: node seed-blog-posts.js
  */
+
+import { createClient } from '@supabase/supabase-js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Load .env.local file
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const envPath = path.join(__dirname, '.env.local');
+
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf-8');
+  envContent.split('\n').forEach(line => {
+    if (line.trim() && !line.startsWith('#')) {
+      const [key, value] = line.split('=');
+      if (key && value) {
+        process.env[key.trim()] = value.trim();
+      }
+    }
+  });
+}
+
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('❌ Error: Missing Supabase credentials');
+  console.error('   VITE_SUPABASE_URL:', supabaseUrl ? '✓ Set' : '✗ Missing');
+  console.error('   VITE_SUPABASE_ANON_KEY:', supabaseKey ? '✓ Set' : '✗ Missing');
+  process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const mutualFundBlogPost = {
   slug: 'why-mutual-funds-work-rain-or-shine',
@@ -105,17 +136,23 @@ const mutualFundBlogPost = {
 
 async function seedBlogPosts() {
   try {
-    console.log('🌱 Starting blog post seeding...');
+    console.log('🌱 Starting blog post seeding...\n');
 
     // Check if post already exists
-    const { data: existing } = await supabase
+    const { data: existing, error: checkError } = await supabase
       .from('blog_posts')
       .select('id')
       .eq('slug', mutualFundBlogPost.slug)
       .single();
 
+    if (checkError && checkError.code !== 'PGRST116') {
+      // PGRST116 means no rows found, which is expected
+      console.error('❌ Error checking for existing post:', checkError);
+      process.exit(1);
+    }
+
     if (existing) {
-      console.log('✅ Blog post already exists. Updating...');
+      console.log('✅ Blog post already exists. Updating...\n');
       // Update the existing post
       const { error: updateError } = await supabase
         .from('blog_posts')
@@ -127,7 +164,12 @@ async function seedBlogPosts() {
         process.exit(1);
       }
 
-      console.log('✅ Blog post updated successfully!');
+      console.log('✅ Blog post updated successfully!\n');
+      console.log('📝 Post details:');
+      console.log(`   Title: ${mutualFundBlogPost.title}`);
+      console.log(`   Slug: ${mutualFundBlogPost.slug}`);
+      console.log(`   Reading Time: ${mutualFundBlogPost.reading_time}`);
+      console.log(`   Status: Published`);
       return;
     }
 
@@ -142,12 +184,14 @@ async function seedBlogPosts() {
       process.exit(1);
     }
 
-    console.log('✅ Blog post created successfully!');
+    console.log('✅ Blog post created successfully!\n');
     console.log('📝 Post details:');
     console.log(`   Title: ${mutualFundBlogPost.title}`);
     console.log(`   Slug: ${mutualFundBlogPost.slug}`);
     console.log(`   Reading Time: ${mutualFundBlogPost.reading_time}`);
-    console.log(`   Status: Published`);
+    console.log(`   Status: Published\n`);
+    console.log('🎉 Your blog post is now live!');
+    console.log('📍 View it at: /blog');
   } catch (error) {
     console.error('❌ Unexpected error:', error);
     process.exit(1);

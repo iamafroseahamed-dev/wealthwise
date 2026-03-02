@@ -39,11 +39,13 @@ const Navbar = () => {
               {link.label}
             </button>
           ))}
-          <button onClick={() => navigate("book-session")}>
-            <Button variant="gold" size="default">
-              Begin Your Journey
-            </Button>
-          </button>
+          <Button 
+            variant="gold" 
+            size="default"
+            onClick={() => navigate("book-session")}
+          >
+            Begin Your Journey
+          </Button>
           <button
             onClick={() => navigate("admin-login")}
             className="text-xs text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"

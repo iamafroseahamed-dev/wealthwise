@@ -97,8 +97,8 @@ const Blog = () => {
                     >
                       <div>
                         <p className="label-uppercase text-accent mb-3">Article</p>
-                        <h2 className="h3-display mb-3">{post.title}</h2>
-                        <p className="text-muted-foreground leading-relaxed mb-6">
+                        <h2 className="h3-display mb-3 text-xl md:text-2xl">{post.title}</h2>
+                        <p className="text-muted-foreground leading-relaxed mb-6 line-clamp-3">
                           {post.excerpt}
                         </p>
                       </div>
@@ -131,7 +131,11 @@ const Blog = () => {
                           )}
                         </div>
 
-                        <Button variant="default" className="w-full gap-2">
+                        <Button 
+                          variant="default" 
+                          className="w-full gap-2 bg-accent hover:bg-accent/90 text-foreground font-semibold"
+                          onClick={() => navigate('blog-post', post.slug)}
+                        >
                           Read Full Article <ArrowRight className="w-4 h-4" />
                         </Button>
                       </div>
