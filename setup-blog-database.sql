@@ -32,6 +32,7 @@ ALTER TABLE public.blog_posts ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Public can read published posts" ON public.blog_posts;
 DROP POLICY IF EXISTS "Anyone can insert blog posts" ON public.blog_posts;
 DROP POLICY IF EXISTS "Users can update their own posts" ON public.blog_posts;
+DROP POLICY IF EXISTS "Authenticated users can manage posts" ON public.blog_posts;
 
 -- Policy: Public can read published posts
 CREATE POLICY "Public can read published posts" 
