@@ -30,7 +30,7 @@ const Insurance = () => {
               <div>
                 <h3 className="text-lg font-bold mb-2">Important Disclaimer</h3>
                 <p className="text-muted-foreground text-sm">
-                  This section provides educational information about insurance products. We are AMFI-Registered Mutual Fund Distributors. We do NOT provide insurance products or services. For insurance needs, please consult a qualified IRDA-registered Insurance Agent or Insurance Advisor.
+                  This section provides educational information about insurance products. I am an AMFI-Registered Mutual Fund Distributor. I do NOT provide insurance products or services. For insurance needs, please consult a qualified IRDA-registered Insurance Agent or Insurance Advisor.
                 </p>
               </div>
             </div>
@@ -90,7 +90,7 @@ const Insurance = () => {
               <div className="pt-8 border-t border-border">
                 <h2 className="h2-display mb-6">How to Get Insurance</h2>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  While we specialize in mutual fund distribution, we encourage you to explore insurance options suited to your needs:
+                  While I specialize in mutual fund distribution, I encourage you to explore insurance options suited to your needs:
                 </p>
                 <div className="space-y-4">
                   {[

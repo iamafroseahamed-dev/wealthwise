@@ -118,16 +118,16 @@ const MutualFunds = () => {
               <h2 className="h3-display mb-6">Commission Disclosure</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed text-sm">
                 <p>
-                  <strong className="text-foreground">We are compensated by AMCs:</strong> As an AMFI-registered Mutual Fund Distributor, we earn trail commission from Asset Management Companies (AMCs) on the mutual funds we distribute. This commission is paid from the scheme's expense ratio and does NOT add to your investment cost.
+                  <strong className="text-foreground">I am compensated by AMCs:</strong> As an AMFI-registered Mutual Fund Distributor, I earn trail commission from Asset Management Companies (AMCs) on the mutual funds I distribute. This commission is paid from the scheme's expense ratio and does NOT add to your investment cost.
                 </p>
                 <p>
                   <strong className="text-foreground">Transparency:</strong> The exact commission varies by scheme and AMC. You can find this information in the scheme's Statement of Additional Information (SAI) or contact us directly.
                 </p>
                 <p>
-                  <strong className="text-foreground">Your benefit:</strong> This compensation model ensures we are incentivized to help you invest optimally, as our income depends on your long-term investments.
+                  <strong className="text-foreground">Your benefit:</strong> This compensation model ensures I am incentivized to help you invest optimally, as my income depends on your long-term investments.
                 </p>
                 <p className="border-t border-border pt-4 mt-4">
-                  All scheme-related charges including expense ratio are transparent and available in the fund documents. We encourage you to review these carefully.
+                  All scheme-related charges including expense ratio are transparent and available in the fund documents. I encourage you to review these carefully.
                 </p>
               </div>
             </div>
@@ -160,7 +160,7 @@ const MutualFunds = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold mb-3">What We Don't Do</h3>
+                  <h3 className="text-lg font-bold mb-3">What I Don't Do</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex gap-3">
                       <span className="text-accent font-bold mt-0.5">✗</span>

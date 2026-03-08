@@ -34,8 +34,8 @@ interface Booking {
   phone: string;
   date: string;
   time_slot: string;
-  message: string | null;
-  created_at: string;
+  message?: string;
+  created_at?: string;
 }
 
 const AdminBookings = () => {

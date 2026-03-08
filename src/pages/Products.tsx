@@ -34,7 +34,7 @@ const Products = () => {
               Our Services for <span className="text-gradient-gold">Every Goal</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              We assist investors across India in selecting suitable mutual fund schemes aligned with their financial goals and risk appetite.
+              I assist investors across India in selecting suitable mutual fund schemes aligned with their financial goals and risk appetite.
             </p>
           </AnimatedSection>
         </div>

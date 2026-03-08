@@ -19,7 +19,7 @@ const HeroSection = ({ navigate }: { navigate: (page: any) => void }) => (
             <span className="text-gradient-gold">Your Wealth Journey Starts Here.</span>
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/70 max-w-xl mb-10 font-body leading-relaxed">
-            We help investors invest in mutual funds with personalised, suitability-based guidance aligned to your financial goals.
+            I help investors invest in mutual funds with personalised, suitability-based guidance aligned to your financial goals.
           </p>
           <div className="button-group">
             <Button variant="hero" size="xl" onClick={() => navigate("book-session")}>
@@ -45,7 +45,7 @@ const services = [
   {
     icon: Target,
     title: "Suitability-First Approach",
-    description: "We conduct thorough risk profiling to recommend mutual fund schemes that match your risk appetite and investment horizon.",
+    description: "I conduct thorough risk profiling to recommend mutual fund schemes that match your risk appetite and investment horizon.",
   },
   {
     icon: Shield,
@@ -91,7 +91,7 @@ const ServicesSection = () => (
         <p className="label-uppercase text-accent mb-3">Key Services</p>
         <h2 className="h2-display mb-4">Mutual Fund Solutions for Every Goal</h2>
         <p className="text-muted-foreground text-lg max-w-2xl mb-14">
-          We assist investors across India in selecting suitable mutual fund schemes aligned with their financial goals and risk appetite.
+          I assist investors across India in selecting suitable mutual fund schemes aligned with their financial goals and risk appetite.
         </p>
       </AnimatedSection>
       <div className="card-grid-2">
@@ -113,10 +113,8 @@ const ServicesSection = () => (
 
 const reasons = [
   "Goal-Based Investing Approach",
-  "Suitability-First Recommendations",
-  "Rigorous Risk Profiling",
-  "No Hidden Charges, Zero Onboarding Fees",
-  "Ongoing Portfolio Support",
+  "Suitability-First Recommendations",  
+  "No Hidden Charges, Zero Onboarding Fees",  
   "AMFI & SEBI Compliant Operations",
 ];
 
@@ -152,7 +150,7 @@ const WhyChooseUs = ({ navigate }: { navigate: (page: any) => void }) => (
 const steps = [
   { num: "01", title: "Book a Consultation", description: "Schedule a consultation to discuss your financial goals and investment timeline." },
   { num: "02", title: "Risk Profiling", description: "We conduct a thorough assessment of your risk appetite, financial situation, and investment horizon." },
-  { num: "03", title: "Scheme Recommendation", description: "Based on your profile, we recommend suitable mutual fund schemes aligned with your goals." },
+  { num: "03", title: "Scheme Recommendation", description: "Based on your profile, I recommend suitable mutual fund schemes aligned with your goals." },
   { num: "04", title: "Invest & Stay on Track", description: "Invest with support and receive ongoing portfolio reviews to keep you on your wealth-building path." },
 ];
 
@@ -189,7 +187,7 @@ const CTABanner = () => (
             <p className="label-uppercase text-accent mb-3">Important Disclaimer</p>
             <h2 className="h3-display mb-4">Scope & Limitations</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              The information on this website is for educational purposes only. We are AMFI-Registered Mutual Fund Distributors providing only incidental advice to help you select suitable mutual fund schemes. We do NOT provide comprehensive financial planning, investment advisory services, or any products other than mutual funds.
+              The information on this website is for educational purposes only. I am an AMFI-Registered Mutual Fund Distributor providing only incidental advice to help you select suitable mutual fund schemes. I do NOT provide comprehensive financial planning, investment advisory services, or any products other than mutual funds.
             </p>
             <p className="text-muted-foreground text-sm">
               All recommendations are made after assessing your risk profile and evaluating product suitability. Mutual Fund investments are subject to market risks. Past performance does not guarantee future results.

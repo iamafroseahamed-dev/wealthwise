@@ -160,7 +160,7 @@ const BookSession = () => {
           <AnimatedSection>
             <div className="bg-secondary/50 rounded-2xl p-6 mb-8 border border-accent/20">
               <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">📋 Important Note:</strong> This is a consultation booking, not an investment advice platform. During our consultation, we will conduct risk profiling and provide incidental guidance to help you select suitable mutual fund schemes. All recommendations are subject to your goals, risk appetite, and suitability assessment.
+                <strong className="text-foreground">📋 Important Note:</strong> This is a consultation booking, not an investment advice platform. During our consultation, I will conduct risk profiling and provide incidental guidance to help you select suitable mutual fund schemes. All recommendations are subject to your goals, risk appetite, and suitability assessment.
               </p>
             </div>
 

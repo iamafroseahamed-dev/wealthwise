@@ -59,16 +59,16 @@ const Footer = () => {
         <div className="border-t border-primary-foreground/10 pt-8">
           <div className="mb-6 space-y-3">
             <p className="text-xs text-primary-foreground/40 leading-relaxed">
-              <strong>🔒 Regulatory Compliance Notice:</strong> Karthik G is an AMFI-Registered Mutual Fund Distributor (ARN: 332207). We distribute mutual fund schemes only and provide "incidental advice" to help you select suitable schemes based on your risk profile and financial goals. We do NOT provide comprehensive financial planning or investment advisory services (unless separately registered as Investment Adviser with SEBI).
+              <strong>🔒 Regulatory Compliance Notice:</strong> Karthik G is an AMFI-Registered Mutual Fund Distributor (ARN: 332207). I distribute mutual fund schemes only and provide "incidental advice" to help you select suitable schemes based on your risk profile and financial goals. I do NOT provide comprehensive financial planning or investment advisory services (unless separately registered as Investment Adviser with SEBI).
             </p>
             <p className="text-xs text-primary-foreground/40 leading-relaxed">
               <strong>⚠️ Risk Disclosure:</strong> Mutual Fund investments are subject to market risks, including the loss of principal amount. Past performance is not indicative of future results. Please read all scheme documents, Key Information Document (KID), and Statement of Additional Information (SAI) carefully before investing. This information is for educational purposes only and does not constitute a recommendation or offer.
             </p>
             <p className="text-xs text-primary-foreground/40 leading-relaxed">
-              <strong>💰 Commission Disclosure:</strong> We earn trail commission from Asset Management Companies (AMCs) on mutual fund schemes we distribute. This commission is paid from the scheme's expense ratio and does not add to your investment cost.
+              <strong>💰 Commission Disclosure:</strong> I earn trail commission from Asset Management Companies (AMCs) on mutual fund schemes I distribute. This commission is paid from the scheme's expense ratio and does not add to your investment cost.
             </p>
             <p className="text-xs text-primary-foreground/40 leading-relaxed">
-              <strong>👥 Suitability Note:</strong> All mutual fund recommendations are made only after conducting proper risk profiling and assessing product suitability. We are NOT responsible for providing advice on other financial products, insurance, or brokerage services.
+              <strong>👥 Suitability Note:</strong> All mutual fund recommendations are made only after conducting proper risk profiling and assessing product suitability. I am NOT responsible for providing advice on other financial products, insurance, or brokerage services.
             </p>
           </div>
 

@@ -4,7 +4,7 @@ import { Award, Heart, Eye, Users } from "lucide-react";
 
 const values = [
   { icon: Heart, title: "Integrity", description: "We prioritize your interests above all. Proper risk profiling and suitability assessment before every recommendation." },
-  { icon: Eye, title: "Clarity", description: "Transparent about our role: mutual fund distribution only. We clearly communicate incidental advice vs. financial planning." },
+  { icon: Eye, title: "Clarity", description: "Transparent about my role: mutual fund distribution only. I clearly communicate incidental advice vs. financial planning." },
   { icon: Award, title: "Compliance", description: "AMFI-registered operations. Regulatory compliance in all activities. Proper documentation of risk profiling and suitability." },
   { icon: Users, title: "Partnership", description: "We're mutual fund distributors committed to helping you build wealth through disciplined investing." },
 ];
@@ -20,7 +20,7 @@ const About = () => {
               Built on Integrity. <span className="text-gradient-gold">Guided by Your Goals.</span>
             </h1>
             <p className="text-primary-foreground/70 text-lg max-w-2xl leading-relaxed">
-              As an AMFI-Registered Mutual Fund Distributor, we combine expertise, transparency, and compliance to help investors build wealth through disciplined investing.
+              As an AMFI-Registered Mutual Fund Distributor, I combine expertise, transparency, and compliance to help investors build wealth through disciplined investing.
             </p>
           </AnimatedSection>
         </div>
@@ -46,7 +46,7 @@ const About = () => {
                   <li>Ongoing after-sales support and portfolio reviews</li>
                 </ul>
                 <p>
-                  We serve salaried professionals, small business owners, young investors, and retirees across India. Our recommendations are always made after assessing suitability and are limited to mutual fund schemes, in compliance with AMFI and SEBI guidelines.
+                  I serve salaried professionals, small business owners, young investors, and retirees across India. My recommendations are always made after assessing suitability and are limited to mutual fund schemes, in compliance with AMFI and SEBI guidelines.
                 </p>
               </div>
             </AnimatedSection>
@@ -57,7 +57,7 @@ const About = () => {
                     { num: "332207", label: "ARN Number" },
                     { num: "AMFI", label: "Registered with" },
                     { num: "MF", label: "Specialization" },
-                    { num: "Pan-India", label: "Coverage" },
+                    { num: "PAN-India", label: "Coverage" },
                   ].map((stat) => (
                     <div key={stat.label} className="text-center">
                       <p className="text-3xl font-bold text-gradient-gold font-display">{stat.num}</p>
@@ -120,7 +120,7 @@ const About = () => {
               
               <div className="card-grid-2 gap-lg">
                 <div className="bg-secondary rounded-2xl p-8 border border-border">
-                  <h3 className="text-lg font-bold mb-4 text-accent">What We Do ✓</h3>
+                  <h3 className="text-lg font-bold mb-4 text-accent">What I Do ✓</h3>
                   <ul className="space-y-3 text-muted-foreground text-sm">
                     <li className="flex gap-3">
                       <span className="text-accent font-bold">✓</span>
@@ -144,13 +144,13 @@ const About = () => {
                     </li>
                     <li className="flex gap-3">
                       <span className="text-accent font-bold">✓</span>
-                      <span>After-sales service support</span>
+                      <span>Continued support through the journey for your investments</span>
                     </li>
                   </ul>
                 </div>
                 
                 <div className="bg-card rounded-2xl p-8 border border-border">
-                  <h3 className="text-lg font-bold mb-4 text-red-600">What We Don't Do ✗</h3>
+                  <h3 className="text-lg font-bold mb-4 text-red-600">What I Don't Do ✗</h3>
                   <ul className="space-y-3 text-muted-foreground text-sm">
                     <li className="flex gap-3">
                       <span className="text-red-600 font-bold">✗</span>
