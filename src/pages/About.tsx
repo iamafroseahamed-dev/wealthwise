@@ -147,8 +147,7 @@ const About = () => {
                       <span>Continued support through the journey for your investments</span>
                     </li>
                   </ul>
-                </div>
-                
+                </div>                
                 <div className="bg-card rounded-2xl p-8 border border-border">
                   <h3 className="text-lg font-bold mb-4 text-red-600">What I Don't Do ✗</h3>
                   <ul className="space-y-3 text-muted-foreground text-sm">
