@@ -46,12 +46,6 @@ const Navbar = () => {
           >
             Begin Your Journey
           </Button>
-          <button
-            onClick={() => navigate("admin-login")}
-            className="text-xs text-muted-foreground hover:text-accent transition-colors opacity-60 hover:opacity-100"
-          >
-            Admin
-          </button>
         </div>
 
         {/* Mobile Toggle */}
