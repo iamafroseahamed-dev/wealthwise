@@ -49,9 +49,13 @@ export const blogService = {
 
   // Create a new blog post
   async createPost(post: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>): Promise<BlogPost> {
+    const postData = {
+      ...post,
+      published_at: post.published_at ?? new Date().toISOString(),
+    };
     const { data, error } = await supabase
       .from('blog_posts')
-      .insert([post])
+      .insert([postData])
       .select()
       .single();
 
